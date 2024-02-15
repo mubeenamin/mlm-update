@@ -3,7 +3,7 @@ from sqlmodel import Field, SQLModel
 # pin models start here -------------- ⬇️
 
 
-class referral(SQLModel, table=True):
+class withdrawal(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
     pin: str
     created_at: str
