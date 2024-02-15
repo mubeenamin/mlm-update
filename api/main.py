@@ -25,7 +25,7 @@ async def create_user(User: userCreate, db: Session = Depends(get_db)):
     return user_to_insert
 
 
-@app.get("/users/", response_model=list[user])
+@app.get("/api/users", response_model=list[user])
 async def get_users(db: Session = Depends(get_db)):
     return db.query(user).all()
 
