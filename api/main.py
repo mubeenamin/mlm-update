@@ -16,7 +16,7 @@ async def root():
     return {"message": "Hello World"}
 
 
-@app.post("/users/", response_model=user)
+@app.post("api/users/", response_model=user)
 async def create_user(User: userCreate, db: Session = Depends(get_db)):
     user_to_insert = user.model_validate(User)
     db.add(user_to_insert)
@@ -25,12 +25,12 @@ async def create_user(User: userCreate, db: Session = Depends(get_db)):
     return user_to_insert
 
 
-@app.get("/users/", response_model=list[user])
+@app.get("api/users/", response_model=list[user])
 async def get_users(db: Session = Depends(get_db)):
     return db.query(user).all()
 
 
-@app.put("/users/{user_id}", response_model=user)
+@app.put("api/users/{user_id}", response_model=user)
 async def update_user(user_id: int, update_data: userCreate, db: Session = Depends(get_db)):
     user_to_update = db.query(user).filter(
         user.id == user_id).first()  # type: ignore
@@ -44,7 +44,7 @@ async def update_user(user_id: int, update_data: userCreate, db: Session = Depen
     return user_to_update
 
 
-@app.delete("/users/{user_id}")
+@app.delete("api/users/{user_id}")
 async def delete_user(user_id: int, db: Session = Depends(get_db)):
     user_to_delete = db.query(user).filter(
         user.id == user_id).first()  # type: ignore
