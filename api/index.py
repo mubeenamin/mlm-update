@@ -1,7 +1,7 @@
 from fastapi import Depends, FastAPI, HTTPException
 # from sqlmodel import SQLModel, Session
-# from .db import create_db_and_tables, get_db
-# from .model.user import user, userCreate
+from .db import create_db_and_tables, get_db
+from .model.user import user, userCreate
 
 app = FastAPI()
 
@@ -12,9 +12,9 @@ app = FastAPI()
 #     create_db_and_tables()
 
 
-@app.get("/api/python")
-def hello_world():
-    return {"message": "Hello World"}
+# @app.get("/api/python")
+# def hello_world():
+#     return {"message": "Hello World"}
 
 
 # @app.post("/api/users", response_model=user)
@@ -26,9 +26,9 @@ def hello_world():
 #     return user_to_insert
 
 
-# @app.get("/api/users", response_model=list[user])
-# async def get_users(db: Session = Depends(get_db)):
-#     return db.query(user).all()
+@app.get("/api/users", response_model=list[user])
+async def get_users(db: Session = Depends(get_db)):
+    return db.query(user).all()
 
 
 # @app.put("/api/users/{user_id}", response_model=user)
