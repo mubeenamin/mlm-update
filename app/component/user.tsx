@@ -1,11 +1,27 @@
-import React from "react";
-import useSWR from "swr";
+"use client";
+import React, { useEffect, useState } from "react";
 
 function User() {
-  const { data, error } = useSWR("/api/users", fetch);
-  if (error) return <div>failed to load</div>;
-  if (!data) return <div>loading...</div>;
-  return <div>{JSON.stringify(data)}</div>;
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch("https://mlm-update-blush.vercel.app/api/users");
+      const data = await res.json();
+      console.log(data)
+      setUsers(data);
+    };
+
+    fetchData();
+  }, []);
+  console.log(users);
+  return (
+    <div>
+      {users.map((user) => (
+        <div key={user}>{user}</div>
+      ))}
+    </div>
+  );
 }
 
 export default User;

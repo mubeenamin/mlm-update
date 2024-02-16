@@ -26,7 +26,7 @@ def hello_world():
 #     return user_to_insert
 
 
-@app.get("/api/users", response_model=list[user1])
+@app.get("/api/users", response_model=user1)
 async def get_users(db: Session = Depends(get_db)):
     return db.exec(select(user1)).all()
 
