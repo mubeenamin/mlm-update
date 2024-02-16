@@ -1,10 +1,10 @@
 from sqlmodel import SQLModel, Field, Relationship
-
+from typing import Optional
 # User models start here -------------- ⬇️
 
 
 class user(SQLModel, table=True):
-    id: int | None = Field(default=None, primary_key=True)
+    id: Optional[int] = Field(default=None, primary_key=True)
     national_id: str
     email: str
     password: str
