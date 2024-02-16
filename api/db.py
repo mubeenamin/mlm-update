@@ -15,8 +15,8 @@ if key is None:
 
 engine = create_engine(key)
 
-# def create_db_and_tables():
-#     SQLModel.metadata.create_all(engine)
+def create_db_and_tables():
+    SQLModel.metadata.create_all(engine)
 
 def get_db():
     with Session(engine) as session:
