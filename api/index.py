@@ -28,7 +28,7 @@ def hello_world():
 
 @app.get("/api/users", response_model=user1)
 async def get_users(db: Session = Depends(get_db)):
-    return db.exec(select(user1)).all()
+    return db.exec(select(user1)).first()
 
 
 # @app.put("/api/users/{user_id}", response_model=user)
