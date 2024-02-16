@@ -1,20 +1,20 @@
 from fastapi import Depends, FastAPI, HTTPException
 from sqlmodel import Session,select
-from api.db import get_db, create_db_and_tables
+from api.db import get_db
 from api.model.user import users
 
 app = FastAPI()
 
 
 
-@app.on_event("startup")
-def on_startup():
-    create_db_and_tables()
+# @app.on_event("startup")
+# def on_startup():
+#     create_db_and_tables()
 
 
-# @app.get("/api/python")
-# def hello_world():
-#     return {"message": "Hello World"}
+@app.get("/api/python")
+def hello_world():
+    return {"message": "Hello World"}
 
 
 # @app.post("/api/users", response_model=user)
