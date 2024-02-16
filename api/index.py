@@ -26,7 +26,7 @@ def on_startup():
 #     return user_to_insert
 
 
-@app.get("/api/users", response_model=list[user])
+@app.get("/api/users", response_model=list[users])
 async def get_users(db: Session = Depends(get_db)):
     return db.exec(select(users)).all()
 
