@@ -1,15 +1,15 @@
 from fastapi import Depends, FastAPI, HTTPException
-from sqlmodel import SQLModel, Session
-from db import create_db_and_tables, get_db
-from model.user import user, userCreate
+from .sqlmodel import SQLModel, Session
+from .db import create_db_and_tables, get_db
+from .model.user import user, userCreate
 
 app = FastAPI()
 
 
 
-@app.on_event("startup")
-def on_startup():
-    create_db_and_tables()
+# @app.on_event("startup")
+# def on_startup():
+#     create_db_and_tables()
 
 
 @app.get("/api/python")
