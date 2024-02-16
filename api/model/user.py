@@ -3,17 +3,17 @@ from typing import Optional
 # User models start here -------------- ⬇️
 
 
-class user1(SQLModel, table=True):
+class user(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     national_id: str
     email: str
     password: str
-    # created_at: str
-    # updated_at: str
-    # city: str
-    # phone_num: str
-    # currency: str
-    # Date: str
+    created_at: str
+    updated_at: str
+    city: str
+    phone_num: str
+    currency: str
+    Date: str
     # country_id: int | None = Field(foreign_key="country.id", default=None)
     # pin: int | None = Field(foreign_key="pin.id", default=None)
     # package: int | None = Field(foreign_key="package.id", default=None)
