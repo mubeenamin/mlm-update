@@ -1,6 +1,6 @@
 from dotenv import load_dotenv , find_dotenv
 import os
-from .sqlmodel import create_engine , SQLModel ,Session
+from sqlmodel import create_engine , SQLModel ,Session
 
 
 

@@ -1,7 +1,7 @@
 from fastapi import Depends, FastAPI, HTTPException
-# from sqlmodel import SQLModel, Session
-from .db import create_db_and_tables, get_db
-from .model.user import user, userCreate
+from sqlmodel import SQLModel, Session
+from db import create_db_and_tables, get_db
+from model.user import user, userCreate
 
 app = FastAPI()
 
