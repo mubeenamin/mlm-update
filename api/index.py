@@ -28,7 +28,7 @@ app = FastAPI()
 
 @app.get("/api/users", response_model=list[user])
 async def get_users(db: Session = Depends(get_db)):
-    return db.query(user).all()
+    return db.exec(user.select()).all()
 
 
 # @app.put("/api/users/{user_id}", response_model=user)
