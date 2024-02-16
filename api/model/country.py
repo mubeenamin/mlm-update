@@ -1,4 +1,4 @@
-from .sqlmodel import Field, SQLModel, Relationship
+from sqlmodel import Field, SQLModel, Relationship
 # from .model import user
 
 # Country models start here -------------- ⬇️

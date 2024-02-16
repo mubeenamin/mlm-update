@@ -1,4 +1,4 @@
-from .sqlmodel import Field, SQLModel
+from sqlmodel import Field, SQLModel
 
 # pin models start here -------------- ⬇️
 class pin(SQLModel, table=True):

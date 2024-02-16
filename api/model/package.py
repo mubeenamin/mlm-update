@@ -1,4 +1,4 @@
-from .sqlmodel import Field, SQLModel, Relationship
+from sqlmodel import Field, SQLModel, Relationship
 
 # Country models start here -------------- ⬇️
 class package(SQLModel, table=True):
