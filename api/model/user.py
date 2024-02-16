@@ -3,7 +3,7 @@ from typing import Optional
 # User models start here -------------- ⬇️
 
 
-class users(SQLModel, table=True):
+class user1(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     national_id: str
     email: str
