@@ -1,7 +1,7 @@
 from fastapi import Depends, FastAPI, HTTPException
 from sqlmodel import Session,select
 from api.db import get_db, create_db_and_tables
-from api.model.user import user
+from api.model.user import users
 
 app = FastAPI()
 
@@ -28,7 +28,7 @@ def on_startup():
 
 @app.get("/api/users", response_model=list[user])
 async def get_users(db: Session = Depends(get_db)):
-    return db.exec(select(user)).all()
+    return db.exec(select(users)).all()
 
 
 # @app.put("/api/users/{user_id}", response_model=user)
