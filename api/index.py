@@ -1,7 +1,7 @@
 from fastapi import Depends, FastAPI, HTTPException
 from sqlmodel import Session,select
 from api.db import get_db
-from api.model.user import user
+from api.model.user import user1
 
 app = FastAPI()
 
@@ -26,9 +26,9 @@ def hello_world():
 #     return user_to_insert
 
 
-@app.get("/api/users", response_model=list[user])
+@app.get("/api/users", response_model=list[user1])
 async def get_users(db: Session = Depends(get_db)):
-    return db.exec(select(user)).all()
+    return db.exec(select(user1)).all()
 
 
 # @app.put("/api/users/{user_id}", response_model=user)
