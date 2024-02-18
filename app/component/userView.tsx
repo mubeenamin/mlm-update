@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -7,8 +7,18 @@ import {
   TableCell,
 } from "@/components/ui/table";
 
-function UserView({ data }: any) {
-  const { user } = data;
+function UserView() {
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch("https://mlm-update-blush.vercel.app/api/users");
+      const data = await res.json();
+      setUsers(data);
+    };
+
+    fetchData();
+  }, []);
   return (
     <main>
       <Table>
@@ -19,10 +29,12 @@ function UserView({ data }: any) {
           </TableRow>
         </TableHead>
         <TableBody>
-          <TableRow>
-            <TableCell>{user.id}</TableCell>
-            <TableCell>{user.email}</TableCell>
-          </TableRow>
+          {users.map((user: any) => (
+            <TableRow key={user.id}>
+              <TableCell>{user.id}</TableCell>
+              <TableCell>{user.email}</TableCell>
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
     </main>
