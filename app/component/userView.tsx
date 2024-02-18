@@ -43,6 +43,9 @@ function UserView() {
             <TableRow key={user.id}>
               <TableCell>{user.id}</TableCell>
               <TableCell>{user.email}</TableCell>
+              <TableCell>{user.package}</TableCell>
+              <TableCell>{user.currency}</TableCell>
+              <TableCell>{user.pin}</TableCell>
             </TableRow>
           ))}
         </TableBody>
