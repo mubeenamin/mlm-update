@@ -15,7 +15,7 @@ function User() {
   }, []);
   return (
     <>
-      {JSON.stringify(users)}
+      
     </>
   );
 }

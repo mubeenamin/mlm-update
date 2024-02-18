@@ -7,7 +7,7 @@ from sqlmodel import create_engine , SQLModel ,Session
 
 _: bool = load_dotenv(find_dotenv()) 
 
-key = os.environ.get('DB_url')
+key = os.environ.get('DB_URL')
 
 if key is None:
     raise ValueError('Database key not found')
