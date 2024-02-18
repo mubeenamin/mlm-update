@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import UserView from "./userView";
 function User() {
-  const [users, setUsers] = useState(null);
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -15,7 +15,10 @@ function User() {
   }, []);
   return (
     <>
-      {JSON.stringify(users)}
+      {users.map((user: any) => (
+        <div key={user.id}>{user.id}</div>
+      ))}
+      // JSON.stringify(users)
     </>
   );
 }
