@@ -19,13 +19,23 @@ function UserView() {
 
     fetchData();
   }, []);
+  const headName = {
+    id: "ID",
+    email: "Email",
+    package: "Package",
+    currency: "Currency",
+    pin: "Pin",
+  };
   return (
     <main>
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>ID</TableCell>
-            <TableCell>Email</TableCell>
+            <TableCell>{headName.id}</TableCell>
+            <TableCell>{headName.email}</TableCell>
+            <TableCell>{headName.package}</TableCell>
+            <TableCell>{headName.currency}</TableCell>
+            <TableCell>{headName.pin}</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
