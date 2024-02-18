@@ -18,7 +18,6 @@ function User() {
       {users.map((user: any) => (
         <div key={user.id}>{user.id}</div>
       ))}
-      // JSON.stringify(users)
     </>
   );
 }
