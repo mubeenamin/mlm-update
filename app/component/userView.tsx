@@ -32,13 +32,11 @@ function UserView() {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>
-              <TableCell>{headName.id}</TableCell>
-              <TableCell>{headName.email}</TableCell>
-              <TableCell>{headName.package}</TableCell>
-              <TableCell>{headName.currency}</TableCell>
-              <TableCell>{headName.pin}</TableCell>
-            </TableHead>
+            <TableHead>{headName.id}</TableHead>
+            <TableHead>{headName.email}</TableHead>
+            <TableHead>{headName.package}</TableHead>
+            <TableHead>{headName.currency}</TableHead>
+            <TableHead>{headName.pin}</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
