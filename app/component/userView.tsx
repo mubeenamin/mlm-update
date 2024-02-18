@@ -1,11 +1,32 @@
 import React from "react";
-interface prop {
-  data: { id: number; national_id: string; email: string; password: string };
-};
-function UserView({ data }: any) {
+import {
+  Table,
+  TableBody,
+  TableHead,
+  TableRow,
+  TableCell,
+} from "@/components/ui/table";
 
-  
-  return <></>;
+function UserView({ data }: any) {
+  const { user } = data;
+  return (
+    <main>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>ID</TableCell>
+            <TableCell>Email</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          <TableRow>
+            <TableCell>{user.id}</TableCell>
+            <TableCell>{user.email}</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+    </main>
+  );
 }
 
 export default UserView;

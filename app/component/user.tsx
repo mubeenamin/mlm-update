@@ -15,9 +15,7 @@ function User() {
   }, []);
   return (
     <>
-      {users.map((user: any) => (
-        <div key={user.id}>{user.id}</div>
-      ))}
+     <UserView data={users}/>
     </>
   );
 }
