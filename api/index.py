@@ -32,13 +32,13 @@ def on_startup():
 # get all the users
 
 @app.get("/api/users" , response_model=list[User])
-def get_users(session : Annotated[Session, Depends(get_db)], offset : int = Query(default=0 , le= 4), limit : int = Query(default=2 , le=4)):
-    users = session.exec(select(User).offset(offset).limit(limit)).all()
+def get_users(session : Annotated[Session, Depends(get_db)]):
+    users = session.exec(select(User)).all()
     return users
 
 # create new user
 
-@app.post("/api/users/" , response_model=UserRead)
+@app.post("/api/create_users" , response_model=UserRead)
 def create_user(user : UserCreate , session : Annotated[Session, Depends(get_db)]):
     user_to_insert = User.model_validate(user)
     session.add(user_to_insert)
@@ -89,7 +89,7 @@ def get_roles(session : Annotated[Session, Depends(get_db)], offset : int = Quer
 
 # create new role
 
-@app.post("/api/roles/" , response_model=RoleRead)
+@app.post("/api/create_roles" , response_model=RoleRead)
 def create_role(role : RoleCreate , session : Annotated[Session, Depends(get_db)]):
     role_to_insert = Role.model_validate(role)
     session.add(role_to_insert)

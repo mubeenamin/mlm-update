@@ -153,13 +153,13 @@ class UserBase(SQLModel):
     created_at: str
     updated_at: str
     currency : str
-    role_id : int = Field(foreign_key="role.description")
-    country_id : int = Field(foreign_key="country.name")
-    city_id : int = Field(foreign_key="city.name")
-    pin_id : int = Field(foreign_key="pin.name")
-    withdraw_id : int = Field(foreign_key="withdraw.amount")
-    referral_id : int = Field(foreign_key="referral.name")
-    package_id : int = Field(foreign_key="package.name")
+    role_id : int = Field(foreign_key="role.id")
+    country_id : int = Field(foreign_key="country.id")
+    city_id : int = Field(foreign_key="city.id")
+    pin_id : int = Field(foreign_key="pin.id")
+    withdraw_id : int = Field(foreign_key="withdraw.id")
+    referral_id : int = Field(foreign_key="referral.id")
+    package_id : int = Field(foreign_key="package.id")
 
 
 class User(UserBase, table=True):
