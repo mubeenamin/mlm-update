@@ -5,6 +5,7 @@ import {
   TableHead,
   TableRow,
   TableCell,
+  TableHeader,
 } from "@/components/ui/table";
 
 function UserView() {
@@ -29,15 +30,17 @@ function UserView() {
   return (
     <main>
       <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>{headName.id}</TableCell>
-            <TableCell>{headName.email}</TableCell>
-            <TableCell>{headName.package}</TableCell>
-            <TableCell>{headName.currency}</TableCell>
-            <TableCell>{headName.pin}</TableCell>
-          </TableRow>
-        </TableHead>
+        <TableHeader>
+          <TableHead>
+            <TableRow>
+              <TableCell>{headName.id}</TableCell>
+              <TableCell>{headName.email}</TableCell>
+              <TableCell>{headName.package}</TableCell>
+              <TableCell>{headName.currency}</TableCell>
+              <TableCell>{headName.pin}</TableCell>
+            </TableRow>
+          </TableHead>
+        </TableHeader>
         <TableBody>
           {users.map((user: any) => (
             <TableRow key={user.id}>
