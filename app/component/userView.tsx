@@ -13,11 +13,20 @@ function UserView() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetch("https://mlm-update-blush.vercel.app/api/users");
-      const data = await res.json();
-      setUsers(data);
+      try {
+        const res = await fetch(
+          "/api/users",{mode:'no-cors'}
+        );
+        if (!res.ok) {
+          // res.ok returns false if the HTTP status is not 200-299
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        const data = await res.json();
+        setUsers(data);
+      } catch (error) {
+        console.log(error);
+      }
     };
-
     fetchData();
   }, []);
   const headName = {
