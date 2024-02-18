@@ -139,7 +139,7 @@ def get_countries(session : Annotated[Session, Depends(get_db)], offset : int = 
 
 # create new country
 
-@app.post("/api/countries/" , response_model=CountryRead)
+@app.post("/api/create_countries" , response_model=CountryRead)
 def create_country(country : CountryCreate , session : Annotated[Session, Depends(get_db)]):
     country_to_insert = Country.model_validate(country)
     session.add(country_to_insert)
@@ -189,7 +189,7 @@ def get_cities(session : Annotated[Session, Depends(get_db)], offset : int = Que
 
 # create new city
 
-@app.post("/api/cities/" , response_model=CityRead)
+@app.post("/api/create_cities" , response_model=CityRead)
 def create_city(city : CityCreate , session : Annotated[Session, Depends(get_db)]):
     city_to_insert = City.model_validate(city)
     session.add(city_to_insert)
@@ -239,7 +239,7 @@ def get_pins(session : Annotated[Session, Depends(get_db)], offset : int = Query
 
 # create new pin
 
-@app.post("/api/pins/" , response_model=PinRead)
+@app.post("/api/create_pins" , response_model=PinRead)
 def create_pin(pin : PinCreate , session : Annotated[Session, Depends(get_db)]):
     pin_to_insert = Pin.model_validate(pin)
     session.add(pin_to_insert)
@@ -289,7 +289,7 @@ def get_withdraws(session : Annotated[Session, Depends(get_db)], offset : int = 
 
 # create new withdraw
 
-@app.post("/api/withdraws/" , response_model=WithdrawRead)
+@app.post("/api/create_withdraws" , response_model=WithdrawRead)
 def create_withdraw(withdraw : WithdrawCreate , session : Annotated[Session, Depends(get_db)]):
     withdraw_to_insert = Withdraw.model_validate(withdraw)
     session.add(withdraw_to_insert)
@@ -339,7 +339,7 @@ def get_referrals(session : Annotated[Session, Depends(get_db)], offset : int = 
 
 # create new referral
 
-@app.post("/api/referrals/" , response_model=ReferralRead)
+@app.post("/api/create_referrals" , response_model=ReferralRead)
 def create_referral(referral : ReferralCreate , session : Annotated[Session, Depends(get_db)]):
     referral_to_insert = Referral.model_validate(referral)
     session.add(referral_to_insert)
@@ -389,7 +389,7 @@ def get_packages(session : Annotated[Session, Depends(get_db)], offset : int = Q
 
 # create new package
 
-@app.post("/api/packages/" , response_model=PackageRead)
+@app.post("/api/create_packages" , response_model=PackageRead)
 def create_package(package : PackageCreate , session : Annotated[Session, Depends(get_db)]):
     package_to_insert = Package.model_validate(package)
     session.add(package_to_insert)
