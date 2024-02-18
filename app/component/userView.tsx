@@ -31,15 +31,15 @@ function UserView() {
     <main>
       <Table>
         <TableHeader>
-          <TableHead>
-            <TableRow>
+          <TableRow>
+            <TableHead>
               <TableCell>{headName.id}</TableCell>
               <TableCell>{headName.email}</TableCell>
               <TableCell>{headName.package}</TableCell>
               <TableCell>{headName.currency}</TableCell>
               <TableCell>{headName.pin}</TableCell>
-            </TableRow>
-          </TableHead>
+            </TableHead>
+          </TableRow>
         </TableHeader>
         <TableBody>
           {users.map((user: any) => (
