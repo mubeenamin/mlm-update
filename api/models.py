@@ -6,9 +6,7 @@ from typing import Optional
 class RoleBase(SQLModel):
     name : str
     description : str
-    created_at: str
-    updated_at: str
-
+ 
 class Role(RoleBase, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     role_users: list["User"] = Relationship(back_populates="role")
@@ -26,8 +24,7 @@ class RoleUpdate(RoleBase):
 
 class CountryBase(SQLModel):
     name : str
-    created_at: str
-    updated_at: str
+    
 
 class Country(CountryBase, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
@@ -47,8 +44,7 @@ class CountryUpdate(CountryBase):
 
 class CityBase(SQLModel):
     name : str
-    created_at: str
-    updated_at: str
+  
 
 class City(CityBase, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
@@ -67,8 +63,7 @@ class CityUpdate(CityBase):
 
 class PinBase(SQLModel):
     name : str
-    created_at: str
-    updated_at: str
+   
 
 class Pin(PinBase, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
@@ -87,8 +82,7 @@ class PinUpdate(PinBase):
 
 class WithdrawBase(SQLModel):
     amount : str
-    created_at: str
-    updated_at: str
+   
 
 class Withdraw(WithdrawBase, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
@@ -107,9 +101,7 @@ class WithdrawUpdate(WithdrawBase):
 
 class ReferralBase(SQLModel):
     name : str
-    created_at: str
-    updated_at: str
-
+    
 
 class Referral(ReferralBase, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
@@ -128,8 +120,7 @@ class ReferralUpdate(ReferralBase):
 
 class PackageBase(SQLModel):
     name : str
-    created_at: str
-    updated_at: str
+   
 
 class Package(PackageBase, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
