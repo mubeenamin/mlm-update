@@ -422,8 +422,8 @@ def delete_referral(referral_id: int, session: Annotated[Session, Depends(get_db
 
 
 @app.get("/api/packages", response_model=list[Package])
-def get_packages(session: Annotated[Session, Depends(get_db)], offset: int = Query(default=0, le=4), limit: int = Query(default=2, le=4)):
-    packages = session.exec(select(Package).offset(offset).limit(limit)).all()
+def get_packages(session: Annotated[Session, Depends(get_db)]):
+    packages = session.exec(select(Package)).all()
     return packages
 
 # create new package
