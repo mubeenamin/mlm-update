@@ -10,9 +10,12 @@ import {
   DropdownMenuContent,
   DropdownMenu,
 } from "@/components/ui/dropdown-menu";
-import UserView from "../../component/userView";
+import UserView from "@/app/component/userView";
+import CreateSingleUser from "@/app/component/createSingleUser";
+import { User } from "lucide-react";
 
-export default function SideBar() {
+
+export  function SideBar({children}:any) {
   return (
     <div className="grid min-h-screen w-full lg:grid-cols-[280px_1fr]">
       <div className="hidden border-r bg-gray-100/40 lg:block dark:bg-gray-800/40">
@@ -31,17 +34,17 @@ export default function SideBar() {
             <nav className="grid items-start px-4 text-sm font-medium">
               <Link
                 className="flex items-center gap-3 rounded-lg bg-gray-100 px-3 py-2 text-gray-900  transition-all hover:text-gray-900 dark:bg-gray-800 dark:text-gray-50 dark:hover:text-gray-50"
-                href="/createUser"
+                href="/dashboard"
               >
                 <HomeIcon className="h-4 w-4" />
-                Create a User
+                Home
               </Link>
               <Link
                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-                href="#"
+                href="/createUser"
               >
-                <ShoppingCartIcon className="h-4 w-4" />
-                Orders
+                <User className="h-4 w-4" />
+                Create User
               </Link>
               <Link
                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
@@ -109,7 +112,7 @@ export default function SideBar() {
         </header>
         <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6">
           <div className="grid gap-4 md:grid-cols-2"></div>
-          <div></div>
+          <div>{children}</div>
         </main>
       </div>
     </div>

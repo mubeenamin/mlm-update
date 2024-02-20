@@ -1,6 +1,6 @@
 import React from "react";
-import CreateSingleUser from "../component/createSingleUser";
-import SideBar from "../(dashboard)/components/sidebar";
+import CreateSingleUser from "../../component/createSingleUser";
+
 function CreateUser() {
   return (
     <div>

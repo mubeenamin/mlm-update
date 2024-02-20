@@ -5,16 +5,9 @@ from typing import Optional
 
 
 class RoleBase(SQLModel):
-<<<<<<< HEAD
-    name: str
-    description: str
-
-
-=======
     name : str
     description : str
  
->>>>>>> af41425eed9967ba59136b04a53cd5abafe3c715
 class Role(RoleBase, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     role_users: list["User"] = Relationship(back_populates="role")
@@ -35,13 +28,8 @@ class RoleUpdate(RoleBase):
 
 
 class CountryBase(SQLModel):
-<<<<<<< HEAD
     name: str
 
-=======
-    name : str
-    
->>>>>>> af41425eed9967ba59136b04a53cd5abafe3c715
 
 class Country(CountryBase, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
@@ -63,13 +51,8 @@ class CountryUpdate(CountryBase):
 # city model
 
 class CityBase(SQLModel):
-<<<<<<< HEAD
     name: str
 
-=======
-    name : str
-  
->>>>>>> af41425eed9967ba59136b04a53cd5abafe3c715
 
 class City(CityBase, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
@@ -91,13 +74,8 @@ class CityUpdate(CityBase):
 
 
 class PinBase(SQLModel):
-<<<<<<< HEAD
     name: str
 
-=======
-    name : str
-   
->>>>>>> af41425eed9967ba59136b04a53cd5abafe3c715
 
 class Pin(PinBase, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
@@ -119,13 +97,8 @@ class PinUpdate(PinBase):
 
 
 class WithdrawBase(SQLModel):
-<<<<<<< HEAD
     amount: str
 
-=======
-    amount : str
-   
->>>>>>> af41425eed9967ba59136b04a53cd5abafe3c715
 
 class Withdraw(WithdrawBase, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
@@ -147,13 +120,8 @@ class WithdrawUpdate(WithdrawBase):
 
 
 class ReferralBase(SQLModel):
-<<<<<<< HEAD
     name: str
 
-=======
-    name : str
-    
->>>>>>> af41425eed9967ba59136b04a53cd5abafe3c715
 
 class Referral(ReferralBase, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
@@ -175,14 +143,8 @@ class ReferralUpdate(ReferralBase):
 
 
 class PackageBase(SQLModel):
-<<<<<<< HEAD
-    name: str
-    created_at: str
-    updated_at: str
-=======
     name : str
    
->>>>>>> af41425eed9967ba59136b04a53cd5abafe3c715
 
 
 class Package(PackageBase, table=True):
