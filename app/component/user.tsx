@@ -1,13 +1,7 @@
 "use client";
-import { useEffect, useState } from "react";
-import UserView from "./userView";
+import SideBar from "../(dashboard)/components/sidebar";
 function User() {
-  
-  return (
-    <>
-    <UserView/>
-        </>
-  );
+  return <>{/* <SideBar /> */}</>;
 }
 
 export default User;
