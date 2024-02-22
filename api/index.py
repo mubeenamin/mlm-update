@@ -38,6 +38,7 @@ def get_users(session: Annotated[Session, Depends(get_db)]):
     users = session.exec(select(User)).all()
     return users
 
+
 # create new user
 
 
