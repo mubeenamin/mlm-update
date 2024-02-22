@@ -31,12 +31,11 @@ function CreateSingleUser() {
       }),
     });
     const data = await response.json();
-    
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <form onSubmit={handleSubmit} className="flex flex-col gap-8 p-8">
+    <main className="flex min-h-screen flex-col items-center justify-between">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-5 p-5">
         <div>
           <label className="flex flex-col">
             National ID:
@@ -81,10 +80,10 @@ function CreateSingleUser() {
             />
           </label>
         </div>
-        <div>
+        <div className="flex justify-center mt-10">
           <button
             type="submit"
-            className="border-2 p-2 rounded bg-slate-300 text-slate-800 hover:bg-slate-400 hover:text-slate-900"
+            className="border-2 p-2 rounded-xl bg-slate-300 text-slate-800 hover:bg-slate-400 hover:text-slate-900"
           >
             Submit
           </button>
