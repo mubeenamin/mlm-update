@@ -13,8 +13,7 @@ import {
 
 import { User } from "lucide-react";
 
-
-export  function SideBar({children}:any) {
+export function SideBar({ children }: any) {
   return (
     <div className="grid min-h-screen w-full lg:grid-cols-[280px_1fr]">
       <div className="hidden border-r bg-gray-100/40 lg:block dark:bg-gray-800/40">
@@ -47,14 +46,14 @@ export  function SideBar({children}:any) {
               </Link>
               <Link
                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-                href="#"
+                href="/userPackage"
               >
                 <PackageIcon className="h-4 w-4" />
-                Products
+                User Package
               </Link>
               <Link
                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-                href="#"
+                href=""
               >
                 <UsersIcon className="h-4 w-4" />
                 Customers
