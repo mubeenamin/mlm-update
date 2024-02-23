@@ -24,7 +24,7 @@ export default function Component() {
   };
 
   return (
-    <div className="flex items-center justify-center p-24">
+    <div className="flex items-center justify-center p-16">
       <Card className="w-full max-w-lg">
         <CardContent className="p-6">
           <div className="grid gap-4">
