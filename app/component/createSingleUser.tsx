@@ -1,5 +1,37 @@
 "use client";
 import { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { useForm } from "react-hook-form";
+
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+
+import {
+  Form,
+  FormField,
+  FormLabel,
+  FormMessage,
+  FormItem,
+  FormControl,
+  FormDescription,
+} from "@/components/ui/form";
+const formSchema = z.object({
+  national_id: z.string(),
+  email: z.string().email({ message: "Invalid email address" }),
+  phone: z.string(),
+  currency: z.string(),
+  city_id: z.number(),
+  role_id: z.number(),
+  referral_id: z.number(),
+  package_id: z.number(),
+  country_id: z.number(),
+  pin_id: z.number(),
+  withdraw_id: z.number(),
+  updated_at: z.string().datetime(),
+  created_at: z.string().datetime(),
+
+})
 
 function CreateSingleUser() {
   const [national_id, setNationality] = useState("");

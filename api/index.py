@@ -50,6 +50,7 @@ def create_user(user: UserCreate, session: Annotated[Session, Depends(get_db)]):
     session.refresh(user_to_insert)
     return user_to_insert
 
+
 # get user by id
 
 
