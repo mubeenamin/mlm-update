@@ -51,8 +51,21 @@ function User() {
       // created_at: "",
     },
   });
+  const handleReset = () => {
+    form.reset({
+      national_id: "",
+      email: "",
+      password: "",
+      city: "",
+      country: "",
+      phone: "",
+      currency: "USD",
+      package: "",
+    });
+  }
   function onSubmit(data: z.infer<typeof formSchema>) {
     console.log(data);
+    handleReset();
   }
   return (
     <main className="space-y-4">
