@@ -15,6 +15,13 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const formSchema = z.object({
   national_id: z.string().min(2, {
@@ -28,7 +35,7 @@ const formSchema = z.object({
   country: z.string(),
   phone: z.string(),
   currency: z.string(),
-  package: z.string(),
+  package: z.string({ required_error: "Please select a package" }),
   // updated_at: z.string().datetime(),
   // created_at: z.string().datetime(),
 });
@@ -47,7 +54,7 @@ function User() {
       // country_id: 1,
       // pin_id: 1,
       // withdraw_id: 1,
-      // updated_at: "", 
+      // updated_at: "",
       // created_at: "",
     },
   });
@@ -62,7 +69,7 @@ function User() {
       currency: "USD",
       package: "",
     });
-  }
+  };
   function onSubmit(data: z.infer<typeof formSchema>) {
     console.log(data);
     handleReset();
@@ -164,6 +171,38 @@ function User() {
                       <Input placeholder="" {...field} />
                     </FormControl>
                     <FormMessage className="text-red-500" />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="package"
+                render={({ field }) => (
+                  <FormItem className="gap-4">
+                    <FormLabel>Package</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select a Package" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent className="bg-white">
+                        <SelectItem value="Gold">Gold</SelectItem>
+                        <SelectItem value="Gold Plus">Gold Plus</SelectItem>
+                        <SelectItem value="Diamond">Diamond</SelectItem>
+                        <SelectItem value="Diamond Plus">
+                          Diamond Plus
+                        </SelectItem>
+                        <SelectItem value="Platinum">Platinum</SelectItem>
+                        <SelectItem value="Platinum Plus">
+                          Platinum Plus
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
