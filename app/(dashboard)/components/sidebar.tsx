@@ -28,7 +28,7 @@ export function SideBar({ children }: any) {
               <span className="sr-only">Toggle notifications</span>
             </Button>
           </div>
-          <div className="flex-1 overflow-auto py-2 mt-3">
+          <div className="flex-1 overflow-auto py-2 ">
             <nav className="grid items-start px-2 text-sm font-semibold">
               {admin_data.map((value, i) => (
                 <Link
