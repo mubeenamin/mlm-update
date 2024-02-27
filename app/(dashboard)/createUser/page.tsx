@@ -1,10 +1,11 @@
 import React from "react";
 import CreateSingleUser from "../../component/createSingleUser";
+import User from "@/app/component/user";
 
 function CreateUser() {
   return (
     <div>
-      <CreateSingleUser />
+      <User/>
     </div>
   );
 }
