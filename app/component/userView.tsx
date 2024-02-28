@@ -8,7 +8,7 @@ import {
   TableCell,
   TableHeader,
 } from "@/components/ui/table";
-import { Skeleton } from "@/components/ui/skeleton";
+
 import TableSkeleton from "../(dashboard)/components/tableSkeleton";
 function UserView() {
   const [users, setUsers] = useState([]);
@@ -33,7 +33,7 @@ function UserView() {
   const headName = {
     id: "ID",
     email: "Email",
-    package: "Package",
+    password: "Password",
     currency: "Currency",
     pin: "Pin",
   };
@@ -47,7 +47,7 @@ function UserView() {
             <TableRow>
               <TableHead>{headName.id}</TableHead>
               <TableHead>{headName.email}</TableHead>
-              <TableHead>{headName.package}</TableHead>
+              <TableHead>{headName.password}</TableHead>
               <TableHead>{headName.currency}</TableHead>
               <TableHead>{headName.pin}</TableHead>
             </TableRow>

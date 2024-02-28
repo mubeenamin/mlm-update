@@ -2,7 +2,7 @@ from fastapi import FastAPI, Depends, HTTPException, Query
 from typing import Annotated
 from sqlmodel import Session, select
 from api.db import get_db, create_db_and_tables
-from api.models import CityCreate, CityUpdate, CountryCreate, CountryRead, CountryUpdate, PackageUpdate, PinCreate, PinUpdate, ReferralCreate, ReferralRead, ReferralUpdate, RoleCreate, RoleUpdate, User, UserCreate, UserRead, UserUpdate, Pin, City, Role, Country, PinRead, CityRead, RoleRead, Withdraw, Referral, Package, PackageCreate, PackageRead, WithdrawCreate, WithdrawRead, WithdrawUpdate
+from api.models import User, UserCreate, UserRead, UserUpdate, Pin, Referral, Withdrawal, PinRead, ReferralRead, WithdrawalRead, PinCreate, ReferralCreate, WithdrawalCreate, PinUpdate, ReferralUpdate, WithdrawalUpdate
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -33,264 +33,199 @@ def on_startup():
 
 # get all the users
 
-@app.get("/api/users", response_model=list[User])
-def get_users(session: Annotated[Session, Depends(get_db)]):
+# @app.get("/")
+# def read_root():
+#     return {"Hello": "World"}
+
+# get all the users
+@app.get("/api/users" , response_model=list[User])
+def get_users(session : Annotated[Session, Depends(get_db)]):
     users = session.exec(select(User)).all()
     return users
 
+#get user by single id 
 
-# create new user
-
-
-@app.post("/api/create_users", response_model=UserRead)
-def create_user(user: UserCreate, session: Annotated[Session, Depends(get_db)]):
-    user_to_insert = User.model_validate(user)
-    session.add(user_to_insert)
-    session.commit()
-    session.refresh(user_to_insert)
-    return user_to_insert
-
-
-# get user by id
-
-
-@app.get("/api/users/{user_id}", response_model=UserRead)
-def get_user_by_id(user_id: int, session: Annotated[Session, Depends(get_db)]):
-    user = session.get(User, user_id)
+@app.get("/api/single_users/{user_id}" , response_model=User)
+def get_user_by_id(session : Annotated[Session, Depends(get_db)], user_id : int):
+    user = session.get(User , user_id)
     if not user:
-        raise HTTPException(status_code=404, detail="User not found")
+        raise HTTPException(status_code=404 , detail="User not found")
     return user
+
+# create a new user
+
+
+@app.post("/api/create_users" , response_model=User)
+def create_user(session : Annotated[Session, Depends(get_db)] , user : UserCreate):
+    db_user = User.model_validate(user)
+    session.add(db_user)
+    session.commit()
+    session.refresh(db_user)
+    return db_user
 
 # update user
 
 
-@app.put("/api/users/{user_id}")
-def update_user(user_id: int, user: UserUpdate, session: Annotated[Session, Depends(get_db)]):
-    user_to_update = session.get(User, user_id)
+@app.put("/api/update_users/{user_id}")
+def update_user(user_id : int , user : UserUpdate , session : Annotated[Session, Depends(get_db)]):
+    user_to_update = session.get(User , user_id)
     if not user_to_update:
-        raise HTTPException(status_code=404, detail="User not found")
-    user_to_update.name = user.name
+        raise HTTPException(status_code=404 , detail="User not found")
+    user_to_update.nation_id = user.nation_id
     user_to_update.email = user.email
+
     session.add(user_to_update)
     session.commit()
     session.refresh(user_to_update)
     return user_to_update
 
+# get user by created_at
+
+@app.get("/api/users_by_created_at/{created_at}" , response_model=list[User])
+def get_user_by_created_at(session : Annotated[Session, Depends(get_db)], created_at : str):
+    users = session.exec(select(User).where(User.created_at == created_at)).all()
+    return users
+
 # delete user
 
 
-@app.delete("/api/users/{user_id}")
-def delete_user(user_id: int, session: Annotated[Session, Depends(get_db)]):
-    user_to_delete = session.get(User, user_id)
-    if not user_to_delete:
-        raise HTTPException(status_code=404, detail="User not found")
-    session.delete(user_to_delete)
+@app.delete("/delete_users/{user_id}")
+def delete_user(session : Annotated[Session, Depends(get_db)] , user_id : int):
+    db_user = session.get(User , user_id)
+    if not db_user:
+        raise HTTPException(status_code=404 , detail="User not found")
+    session.delete(db_user)
     session.commit()
-    return {"message": "User deleted"}
+    return {"message" : "User deleted"}
 
+# get all the refferals
+@app.get("/api/referrals" , response_model=list[Referral])
+def get_referrals(session : Annotated[Session, Depends(get_db)], offset : int = Query(default=0 , le= 4), limit : int = Query(default=2 , le=4)):
+    referrals = session.exec(select(Referral).offset(offset).limit(limit)).all()
+    return referrals
 
-# get all the roles
+# get referral by single id 
 
-@app.get("/api/roles", response_model=list[Role])
-def get_roles(session: Annotated[Session, Depends(get_db)], offset: int = Query(default=0, le=4), limit: int = Query(default=2, le=4)):
-    roles = session.exec(select(Role).offset(offset).limit(limit)).all()
-    return roles
+@app.get("/api/single_referrals/{referral_id}" , response_model=ReferralRead)
+def get_referral_by_id(session : Annotated[Session, Depends(get_db)], referral_id : int):
+    referral = session.get(Referral , referral_id)
+    if not referral:
+        raise HTTPException(status_code=404 , detail="Referral not found")
+    return referral
 
-# create new role
+# create a new referral
 
-
-@app.post("/api/create_roles", response_model=RoleRead)
-def create_role(role: RoleCreate, session: Annotated[Session, Depends(get_db)]):
-    role_to_insert = Role.model_validate(role)
-    session.add(role_to_insert)
+@app.post("/api/create_referrals" , response_model=Referral)
+def create_referral(session : Annotated[Session, Depends(get_db)] , referral : ReferralCreate):
+    db_referral = Referral.model_validate(referral)
+    session.add(db_referral)
     session.commit()
-    session.refresh(role_to_insert)
-    return role_to_insert
+    session.refresh(db_referral)
+    return db_referral
 
-# get role by id
-
-
-@app.get("/api/roles/{role_id}", response_model=RoleRead)
-def get_role_by_id(role_id: int, session: Annotated[Session, Depends(get_db)]):
-    role = session.get(Role, role_id)
-    if not role:
-        raise HTTPException(status_code=404, detail="Role not found")
-    return role
-
-# update role
+# update referral
 
 
-@app.put("/api/roles/{role_id}")
-def update_role(role_id: int, role: RoleUpdate, session: Annotated[Session, Depends(get_db)]):
-    role_to_update = session.get(Role, role_id)
-    if not role_to_update:
-        raise HTTPException(status_code=404, detail="Role not found")
-    role_to_update.role_users = role.role_users
-    session.add(role_to_update)
+@app.put("/api/update_referrals/{referral_id}")
+def update_referral(referral_id : int , referral : ReferralUpdate , session : Annotated[Session, Depends(get_db)]):
+    referral_to_update = session.get(Referral , referral_id)
+    if not referral_to_update:
+        raise HTTPException(status_code=404 , detail="Referral not found")
+    referral_to_update.referral_id = referral.referral_id
+    session.add(referral_to_update)
     session.commit()
-    session.refresh(role_to_update)
-    return role_to_update
-
-# delete role
-
-
-@app.delete("/api/roles/{role_id}")
-def delete_role(role_id: int, session: Annotated[Session, Depends(get_db)]):
-    role_to_delete = session.get(Role, role_id)
-    if not role_to_delete:
-        raise HTTPException(status_code=404, detail="Role not found")
-    session.delete(role_to_delete)
+    session.refresh(referral_to_update)
+    return referral_to_update
+# delete referral
+@app.delete("/api/delete_referrals/{referral_id}")
+def delete_referral(session : Annotated[Session, Depends(get_db)] , referral_id : int):
+    db_referral = session.get(Referral , referral_id)
+    if not db_referral:
+        raise HTTPException(status_code=404 , detail="Referral not found")
+    session.delete(db_referral)
     session.commit()
-    return {"message": "Role deleted"}
+    return {"message" : "Referral deleted"}
 
-# get all the countries
+# get all the withdrawals
+@app.get("/api/withdrawals" , response_model=list[Withdrawal])
+def get_withdrawals(session : Annotated[Session, Depends(get_db)], offset : int = Query(default=0 , le= 4), limit : int = Query(default=2 , le=4)):
+    withdrawals = session.exec(select(Withdrawal).offset(offset).limit(limit)).all()
+    return withdrawals
 
+# get single withdrawal by id 
+@app.get("/api/single_withdrawals/{withdrawal_id}" , response_model=WithdrawalRead)
+def get_withdrawal_by_id(session : Annotated[Session, Depends(get_db)], withdrawal_id : int):
+    withdrawal = session.get(Withdrawal , withdrawal_id)
+    if not withdrawal:
+        raise HTTPException(status_code=404 , detail="Withdrawal not found")
+    return withdrawal
 
-@app.get("/api/countries", response_model=list[Country])
-def get_countries(session: Annotated[Session, Depends(get_db)], offset: int = Query(default=0, le=4), limit: int = Query(default=2, le=4)):
-    countries = session.exec(select(Country).offset(offset).limit(limit)).all()
-    return countries
-
-# create new country
-
-
-@app.post("/api/create_countries", response_model=CountryRead)
-def create_country(country: CountryCreate, session: Annotated[Session, Depends(get_db)]):
-    country_to_insert = Country.model_validate(country)
-    session.add(country_to_insert)
+# create a new withdrawal
+@app.post("/api/create_withdrawals" )
+def create_withdrawal(session : Annotated[Session, Depends(get_db)] , withdrawal : WithdrawalCreate):
+    db_withdrawal = Withdrawal.model_validate(withdrawal)
+    session.add(db_withdrawal)
     session.commit()
-    session.refresh(country_to_insert)
-    return country_to_insert
+    session.refresh(db_withdrawal)
+    return db_withdrawal
 
-# get country by id
-
-
-@app.get("/api/countries/{country_id}", response_model=CountryRead)
-def get_country_by_id(country_id: int, session: Annotated[Session, Depends(get_db)]):
-    country = session.get(Country, country_id)
-    if not country:
-        raise HTTPException(status_code=404, detail="Country not found")
-    return country
-
-# update country
-
-
-@app.put("/api/countries/{country_id}")
-def update_country(country_id: int, country: CountryUpdate, session: Annotated[Session, Depends(get_db)]):
-    country_to_update = session.get(Country, country_id)
-    if not country_to_update:
-        raise HTTPException(status_code=404, detail="Country not found")
-    country_to_update.country_users = country.country_users
-    session.add(country_to_update)
+# update withdrawal
+@app.put("/api/update_withdraws/{withdraw_id}")
+def update_withdraw(withdraw_id : int , withdraw : WithdrawalUpdate , session : Annotated[Session, Depends(get_db)]):
+    withdraw_to_update = session.get(Withdrawal , withdraw_id)
+    if not withdraw_to_update:
+        raise HTTPException(status_code=404 , detail="Withdraw not found")
+    withdraw_to_update.withdrawal_amount = withdraw.withdrawal_amount
+    session.add(withdraw_to_update)
     session.commit()
-    session.refresh(country_to_update)
-    return country_to_update
-
-# delete country
-
-
-@app.delete("/api/countries/{country_id}")
-def delete_country(country_id: int, session: Annotated[Session, Depends(get_db)]):
-    country_to_delete = session.get(Country, country_id)
-    if not country_to_delete:
-        raise HTTPException(status_code=404, detail="Country not found")
-    session.delete(country_to_delete)
+    session.refresh(withdraw_to_update)
+    return withdraw_to_update
+# delete withdrawal
+@app.delete("/api/delete_withdrawals/{withdrawal_id}")
+def delete_withdrawal(session : Annotated[Session, Depends(get_db)] , withdrawal_id : int):
+    db_withdrawal = session.get(Withdrawal , withdrawal_id)
+    if not db_withdrawal:
+        raise HTTPException(status_code=404 , detail="Withdrawal not found")
+    session.delete(db_withdrawal)
     session.commit()
-    return {"message": "Country deleted"}
+    return {"message" : "Withdrawal deleted"}
 
-# get all the cities
-
-
-@app.get("/api/cities", response_model=list[City])
-def get_cities(session: Annotated[Session, Depends(get_db)], offset: int = Query(default=0, le=4), limit: int = Query(default=2, le=4)):
-    cities = session.exec(select(City).offset(offset).limit(limit)).all()
-    return cities
-
-# create new city
-
-
-@app.post("/api/create_cities", response_model=CityRead)
-def create_city(city: CityCreate, session: Annotated[Session, Depends(get_db)]):
-    city_to_insert = City.model_validate(city)
-    session.add(city_to_insert)
-    session.commit()
-    session.refresh(city_to_insert)
-    return city_to_insert
-
-# get city by id
-
-
-@app.get("/api/cities/{city_id}", response_model=CityRead)
-def get_city_by_id(city_id: int, session: Annotated[Session, Depends(get_db)]):
-    city = session.get(City, city_id)
-    if not city:
-        raise HTTPException(status_code=404, detail="City not found")
-    return city
-
-# update city
-
-
-@app.put("/api/cities/{city_id}")
-def update_city(city_id: int, city: CityUpdate, session: Annotated[Session, Depends(get_db)]):
-    city_to_update = session.get(City, city_id)
-    if not city_to_update:
-        raise HTTPException(status_code=404, detail="City not found")
-    city_to_update.city_users = city.city_users
-    session.add(city_to_update)
-    session.commit()
-    session.refresh(city_to_update)
-    return city_to_update
-
-# delete city
-
-
-@app.delete("/api/cities/{city_id}")
-def delete_city(city_id: int, session: Annotated[Session, Depends(get_db)]):
-    city_to_delete = session.get(City, city_id)
-    if not city_to_delete:
-        raise HTTPException(status_code=404, detail="City not found")
-    session.delete(city_to_delete)
-    session.commit()
-    return {"message": "City deleted"}
-
-# get all the pins
-
-
-@app.get("/api/pins", response_model=list[Pin])
-def get_pins(session: Annotated[Session, Depends(get_db)], offset: int = Query(default=0, le=4), limit: int = Query(default=2, le=4)):
+# all the pins
+@app.get("/api/pins" , response_model=list[Pin])
+def get_pins(session : Annotated[Session, Depends(get_db)], offset : int = Query(default=0 , le= 4), limit : int = Query(default=2 , le=4)):
     pins = session.exec(select(Pin).offset(offset).limit(limit)).all()
     return pins
 
-# create new pin
+# get single pin by id 
 
 
-@app.post("/api/create_pins", response_model=PinRead)
-def create_pin(pin: PinCreate, session: Annotated[Session, Depends(get_db)]):
-    pin_to_insert = Pin.model_validate(pin)
-    session.add(pin_to_insert)
-    session.commit()
-    session.refresh(pin_to_insert)
-    return pin_to_insert
-
-# get pin by id
-
-
-@app.get("/api/pins/{pin_id}", response_model=PinRead)
-def get_pin_by_id(pin_id: int, session: Annotated[Session, Depends(get_db)]):
-    pin = session.get(Pin, pin_id)
+@app.get("/api/single_pins/{pin_id}" , response_model=PinRead)
+def get_pin_by_id(session : Annotated[Session, Depends(get_db)], pin_id : int):
+    pin = session.get(Pin , pin_id)
     if not pin:
-        raise HTTPException(status_code=404, detail="Pin not found")
+        raise HTTPException(status_code=404 , detail="Pin not found")
     return pin
+
+# create a new pin
+
+
+@app.post("/api/create_pins" )
+def create_pin(session : Annotated[Session, Depends(get_db)] , pin : PinCreate):
+    db_pin = Pin.model_validate(pin)
+    session.add(db_pin)
+    session.commit()
+    session.refresh(db_pin)
+    return db_pin
 
 # update pin
 
 
-@app.put("/api/pins/{pin_id}")
-def update_pin(pin_id: int, pin: PinUpdate, session: Annotated[Session, Depends(get_db)]):
-    pin_to_update = session.get(Pin, pin_id)
+@app.put("/api/update_pins/{pin_id}")
+def update_pin(pin_id : int , pin : PinUpdate , session : Annotated[Session, Depends(get_db)]):
+    pin_to_update = session.get(Pin , pin_id)
     if not pin_to_update:
-        raise HTTPException(status_code=404, detail="Pin not found")
-    pin_to_update.pin_users = pin.pin_users
+        raise HTTPException(status_code=404 , detail="Pin not found")
+    pin_to_update.pin_id = pin.pin_id
     session.add(pin_to_update)
     session.commit()
     session.refresh(pin_to_update)
@@ -299,178 +234,11 @@ def update_pin(pin_id: int, pin: PinUpdate, session: Annotated[Session, Depends(
 # delete pin
 
 
-@app.delete("/api/pins/{pin_id}")
-def delete_pin(pin_id: int, session: Annotated[Session, Depends(get_db)]):
-    pin_to_delete = session.get(Pin, pin_id)
-    if not pin_to_delete:
-        raise HTTPException(status_code=404, detail="Pin not found")
-    session.delete(pin_to_delete)
+@app.delete("/api/delete_pins/{pin_id}")
+def delete_pin(session : Annotated[Session, Depends(get_db)] , pin_id : int):
+    db_pin = session.get(Pin , pin_id)
+    if not db_pin:
+        raise HTTPException(status_code=404 , detail="Pin not found")
+    session.delete(db_pin)
     session.commit()
-    return {"message": "Pin deleted"}
-
-# get all the withdraws
-
-
-@app.get("/api/withdraws", response_model=list[Withdraw])
-def get_withdraws(session: Annotated[Session, Depends(get_db)], offset: int = Query(default=0, le=4), limit: int = Query(default=2, le=4)):
-    withdraws = session.exec(
-        select(Withdraw).offset(offset).limit(limit)).all()
-    return withdraws
-
-# create new withdraw
-
-
-@app.post("/api/create_withdraws", response_model=WithdrawRead)
-def create_withdraw(withdraw: WithdrawCreate, session: Annotated[Session, Depends(get_db)]):
-    withdraw_to_insert = Withdraw.model_validate(withdraw)
-    session.add(withdraw_to_insert)
-    session.commit()
-    session.refresh(withdraw_to_insert)
-    return withdraw_to_insert
-
-# get withdraw by id
-
-
-@app.get("/api/withdraws/{withdraw_id}", response_model=WithdrawRead)
-def get_withdraw_by_id(withdraw_id: int, session: Annotated[Session, Depends(get_db)]):
-    withdraw = session.get(Withdraw, withdraw_id)
-    if not withdraw:
-        raise HTTPException(status_code=404, detail="Withdraw not found")
-    return withdraw
-
-# update withdraw
-
-
-@app.put("/api/withdraws/{withdraw_id}")
-def update_withdraw(withdraw_id: int, withdraw: WithdrawUpdate, session: Annotated[Session, Depends(get_db)]):
-    withdraw_to_update = session.get(Withdraw, withdraw_id)
-    if not withdraw_to_update:
-        raise HTTPException(status_code=404, detail="Withdraw not found")
-    withdraw_to_update.withdraw_users = withdraw.withdraw_users
-    session.add(withdraw_to_update)
-    session.commit()
-    session.refresh(withdraw_to_update)
-    return withdraw_to_update
-
-# delete withdraw
-
-
-@app.delete("/api/withdraws/{withdraw_id}")
-def delete_withdraw(withdraw_id: int, session: Annotated[Session, Depends(get_db)]):
-    withdraw_to_delete = session.get(Withdraw, withdraw_id)
-    if not withdraw_to_delete:
-        raise HTTPException(status_code=404, detail="Withdraw not found")
-    session.delete(withdraw_to_delete)
-    session.commit()
-    return {"message": "Withdraw deleted"}
-
-# get all the referrals
-
-
-@app.get("/api/referrals", response_model=list[Referral])
-def get_referrals(session: Annotated[Session, Depends(get_db)], offset: int = Query(default=0, le=4), limit: int = Query(default=2, le=4)):
-    referrals = session.exec(
-        select(Referral).offset(offset).limit(limit)).all()
-    return referrals
-
-# create new referral
-
-
-@app.post("/api/create_referrals", response_model=ReferralRead)
-def create_referral(referral: ReferralCreate, session: Annotated[Session, Depends(get_db)]):
-    referral_to_insert = Referral.model_validate(referral)
-    session.add(referral_to_insert)
-    session.commit()
-    session.refresh(referral_to_insert)
-    return referral_to_insert
-
-# get referral by id
-
-
-@app.get("/api/referrals/{referral_id}", response_model=ReferralRead)
-def get_referral_by_id(referral_id: int, session: Annotated[Session, Depends(get_db)]):
-    referral = session.get(Referral, referral_id)
-    if not referral:
-        raise HTTPException(status_code=404, detail="Referral not found")
-    return referral
-
-# update referral
-
-
-@app.put("/api/referrals/{referral_id}")
-def update_referral(referral_id: int, referral: ReferralUpdate, session: Annotated[Session, Depends(get_db)]):
-    referral_to_update = session.get(Referral, referral_id)
-    if not referral_to_update:
-        raise HTTPException(status_code=404, detail="Referral not found")
-    referral_to_update.referral_users = referral.referral_users
-    session.add(referral_to_update)
-    session.commit()
-    session.refresh(referral_to_update)
-    return referral_to_update
-
-# delete referral
-
-
-@app.delete("/api/referrals/{referral_id}")
-def delete_referral(referral_id: int, session: Annotated[Session, Depends(get_db)]):
-    referral_to_delete = session.get(Referral, referral_id)
-    if not referral_to_delete:
-        raise HTTPException(status_code=404, detail="Referral not found")
-    session.delete(referral_to_delete)
-    session.commit()
-    return {"message": "Referral deleted"}
-
-# get all the packages
-
-
-@app.get("/api/packages", response_model=list[Package])
-def get_packages(session: Annotated[Session, Depends(get_db)]):
-    packages = session.exec(select(Package)).all()
-    return packages
-
-# create new package
-
-
-@app.post("/api/create_packages", response_model=PackageRead)
-def create_package(package: PackageCreate, session: Annotated[Session, Depends(get_db)]):
-    package_to_insert = Package.model_validate(package)
-    session.add(package_to_insert)
-    session.commit()
-    session.refresh(package_to_insert)
-    return package_to_insert
-
-# get package by id
-
-
-@app.get("/api/packages/{package_id}", response_model=PackageRead)
-def get_package_by_id(package_id: int, session: Annotated[Session, Depends(get_db)]):
-    package = session.get(Package, package_id)
-    if not package:
-        raise HTTPException(status_code=404, detail="Package not found")
-    return package
-
-# update package
-
-
-@app.put("/api/packages/{package_id}")
-def update_package(package_id: int, package: PackageUpdate, session: Annotated[Session, Depends(get_db)]):
-    package_to_update = session.get(Package, package_id)
-    if not package_to_update:
-        raise HTTPException(status_code=404, detail="Package not found")
-    package_to_update.package_users = package.package_users
-    session.add(package_to_update)
-    session.commit()
-    session.refresh(package_to_update)
-    return package_to_update
-
-# delete package
-
-
-@app.delete("/api/packages/{package_id}")
-def delete_package(package_id: int, session: Annotated[Session, Depends(get_db)]):
-    package_to_delete = session.get(Package, package_id)
-    if not package_to_delete:
-        raise HTTPException(status_code=404, detail="Package not found")
-    session.delete(package_to_delete)
-    session.commit()
-    return {"message": "Package deleted"}
+    return {"message" : "Pin deleted"}
