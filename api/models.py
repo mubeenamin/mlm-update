@@ -74,8 +74,7 @@ class userBase(SQLModel):
     city : str
     package : str
     role : str
-    
-    created_at: date 
+    created_at: int = Field(default_factory = date.today)
     
 
 class User(userBase , table = True):

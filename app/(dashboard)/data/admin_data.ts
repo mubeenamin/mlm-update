@@ -7,6 +7,7 @@ export const admin_data = [
     name: "CREATE USER ACCOUNT",
     href: "/createUser",
   },
+  
   {
     name: "DAILY CREATED ACCOUNTS LIST ",
     href: "/dailyAccounts",
