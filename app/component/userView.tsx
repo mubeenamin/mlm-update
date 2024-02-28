@@ -32,7 +32,10 @@ function UserView() {
   }, []);
   const headName = {
     id: "ID",
+    national_id: "National ID",
     email: "Email",
+    password:"Password",
+    Phone: "Phone",
     package: "Package",
     currency: "Currency",
     pin: "Pin",
@@ -46,7 +49,10 @@ function UserView() {
           <TableHeader>
             <TableRow>
               <TableHead>{headName.id}</TableHead>
+              <TableHead>{headName.national_id}</TableHead>
               <TableHead>{headName.email}</TableHead>
+              <TableHead>{headName.password}</TableHead>
+              <TableHead>{headName.Phone}</TableHead>
               <TableHead>{headName.package}</TableHead>
               <TableHead>{headName.currency}</TableHead>
               <TableHead>{headName.pin}</TableHead>
@@ -56,8 +62,11 @@ function UserView() {
             {users.map((user: any) => (
               <TableRow key={user.id}>
                 <TableCell>{user.id}</TableCell>
+                <TableCell>{user.nation_id}</TableCell>
                 <TableCell>{user.email}</TableCell>
-                <TableCell>{user.package_id}</TableCell>
+                <TableCell>{user.password}</TableCell>
+                <TableCell>{user.phone}</TableCell>
+                <TableCell>{user.package}</TableCell>
                 <TableCell>{user.currency}</TableCell>
                 <TableCell>{user.pin_id}</TableCell>
               </TableRow>

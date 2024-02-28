@@ -62,7 +62,7 @@ def create_user(session : Annotated[Session, Depends(get_db)] , user : UserCreat
 # update user
 
 
-@app.put("/update_users/{user_id}")
+@app.put("/api/update_users/{user_id}")
 def update_user(user_id : int , user : UserUpdate , session : Annotated[Session, Depends(get_db)]):
     user_to_update = session.get(User , user_id)
     if not user_to_update:
