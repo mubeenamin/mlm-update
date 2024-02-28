@@ -21,7 +21,7 @@ const FormSchema = z.object({
 });
 
 const onSubmit = () => {
-  console.log("data");
+  console.log("data" );
 };
 
 function FundTransfer() {
@@ -33,11 +33,11 @@ function FundTransfer() {
   });
 
   return (
-    <main>
-      <Form {...form}>
+    <main className="flex min-h-screen flex-col items-center justify-between">
+      <Form {...form} >
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="w-2/3 space-y-6"
+          className="flex flex-col gap-5 p-5"
         >
           <FormField
             control={form.control}
@@ -55,7 +55,7 @@ function FundTransfer() {
               </FormItem>
             )}
           />
-          <Button type="submit">Submit</Button>
+          <Button type="submit" className="border-2 p-2 rounded-xl bg-slate-300 text-slate-800 hover:bg-slate-400 hover:text-slate-900">Submit</Button>
         </form>
       </Form>
     </main>

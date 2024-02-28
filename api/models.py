@@ -74,7 +74,11 @@ class userBase(SQLModel):
     city : str
     package : str
     role : str
+
     created_at: int 
+
+   
+
     
 
 class User(userBase , table = True):
