@@ -77,10 +77,7 @@ class userBase(SQLModel):
 
     created_at: int 
 
-   
-
     
-
 class User(userBase , table = True):
     id : Optional[int] = Field(default = None , primary_key = True)
     withdrawal : Optional[Withdrawal] = Relationship(back_populates = "user")

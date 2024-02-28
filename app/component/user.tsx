@@ -36,7 +36,8 @@ const formSchema = z.object({
   phone: z.string(),
   currency: z.string(),
   package: z.string({ required_error: "Please select a package" }),
-  date: z.string(),
+  role: z.string(),
+  date: z.number(),
 });
 function User() {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -50,8 +51,8 @@ function User() {
       phone: "",
       currency: "USD",
       package: "",
-      date: "",
-      
+      role: "user",
+      date: 0,
     },
   });
   const handleReset = () => {
@@ -67,29 +68,39 @@ function User() {
     });
   };
   async function onSubmit(data: z.infer<typeof formSchema>) {
-    const response = await fetch("/api/create_users", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      // body: JSON.stringify(data),
-      body: JSON.stringify({
-        nation_id: data.national_id,
-        email: data.email,
-        password: data.password,
-        city: data.city,
-        country: data.country,
-        phone: data.phone,
-        currency: data.currency,
-        package: data.package,
-        role: "user",
-        date: Date.now(),
-      }),
-    });
-    console.log(response);
+    console.log(data);
+    try {
+      const response = await fetch("/api/create_users", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          nation_id: data.national_id,
+          email: data.email,
+          password: data.password,
+          phone: data.phone,
+          currency: data.currency,
+          country: data.country,
+          city: data.city,
+          package: data.package,
+          role: data.role,
+          date: data.date,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      } else {
+        console.log(await response.json());
+      }
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
+
     handleReset();
-    
   }
+
   return (
     <main className="space-y-4">
       <div className="flex justify-center">
