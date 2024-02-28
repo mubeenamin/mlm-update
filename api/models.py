@@ -1,207 +1,110 @@
 from sqlmodel import Field, SQLModel, Relationship
-from typing import Optional
-
-# role model
-
-
-class RoleBase(SQLModel):
-    name : str
-    description : str
- 
-class Role(RoleBase, table=True):
-    id: Optional[int] = Field(default=None, primary_key=True)
-    role_users: list["User"] = Relationship(back_populates="role")
-
-
-class RoleRead(RoleBase):
-    id: int
-
-
-class RoleCreate(RoleBase):
-    pass
-
-
-class RoleUpdate(RoleBase):
-    pass
-
-# country model
-
-
-class CountryBase(SQLModel):
-    name: str
-
-
-class Country(CountryBase, table=True):
-    id: Optional[int] = Field(default=None, primary_key=True)
-    country_users: list["User"] = Relationship(back_populates="country")
-
-
-class CountryRead(CountryBase):
-    id: int
-
-
-class CountryCreate(CountryBase):
-    pass
-
-
-class CountryUpdate(CountryBase):
-    pass
-
-
-# city model
-
-class CityBase(SQLModel):
-    name: str
-
-
-class City(CityBase, table=True):
-    id: Optional[int] = Field(default=None, primary_key=True)
-    city_users: list["User"] = Relationship(back_populates="city")
-
-
-class CityRead(CityBase):
-    id: int
-
-
-class CityCreate(CityBase):
-    pass
-
-
-class CityUpdate(CityBase):
-    pass
-
-# pin model
-
-
-class PinBase(SQLModel):
-    name: str
-
-
-class Pin(PinBase, table=True):
-    id: Optional[int] = Field(default=None, primary_key=True)
-    pin_users: list["User"] = Relationship(back_populates="pin")
-
-
-class PinRead(PinBase):
-    id: int
-
-
-class PinCreate(PinBase):
-    pass
-
-
-class PinUpdate(PinBase):
-    pass
-
-# withdraw model
-
-
-class WithdrawBase(SQLModel):
-    amount: str
-
-
-class Withdraw(WithdrawBase, table=True):
-    id: Optional[int] = Field(default=None, primary_key=True)
-    withdraw_users: list["User"] = Relationship(back_populates="withdraw")
-
-
-class WithdrawRead(WithdrawBase):
-    id: int
-
-
-class WithdrawCreate(WithdrawBase):
-    pass
-
-
-class WithdrawUpdate(WithdrawBase):
-    pass
-
-# referral model
+from typing import Optional 
+from datetime import date
 
 
 class ReferralBase(SQLModel):
-    name: str
+    referral_code : str = Field(unique = True)
+    user_id : Optional[int] = Field(default = None , foreign_key = "user.id")
 
+    
 
-class Referral(ReferralBase, table=True):
-    id: Optional[int] = Field(default=None, primary_key=True)
-    referral_users: list["User"] = Relationship(back_populates="referral")
-
-
-class ReferralRead(ReferralBase):
-    id: int
-
+class Referral(ReferralBase , table = True):
+    id : Optional[int] = Field(default = None , primary_key = True)
+    user : Optional["User"] = Relationship(back_populates = "referral")
+    
 
 class ReferralCreate(ReferralBase):
     pass
 
+class ReferralRead(ReferralBase):
+    id : int
 
 class ReferralUpdate(ReferralBase):
-    pass
-
-# package model
+    referral_id : Optional[str]
 
 
-class PackageBase(SQLModel):
-    name : str
+class withdrawalBase(SQLModel):
+    withdrawal_amount : str = Field(unique = True)
+    status : str
+    user_id : Optional[int] = Field(default = None , foreign_key = "user.id")
    
 
+class Withdrawal(withdrawalBase , table = True):
+    id : Optional[int] = Field(default = None , primary_key = True)
+    user : Optional["User"] = Relationship(back_populates = "withdrawal")
 
-class Package(PackageBase, table=True):
-    id: Optional[int] = Field(default=None, primary_key=True)
-    package_users: list["User"] = Relationship(back_populates="package")
-
-
-class PackageRead(PackageBase):
-    id: int
-
-
-class PackageCreate(PackageBase):
+class WithdrawalCreate(withdrawalBase):
     pass
 
+class WithdrawalRead(withdrawalBase):
+    id : int
 
-class PackageUpdate(PackageBase):
+class WithdrawalUpdate(withdrawalBase):
+    withdrawal_amount : Optional[str]
+
+
+class pinBase(SQLModel):
+    pin_id : str = Field(unique = True)
+    user_id : Optional[int] = Field(default = None , foreign_key = "user.id")
+    
+
+
+class Pin(pinBase , table = True):
+    id : Optional[int] = Field(default = None , primary_key = True)
+    user : Optional["User"] = Relationship(back_populates = "pin")
+
+class PinCreate(pinBase):
     pass
 
-# user model
+class PinRead(pinBase):
+    id : int
+
+class PinUpdate(pinBase):
+    pin_id : Optional[str]
 
 
-class UserBase(SQLModel):
-    national_id: str
-    email: str
-    phone: str
-    created_at: str
-    updated_at: str
-    currency: str
-    role_id: int = Field(foreign_key="role.id")
-    country_id: int = Field(foreign_key="country.id")
-    city_id: int = Field(foreign_key="city.id")
-    pin_id: int = Field(foreign_key="pin.id")
-    withdraw_id: int = Field(foreign_key="withdraw.id")
-    referral_id: int = Field(foreign_key="referral.id")
-    package_id: int = Field(foreign_key="package.id")
+class userBase(SQLModel):
+    nation_id : str
+    email : str = Field(unique = True )
+    password : str
+    phone : str
+    currency : str
+    country : str
+    city : str
+    package : str
+    role : str
+    
+    created_at: date 
+    
+
+class User(userBase , table = True):
+    id : Optional[int] = Field(default = None , primary_key = True)
+    withdrawal : Optional[Withdrawal] = Relationship(back_populates = "user")
+    pin : Optional[Pin] = Relationship(back_populates = "user")
+    referral : Optional[Referral] = Relationship(back_populates = "user")
 
 
-class User(UserBase, table=True):
-    id: Optional[int] = Field(default=None, primary_key=True)
-    role: Optional[Role] = Relationship(back_populates="role_users")
-    country: Optional[Country] = Relationship(back_populates="country_users")
-    city: Optional[City] = Relationship(back_populates="city_users")
-    pin: Optional[Pin] = Relationship(back_populates="pin_users")
-    withdraw: Optional[Withdraw] = Relationship(
-        back_populates="withdraw_users")
-    referral: Optional[Referral] = Relationship(
-        back_populates="referral_users")
-    package: Optional[Package] = Relationship(back_populates="package_users")
-
-
-class UserRead(UserBase):
-    id: int
-
-
-class UserCreate(UserBase):
+class UserCreate(userBase):
     pass
 
+class UserRead(userBase):
+    id : int
 
-class UserUpdate(UserBase):
-    pass
+class UserUpdate(userBase):
+    nation_id : Optional[str]
+    email : Optional[str]
+    password : Optional[str]
+    phone : Optional[str]
+    currency : Optional[str]
+    country : Optional[str]
+    city : Optional[str]
+    package : Optional[str]
+    role : Optional[str]
+
+class UserWithAll(UserRead):
+    withdrawal : WithdrawalRead
+    pin : PinRead
+    referral : ReferralRead
+    
+    
