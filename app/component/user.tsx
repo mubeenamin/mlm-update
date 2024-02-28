@@ -36,8 +36,7 @@ const formSchema = z.object({
   phone: z.string(),
   currency: z.string(),
   package: z.string({ required_error: "Please select a package" }),
-  // updated_at: z.string().datetime(),
-  // created_at: z.string().datetime(),
+  date: z.string(),
 });
 function User() {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -51,11 +50,8 @@ function User() {
       phone: "",
       currency: "USD",
       package: "",
-      // country_id: 1,
-      // pin_id: 1,
-      // withdraw_id: 1,
-      // updated_at: "",
-      // created_at: "",
+      date: "",
+      
     },
   });
   const handleReset = () => {
@@ -70,9 +66,29 @@ function User() {
       package: "",
     });
   };
-  function onSubmit(data: z.infer<typeof formSchema>) {
-    console.log(data);
+  async function onSubmit(data: z.infer<typeof formSchema>) {
+    const response = await fetch("/api/create_users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      // body: JSON.stringify(data),
+      body: JSON.stringify({
+        nation_id: data.national_id,
+        email: data.email,
+        password: data.password,
+        city: data.city,
+        country: data.country,
+        phone: data.phone,
+        currency: data.currency,
+        package: data.package,
+        role: "user",
+        date: Date.now(),
+      }),
+    });
+    console.log(response);
     handleReset();
+    
   }
   return (
     <main className="space-y-4">
@@ -215,7 +231,6 @@ function User() {
               </div>
             </div>
           </form>
-          <FormItem></FormItem>
         </Form>
       </div>
     </main>
