@@ -4,7 +4,7 @@ from datetime import date
 
 
 class ReferralBase(SQLModel):
-    referral_code : str = Field(unique = True)
+    referral_code : str 
     user_id : Optional[int] = Field(default = None , foreign_key = "user.id")
 
     
@@ -25,7 +25,7 @@ class ReferralUpdate(ReferralBase):
 
 
 class withdrawalBase(SQLModel):
-    withdrawal_amount : str = Field(unique = True)
+    withdrawal_amount : str 
     status : str
     user_id : Optional[int] = Field(default = None , foreign_key = "user.id")
    
@@ -45,7 +45,7 @@ class WithdrawalUpdate(withdrawalBase):
 
 
 class pinBase(SQLModel):
-    pin_id : str = Field(unique = True)
+    pin_id : str 
     user_id : Optional[int] = Field(default = None , foreign_key = "user.id")
     
 
