@@ -50,7 +50,7 @@ def get_user_by_id(session : Annotated[Session, Depends(get_db)], user_id : int)
 # create a new user
 
 
-@app.post("/api/create_users" , response_model=User)
+@app.post("/api/create_users" , response_model=UserRead)
 def create_user(session : Annotated[Session, Depends(get_db)] , user : UserCreate):
     db_user = User.model_validate(user)
     session.add(db_user)

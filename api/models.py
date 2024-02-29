@@ -66,7 +66,7 @@ class PinUpdate(pinBase):
 
 class userBase(SQLModel):
     nation_id : str
-    email : str = Field(unique = True )
+    email : str 
     password : str
     phone : str
     currency : str

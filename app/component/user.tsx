@@ -72,8 +72,14 @@ function User() {
     try {
       const response = await fetch("/api/create_users", {
         method: "POST",
+        mode: "no-cors",
+        cache: "no-cache",
+        credentials: "same-origin",
+        redirect: "follow",
+        
         headers: {
           "Content-Type": "application/json",
+          "body": "formSchema",
         },
         body: JSON.stringify({
           nation_id: data.national_id,
