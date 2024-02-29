@@ -37,7 +37,7 @@ const formSchema = z.object({
   currency: z.string(),
   package: z.string({ required_error: "Please select a package" }),
   role: z.string(),
-  date: z.number(),
+  date: z.string(),
 });
 function User() {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -52,7 +52,7 @@ function User() {
       currency: "USD",
       package: "",
       role: "user",
-      date: Date.now(),
+      date: Date.now().toString(),
     },
   });
   const handleReset = () => {
@@ -68,18 +68,12 @@ function User() {
     });
   };
   async function onSubmit(data: z.infer<typeof formSchema>) {
-    console.log(data.date);
+    console.log(data);
     try {
       const res = await fetch("/api/create_users", {
-        method: "POST",
-        mode: "no-cors",
-        cache: "no-cache",
-        credentials: "same-origin",
-        redirect: "follow",
-        
+        method: "POST",        
         headers: {
           "Content-Type": "application/json",
-          "body": "formSchema",
         },
         body: JSON.stringify({
           nation_id: data.nation_id,
@@ -91,7 +85,7 @@ function User() {
           city: data.city,
           package: data.package,
           role: data.role,
-          created_at: data.date
+          created_at: data.date,
         }),
       });
 
