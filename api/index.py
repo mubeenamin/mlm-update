@@ -58,6 +58,21 @@ def create_user(session : Annotated[Session, Depends(get_db)] , user : UserCreat
     session.refresh(db_user)
     return db_user
 
+# get login user
+
+
+@app.get("/api/login_users" , response_model=UserRead)
+def get_login_user(session : Annotated[Session, Depends(get_db)] , email : str , password : str):
+    user = session.exec(select(User).where(User.email == email , User.password == password)).first()
+    if not user:
+        raise HTTPException(status_code=404 , detail="User not found")
+    return user
+
+
+
+
+
+
 
 # update user
 
