@@ -15,20 +15,21 @@ import { Input } from "@/components/ui/input";
 import { z } from "zod";
 
 const FormSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
+  FundTransfer: z.string().min(2, {
+    message: "FundTransfer",
   }),
 });
 
-const onSubmit = () => {
-  console.log("data" );
+const onSubmit = (data: z.infer<typeof FormSchema>) => {
+  console.log(data);
 };
 
 function FundTransfer() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      username: "",
+      
+      FundTransfer: "",
     },
   });
 
@@ -41,16 +42,14 @@ function FundTransfer() {
         >
           <FormField
             control={form.control}
-            name="username"
+            name="FundTransfer"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Username</FormLabel>
+                <FormLabel>Fund Transfer</FormLabel>
                 <FormControl>
-                  <Input placeholder="shadcn" {...field} />
+                  <Input placeholder="Enter your amount" {...field} />
                 </FormControl>
-                <FormDescription>
-                  This is your public display name.
-                </FormDescription>
+               
                 <FormMessage />
               </FormItem>
             )}
