@@ -24,7 +24,7 @@ import {
 } from "@/components/ui/select";
 
 const formSchema = z.object({
-  national_id: z.string().min(2, {
+  nation_id: z.string().min(2, {
     message: "National ID must be at least 2 characters.",
   }),
   email: z.string().email({ message: "Invalid email address" }),
@@ -43,7 +43,7 @@ function User() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      national_id: "",
+      nation_id: "",
       email: "",
       password: "",
       city: "",
@@ -52,12 +52,12 @@ function User() {
       currency: "USD",
       package: "",
       role: "user",
-      date: 0,
+      date: Date.now(),
     },
   });
   const handleReset = () => {
     form.reset({
-      national_id: "",
+      nation_id: "",
       email: "",
       password: "",
       city: "",
@@ -68,15 +68,15 @@ function User() {
     });
   };
   async function onSubmit(data: z.infer<typeof formSchema>) {
-    console.log(data);
+    console.log(data.date);
     try {
-      const response = await fetch("/api/create_users", {
+      const res = await fetch("/api/create_users", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          nation_id: data.national_id,
+          nation_id: data.nation_id,
           email: data.email,
           password: data.password,
           phone: data.phone,
@@ -85,14 +85,14 @@ function User() {
           city: data.city,
           package: data.package,
           role: data.role,
-          date: data.date,
+          created_at: data.date
         }),
       });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
       } else {
-        console.log(await response.json());
+        console.log(await res.json());
       }
     } catch (error) {
       console.error("An error occurred:", error);
@@ -112,7 +112,7 @@ function User() {
             <div className="w-80 gap-4">
               <FormField
                 control={form.control}
-                name="national_id"
+                name="nation_id"
                 render={({ field }) => (
                   <FormItem className="gap-4">
                     <FormLabel>National ID</FormLabel>
