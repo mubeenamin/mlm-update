@@ -74,7 +74,7 @@ class userBase(SQLModel):
     city : str
     package : str
     role : str
-    created_at: int 
+    created_at: str
 
     
 class User(userBase , table = True):
