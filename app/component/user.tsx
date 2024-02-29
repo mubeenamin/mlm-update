@@ -68,7 +68,7 @@ function User() {
     });
   };
   async function onSubmit(data: z.infer<typeof formSchema>) {
-    console.log(data);
+   
     try {
       const res = await fetch("/api/create_users", {
         method: "POST",        
