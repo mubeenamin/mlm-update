@@ -2,6 +2,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
+
 import {
   Form,
   FormControl,
@@ -14,6 +15,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 
 const FormSchema = z.object({
@@ -66,7 +68,11 @@ const SignIn = () => {
     },
   });
   return (
+    <>
+    <div className="mt-4 p-4  bg-black">
+    <h1 className="text-4xl text-white font-bold ">OPUS GLOBAL</h1></div>
     <main className="flex min-h-screen flex-col items-center  justify-between">
+      
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -107,9 +113,18 @@ const SignIn = () => {
           >
             Login
           </Button>
+          
+          <Button
+            
+            className="border-2 p-2 rounded-xl bg-blue-500 text-slate-800 hover:bg-blue-600 hover:text-slate-900"
+          >
+          <Link href="/signUp">  signUp </Link>
+          </Button>
+
         </form>
       </Form>
     </main>
+    </>
   );
 };
 
