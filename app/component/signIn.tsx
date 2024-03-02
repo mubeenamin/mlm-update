@@ -16,7 +16,7 @@ import { Input } from "@/components/ui/input";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-
+import { useState } from "react";
 
 const FormSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -25,10 +25,9 @@ const FormSchema = z.object({
   }),
 });
 
-
 const SignIn = () => {
   const router = useRouter();
-
+  const [loading, setLoading] = useState(false);
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
     console.log(data);
     try {
@@ -37,27 +36,28 @@ const SignIn = () => {
         {
           mode: "no-cors",
         }
+        
       );
       if (!res.ok) {
         // res.ok returns false if the HTTP status is not 200-299
+        
         throw new Error(`HTTP error! status: ${res.status}`);
       }
       const newdata = await res.json();
       if (data.email === newdata.email && data.password === newdata.password) {
-        console.log("successfull");
+       
         router.push("/dashboard");
       } else {
         console.log("wrong username or password");
       }
+      setLoading(true);
       handleReset();
     } catch (error) {}
   };
   const handleReset = () => {
     form.reset({
-      
       email: "",
       password: "",
-      
     });
   };
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -68,17 +68,15 @@ const SignIn = () => {
     },
   });
   return (
-    <>
-    <div className="mt-4 p-4  bg-black">
-    <h1 className="text-4xl text-white font-bold ">OPUS GLOBAL</h1></div>
     <main className="flex min-h-screen flex-col items-center  justify-between">
-      
       <Form {...form}>
+        
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col gap-5 p-5 mt-8"
+          className="flex flex-col gap-5 p-8 mt-4 shadow-xl"
         >
-          <h1 className="text-4xl text-slate-900 font-medium">Login</h1>
+          <h1 className="text-4xl font-bold ">OPUS GLOBAL</h1>
+          <h1 className="text-3xl text-slate-900 font-medium text-center">Login</h1>
           <FormField
             control={form.control}
             name="email"
@@ -106,25 +104,28 @@ const SignIn = () => {
               </FormItem>
             )}
           />
-
+          <div className="">
+            If you have not an account
+            <Link href="/signUp" className="text-blue-500 hover:underline">
+              {" "}
+              register{" "}
+            </Link>
+          </div>
           <Button
             type="submit"
-            className="border-2 p-2 rounded-xl bg-blue-500 text-slate-800 hover:bg-blue-600 hover:text-slate-900"
-          >
-            Login
-          </Button>
-          
-          <Button
-            
-            className="border-2 p-2 rounded-xl bg-blue-500 text-slate-800 hover:bg-blue-600 hover:text-slate-900"
-          >
-          <Link href="/signUp">  signUp </Link>
-          </Button>
+            className="bg-red-500/70 hover:bg-red-500/90 text-white">
+          {
+            loading ? (
+              <>loading....</>
+            ):(
 
+             <span>Login</span> 
+            )
+          }
+          </Button>
         </form>
       </Form>
     </main>
-    </>
   );
 };
 
