@@ -43,8 +43,18 @@ const SignIn = () => {
         throw new Error(`HTTP error! status: ${res.status}`);
       }
       const newdata = await res.json();
-      if (data.email === newdata.email && data.password === newdata.password) {
+      if (
+        data.email === newdata.email &&
+        data.password === newdata.password &&
+        newdata.role === "admin"
+      ) {
         router.push("/dashboard");
+      } else if (
+        data.email === newdata.email &&
+        data.password === newdata.password &&
+        newdata.role === "user"
+      ) {
+        router.push("/userDashboard");
       } else {
         setinvalidUser(true);
       }
