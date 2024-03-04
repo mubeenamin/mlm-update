@@ -72,7 +72,7 @@ const SignIn = () => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col gap-5 p-8 mt-4 shadow-xl"
+          className="flex flex-col gap-5 p-14 mt-4 shadow-xl"
         >
           <h1 className="text-4xl font-bold ">OPUS GLOBAL</h1>
           <h1 className="text-3xl text-slate-900 font-medium text-center">
