@@ -1,16 +1,16 @@
-export const admin_data = [
+export const user_data = [
   {
     name: "HOME",
-    href: "/dashboard",
+    href: "/userDashboard",
   },
   {
     name: "CREATE USER ACCOUNT",
     href: "/createUser",
   },
-  
+
   {
     name: "DAILY CREATED ACCOUNTS LIST ",
-    href: "/dailyAccounts",
+    href: "/",
   },
   {
     name: "FUND TRANSFER",
@@ -25,32 +25,12 @@ export const admin_data = [
     href: "/allAccountHistory",
   },
   {
-    name: "PASSWORD CHANGE",
-    href: "/passwordChange",
-  },
-  {
-    name: "PIN CHANGE",
-    href: "/pinChange",
-  },
-  {
-    name: "MESSAGE",
-    href: "/message",
-  },
-  {
-    name: "DEACTIVATE ACCOUNT",
-    href: "/deactivateAccount",
-  },
-  {
     name: "NOTIFICATION",
     href: "/notification",
   },
   {
     name: "CASH WITHDRAWAL",
     href: "/cashWithdrawal",
-  },
-  {
-    name: "PACKAGE",
-    href: "/packages",
   },
 ];
 
