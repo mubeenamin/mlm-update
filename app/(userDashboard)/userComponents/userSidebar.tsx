@@ -11,11 +11,11 @@ import {
   DropdownMenu,
 } from "@/components/ui/dropdown-menu";
 
-import { admin_data } from "../data/admin_data";
+import { user_data } from "../data/user_data";
 import Image from "next/image";
-import { UserIcon } from "lucide-react";
 
-export function SideBar({ children }: any) {
+
+export function UserSideBar({ children }: any) {
   return (
     <div className="grid min-h-screen w-full lg:grid-cols-[280px_1fr]">
       <div className="hidden border-r bg-gray-100/40 lg:block dark:bg-gray-800/40">
@@ -34,7 +34,7 @@ export function SideBar({ children }: any) {
           </div>
           <div className="flex-1 overflow-auto py-2 ">
             <nav className="grid items-start px-2 text-sm font-semibold">
-              {admin_data.map((value, i) => (
+              {user_data.map((value, i) => (
                 <Link
                   href={value.href}
                   key={i}
