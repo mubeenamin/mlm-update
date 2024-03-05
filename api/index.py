@@ -58,6 +58,7 @@ def create_user(session : Annotated[Session, Depends(get_db)] , user : UserCreat
     session.refresh(db_user)
     return db_user
 
+
 # get login user
 
 
