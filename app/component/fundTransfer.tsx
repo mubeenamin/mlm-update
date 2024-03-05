@@ -47,6 +47,10 @@ function FundTransfer() {
               <FormItem>
                 <FormLabel>Fund Transfer</FormLabel>
                 <FormControl>
+                  <Input placeholder="Enter account number" {...field} />
+                </FormControl>
+
+                <FormControl>
                   <Input placeholder="Enter your amount" {...field} />
                 </FormControl>
                
