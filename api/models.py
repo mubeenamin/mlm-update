@@ -1,11 +1,11 @@
 from sqlmodel import Field, SQLModel, Relationship
 from typing import Optional 
-from datetime import date
+
 
 
 class ReferralBase(SQLModel):
     referral_code : str 
-    user_id : Optional[int] = Field(default = None , foreign_key = "user.id")
+    # user_id : Optional[int] = Field(default = None , foreign_key = "user.id")
 
     
 
@@ -75,6 +75,7 @@ class userBase(SQLModel):
     package : str
     role : str
     created_at: str
+    referral_id : Optional[int] = Field(default = None , foreign_key = "referral.id") 
 
     
 class User(userBase , table = True):
@@ -100,10 +101,12 @@ class UserUpdate(userBase):
     city : Optional[str]
     package : Optional[str]
     role : Optional[str]
+    
 
 class UserWithAll(UserRead):
     withdrawal : WithdrawalRead
     pin : PinRead
     referral : ReferralRead
+    
     
     
