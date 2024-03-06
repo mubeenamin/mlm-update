@@ -40,7 +40,7 @@ def get_users(session : Annotated[Session, Depends(get_db)]):
 #get user by single id 
 
 
-@app.get("/api/single_users/{user_id}" , response_model=UserWithAll)
+@app.get("/api/single_users/{user_id}" , response_model=UserRead)
 def get_user_by_id(session : Annotated[Session, Depends(get_db)], user_id : int):
     user = session.get(User , user_id)
     if not user:
