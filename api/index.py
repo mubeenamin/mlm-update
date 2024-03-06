@@ -40,9 +40,9 @@ def get_users(session : Annotated[Session, Depends(get_db)]):
 #get user by single id 
 
 
-@app.get("/api/single_users/{user_id}" , response_model=UserWithAll)
-def get_user_by_id(session : Annotated[Session, Depends(get_db)], user_id : int):
-    user = session.get(User , user_id)
+@app.get("/api/single_users/{id}" , response_model=UserWithAll)
+def get_user_by_id(session : Annotated[Session, Depends(get_db)], id : int):
+    user = session.get(User , id)
     if not user:
         raise HTTPException(status_code=404 , detail="User not found")
     return user

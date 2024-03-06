@@ -53,8 +53,9 @@ const SignIn = () => {
         data.email === newdata.email &&
         data.password === newdata.password &&
         newdata.role === "user"
+        
       ) {
-        router.push("/userDashboard");
+        router.push(`/${newdata.id}`);
       } else {
         setinvalidUser(true);
       }
