@@ -122,13 +122,7 @@ const SignIn = () => {
               {invalidUser && "Wrong email or password"}
             </p>
           </div>
-          <div className="">
-            If you have not an account
-            <Link href="/signUp" className="text-blue-500 hover:underline">
-              {" "}
-              register{" "}
-            </Link>
-          </div>
+          
           <Button
             type="submit"
             className="bg-red-500/70 hover:bg-red-500/90 text-white"

@@ -18,7 +18,7 @@ import Image from "next/image";
 export function UserSideBar({ children }: any) {
   return (
     <div className="grid min-h-screen w-full lg:grid-cols-[280px_1fr]">
-      <div className="hidden border-r bg-gray-100/40 lg:block dark:bg-gray-800/40">
+      <div className="hidden border-r bg-gray-100/40 lg:block">
         <div className="flex h-full max-h-screen flex-col gap-2">
           <div className="flex h-[60px] items-center border-b px-6">
             <Link className="flex items-center gap-2 font-semibold" href="#">
@@ -38,7 +38,7 @@ export function UserSideBar({ children }: any) {
                 <Link
                   href={value.href}
                   key={i}
-                  className="flex items-center gap-3 hover:underline underline-offset-4  px-6 py-3 text-gray-900  transition-all hover:text-gray-900 dark:bg-gray-800 dark:text-gray-50 dark:hover:text-gray-50"
+                  className="flex items-center gap-3 hover:underline underline-offset-4  px-6 py-3 text-gray-900  transition-all hover:text-gray-900"
                 >
                   <span>{value.name}</span>
                 </Link>
@@ -48,16 +48,16 @@ export function UserSideBar({ children }: any) {
         </div>
       </div>
       <div className="flex flex-col">
-        <header className="flex h-14 lg:h-[60px] items-center gap-4 border-b shrink-0 bg-gray-100/40 px-6 dark:bg-gray-800/40">
+        <header className="flex h-14 lg:h-[60px] items-center gap-4 border-b shrink-0 bg-gray-100/40 px-6">
           <Link className="lg:hidden" href="#">
             <Package2Icon className="w-6 h-6" />
           </Link>
           <div className="w-full flex-1">
             <form>
               <div className="relative">
-                <SearchIcon className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500 dark:text-gray-400" />
+                <SearchIcon className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
                 <Input
-                  className="w-full bg-white shadow-none appearance-none pl-8 md:w-2/3 lg:w-1/3 dark:bg-gray-950"
+                  className="w-full bg-white shadow-none appearance-none pl-8 md:w-2/3 lg:w-1/3 "
                   placeholder="Search products..."
                   type="search"
                 />
@@ -66,7 +66,7 @@ export function UserSideBar({ children }: any) {
           </div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Image src="/next.svg" alt="logo" width={30} height={30} className="rounded-full border border-black w-8 h-8 dark:border-gray-800">
+              <Image src="/next.svg" alt="logo" width={30} height={30} className="rounded-full border border-black w-8 h-8 ">
                 
               </Image>
             </DropdownMenuTrigger>
