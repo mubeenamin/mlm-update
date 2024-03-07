@@ -48,31 +48,40 @@ function Page({ params }: { params: { id: Prop } }) {
 
   return (
     <div className="space-y-4">
-      <div>Username:{users.nation_id}</div>
-      <div>Email:{users.email}</div>
-      <div>Package:{users.package}</div>
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        <Card className="p-8 shadow-md">
-          <div>Daily Profit from Package</div>
-          <div>{users.package}</div>
-        </Card>
-        <Card className="p-8 shadow-md">
-          <div>Referrral Profit</div>
-          <div>{users.package}</div>
-        </Card>
-        <Card className="p-8 shadow-md">
-          <div>Total Earnings</div>
-          <div>{users.package}</div>
-        </Card>
-        <Card className="p-8 shadow-md">
-          <div>Total Referral Count</div>
-          <div>0</div>
-        </Card>
-        <Card className="p-8 shadow-md">Total Earning</Card>
-        <Card className="p-8 shadow-md">Total Profit</Card>
-        
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 pb-10">
+        <div>
+          Username:<div>{users.nation_id}</div>
+        </div>
+        <div>
+          Email:<div>{users.email}</div>
+        </div>
+        <div>
+          Package:<div>{users.package}</div>
+        </div>
       </div>
-      <div className=""><Chart/></div>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <Card className="p-8 shadow-md grid grid-cols-3 items-center">
+          <div className="col-span-2">Daily Profit from Package</div>
+          <div className="col-span-1 text-end text-4xl">$0</div>
+        </Card>
+        <Card className="p-8 shadow-md grid grid-cols-3 items-center">
+          <div className="col-span-2">Referrral Profit</div>
+          <div className="col-span-1 text-end text-4xl">$0</div>
+        </Card>
+        <Card className="p-8 shadow-md grid grid-cols-3 items-center">
+          <div className="col-span-2">Total Earnings</div>
+          <div className="col-span-1 text-end text-4xl">$0</div>
+        </Card>
+        <Card className="p-8 shadow-md grid grid-cols-3 items-center">
+          <div className="col-span-2">Total Referral Count</div>
+          <div className="col-span-1 text-end text-4xl">$0</div>
+        </Card>
+        <Card className="p-8 shadow-md grid grid-cols-3 items-center">Total Earning</Card>
+        <Card className="p-8 shadow-md grid grid-cols-3 items-center">Total Profit</Card>
+      </div>
+      <div className="">
+        <Chart />
+      </div>
     </div>
   );
 }
