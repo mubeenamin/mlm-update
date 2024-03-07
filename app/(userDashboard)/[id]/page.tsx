@@ -28,7 +28,7 @@ function Page({ params }: { params: { id: Prop } }) {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchData = async () => {
-      console.log(userID);
+      
       try {
         const res = await fetch(`/api/single_users/${userID}`, {
           mode: "no-cors",
