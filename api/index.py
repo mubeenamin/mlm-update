@@ -4,6 +4,7 @@ from sqlmodel import Session, select
 from api.db import get_db, create_db_and_tables
 from api.models import *
 from fastapi.middleware.cors import CORSMiddleware
+from datetime import datetime
 
 app = FastAPI()
 origins = [
@@ -278,6 +279,56 @@ def delete_pin(session : Annotated[Session, Depends(get_db)] , pin_id : int):
     session.commit()
     return {"message" : "Pin deleted"}
 
+
+
+
+# get all the  profit users
+
+# @app.get("/api/profit_users" , response_model=list[Daily_profit])
+# def get_profit_users(session : Annotated[Session, Depends(get_db)]):
+#     profit_users = session.exec(select(Daily_profit)).all()
+#     return profit_users
+
+# create new profit user
+
+@app.post("/api/create_profit_user" , response_model=Daily_profit)
+def create_profit_user(session : Annotated[Session, Depends(get_db)] , profit_user : Daily_profitCreate ):
+    db_profit_user = Daily_profit.model_validate(profit_user)
+    session.add(db_profit_user)
+    session.commit()
+    session.refresh(db_profit_user)
+    return db_profit_user
+
+ 
+
+
+
+
+# user Daily profit
+
+@app.put("/api/user_daily_profit", response_class=Daily_profit)
+def update_user_daily_profit(session: Annotated[Session, Depends(get_db)]):
+    # Assuming you have a model named DailyProfit with fields id, value_to_update, daily_profit, and last_updated
+    statement = select(Daily_profit).where(Daily_profit.user_id == 1)
+    result = session.exec(statement)
+    row = result.first()
+
+    # Check if the last update was today
+    if row.last_updated.date() == datetime.now().date():
+        # Update the value_to_update by adding the daily_profit
+        row.value_to_update = row.value_to_update + row.daily_profit
+        row.last_updated = datetime.now()
+        session.add(row)
+        session.commit()
+    else:
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    # get all the profit users
+
+@app.get("/api/profit_users" , response_model=list[Daily_profit])
+def get_profit_users(session : Annotated[Session, Depends(get_db)]):
+    profit_users = session.exec(select(Daily_profit)).all()
+    return profit_users
 
 
 # # get all the users

@@ -1,5 +1,8 @@
+from datetime import datetime
 from sqlmodel import Field, SQLModel, Relationship
-from typing import Optional 
+from typing import Optional
+from decimal import Decimal
+
 
 
 
@@ -61,7 +64,27 @@ class PinRead(pinBase):
     id : int
 
 class PinUpdate(pinBase):
-    pin_id : Optional[str]
+    pin_id : str
+
+class daily_profitBase(SQLModel):
+    daily_profit : Decimal = Field(default = 0.00)
+    value_to_update : Decimal = Field(default = 0.00)
+    last_updated : datetime
+    
+    user_id : Optional[int] = Field(default = None , foreign_key = "user.id")
+
+class Daily_profit(daily_profitBase , table = True):
+    id : Optional[int] = Field(default = None , primary_key = True)
+    user : Optional["User"] = Relationship(back_populates = "daily_profit")
+
+class Daily_profitRead(daily_profitBase):
+    id : int
+
+class Daily_profitCreate(daily_profitBase):
+    pass
+
+class Daily_profitUpdate(daily_profitBase):
+    daily_profit : str
 
 
 class userBase(SQLModel):
@@ -83,6 +106,7 @@ class User(userBase , table = True):
     withdrawal : Optional[Withdrawal] = Relationship(back_populates = "user")
     pin : Optional[Pin] = Relationship(back_populates = "user")
     referral : Optional[Referral] = Relationship(back_populates = "user")
+    daily_profit : Optional[Daily_profit] = Relationship(back_populates = "user")
 
 
 class UserCreate(userBase):
@@ -109,4 +133,4 @@ class UserWithAll(UserRead):
     referral : ReferralRead
     
     
-    
+
