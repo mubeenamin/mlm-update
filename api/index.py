@@ -306,22 +306,22 @@ def create_profit_user(session : Annotated[Session, Depends(get_db)] , profit_us
 
 # user Daily profit
 
-@app.put("/api/user_daily_profit", response_class=Daily_profit)
-def update_user_daily_profit(session: Annotated[Session, Depends(get_db)]):
-    # Assuming you have a model named DailyProfit with fields id, value_to_update, daily_profit, and last_updated
-    statement = select(Daily_profit).where(Daily_profit.user_id == 1)
-    result = session.exec(statement)
-    row = result.first()
+# @app.post("/api/user_daily_profit", response_class=Daily_profit)
+# def update_user_daily_profit(session: Annotated[Session, Depends(get_db)]):
+#     # Assuming you have a model named DailyProfit with fields id, value_to_update, daily_profit, and last_updated
+#     statement = select(Daily_profit).where(Daily_profit.user_id == 1)
+#     result = session.exec(statement)
+#     row = result.first()
 
-    # Check if the last update was today
-    if row.last_updated.date() == datetime.now().date():
-        # Update the value_to_update by adding the daily_profit
-        row.value_to_update = row.value_to_update + row.daily_profit
-        row.last_updated = datetime.now()
-        session.add(row)
-        session.commit()
-    else:
-        raise HTTPException(status_code=404, detail="User not found")
+#     # Check if the last update was today
+#     if row.last_updated.date() == datetime.now().date():
+#         # Update the value_to_update by adding the daily_profit
+#         row.value_to_update = row.value_to_update + row.daily_profit
+#         row.last_updated = datetime.now()
+#         session.add(row)
+#         session.commit()
+#     else:
+#         raise HTTPException(status_code=404, detail="User not found")
     
     # get all the profit users
 
