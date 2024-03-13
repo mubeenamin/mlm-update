@@ -22,6 +22,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import moment from "moment";
+
 
 const formSchema = z.object({
   nation_id: z.string().min(2, {
@@ -37,7 +39,9 @@ const formSchema = z.object({
   currency: z.string(),
   package: z.string({ required_error: "Please select a package" }),
   role: z.string(),
-  date: z.string(),
+  created_at: z.string(),
+  updated_at: z.string(),
+  balance: z.number(),
 });
 function User() {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -52,7 +56,9 @@ function User() {
       currency: "USD",
       package: "",
       role: "user",
-      date: Date.now().toString(),
+      created_at: moment().format("YYYY-MM-DD"),
+      updated_at: moment().format("YYYY-MM-DD"),
+      balance: 0,
     },
   });
   const handleReset = () => {
@@ -68,10 +74,10 @@ function User() {
     });
   };
   async function onSubmit(data: z.infer<typeof formSchema>) {
-   
+    
     try {
       const res = await fetch("/api/create_users", {
-        method: "POST",        
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
@@ -85,7 +91,9 @@ function User() {
           city: data.city,
           package: data.package,
           role: data.role,
-          created_at: data.date,
+          created_at: data.created_at,
+          updated_at: data.updated_at,
+          balance: 0,
         }),
       });
 

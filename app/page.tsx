@@ -4,13 +4,15 @@ import Link from "next/link";
 import User from "./component/user";
 import UserView from "./component/userView";
 import SignIn from "./signIn/page";
+import LiveTime from "./component/liveTime";
 
 export default function Home() {
   return (
-  <>
-  <main >
-   <SignIn/>
-
-  </main>
-  </>
-)}
+    <>
+      <main>
+        <LiveTime />
+        <SignIn />
+      </main>
+    </>
+  );
+}
