@@ -69,7 +69,7 @@ class PinUpdate(pinBase):
 class daily_profitBase(SQLModel):
     daily_profit : Decimal = Field(default = 0.00)
     value_to_update : Decimal = Field(default = 0.00)
-    last_updated : datetime
+    last_updated : datetime = Field(default = datetime.now())
     
     user_id : Optional[int] = Field(default = None , foreign_key = "user.id")
 
@@ -98,6 +98,8 @@ class userBase(SQLModel):
     package : str
     role : str
     created_at: str
+    updated_at: str
+    balance : Decimal = Field(default = 0.00)
     referral_id : Optional[int] = Field(default = None , foreign_key = "referral.id") 
 
     
@@ -125,6 +127,8 @@ class UserUpdate(userBase):
     city : Optional[str]
     package : Optional[str]
     role : Optional[str]
+    created_at: Optional[str]
+    balance : Optional[Decimal]
     
 
 class UserWithAll(UserRead):
