@@ -46,5 +46,8 @@
     "tailwindcss-animate": "^1.0.7",
     "typescript": "5.0.4",
     "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/node-cron": "^3.0.11"
   }
 }

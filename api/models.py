@@ -128,6 +128,7 @@ class UserUpdate(userBase):
     package : Optional[str]
     role : Optional[str]
     created_at: Optional[str]
+    updated_at: Optional[str]
     balance : Optional[Decimal]
     
 
