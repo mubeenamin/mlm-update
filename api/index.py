@@ -5,7 +5,8 @@ from sqlmodel import Session, case, select, update
 from api.db import get_db, create_db_and_tables 
 from api.models import *
 from fastapi.middleware.cors import CORSMiddleware
-from apscheduler.schedulers.background import BackgroundScheduler, BlockingScheduler
+import schedule
+import time
 app = FastAPI()
 origins = [
 
@@ -23,26 +24,12 @@ app.add_middleware(
 )
 
 
-@app.put("/api/update_balance_gold_platinum")
-def update_balance_gold_platinum(session:Annotated[Session, Depends(get_db)]):
-        statement=update(User).where(User.package.in_(["Gold" , "Gold Plus" , "Platinum" , "Platinum Plus"])).values(balance = User.balance + case({"Gold" : User.balance*0.01 , "Gold Plus" : 1 , "Platinum" : 2 , "Platinum Plus" : 2} , value = User.package))
-        session.exec(statement)
-        session.commit()
- 
-
-# scheduler = BackgroundScheduler()
-# scheduler.add_job(update_balance_gold_platinum, 'cron', minute='*/1', args=[get_db])
-
-
 @app.on_event("startup")
 async def on_startup():
     create_db_and_tables()
-   
     
-# @app.get("/")
-# def read_root():
-#     return {"Hello": "World"}
 
+session : Annotated[Session, Depends(get_db)]
 
 @app.get("/api/users" , response_model=list[User])
 def get_users(session : Annotated[Session, Depends(get_db)]):
@@ -54,7 +41,7 @@ def get_users(session : Annotated[Session, Depends(get_db)]):
 
 
 @app.get("/api/single_users/{id}" , response_model=UserRead)
-def get_user_by_id(session : Annotated[Session, Depends(get_db)], id : int):
+def get_user_by_id(session, id : int):
     user = session.get(User , id)
     if not user:
         raise HTTPException(status_code=404 , detail="User not found")
@@ -83,6 +70,14 @@ def get_login_user(session : Annotated[Session, Depends(get_db)] , email : str ,
     return user
 
 
+
+@app.put("/api/update_balance_gold_platinum")
+def update_balance_gold_platinum(session : Annotated[Session, Depends(get_db)]):
+    
+        session.exec(update(User).where(User.package.in_(["Gold" , "Gold Plus" , "Platinum" , "Platinum Plus"])).values(balance = User.balance + case({"Gold" : User.balance*0.01 , "Gold Plus" : 1 , "Platinum" : 2 , "Platinum Plus" : 2} , value = User.package)))
+        session.commit()
+        return {"message" : "Balance Updated"}
+        
 
 
 
@@ -310,36 +305,16 @@ def create_profit_user(session : Annotated[Session, Depends(get_db)] , profit_us
     session.refresh(db_profit_user)
     return db_profit_user
 
-
-<<<<<<< HEAD
-
-
-
-# user Daily profit
-
-# @app.post("/api/user_daily_profit", response_class=Daily_profit)
-# def update_user_daily_profit(session: Annotated[Session, Depends(get_db)]):
-#     # Assuming you have a model named DailyProfit with fields id, value_to_update, daily_profit, and last_updated
-#     statement = select(Daily_profit).where(Daily_profit.user_id == 1)
-#     result = session.exec(statement)
-#     row = result.first()
-
-#     # Check if the last update was today
-#     if row.last_updated.date() == datetime.now().date():
-#         # Update the value_to_update by adding the daily_profit
-#         row.value_to_update = row.value_to_update + row.daily_profit
-#         row.last_updated = datetime.now()
-#         session.add(row)
-#         session.commit()
-#     else:
-#         raise HTTPException(status_code=404, detail="User not found")
-    
-=======
->>>>>>> a54ae35809b919bb2947edf72264a19db55df4ae
-    # get all the profit users
-
 @app.get("/api/profit_users" , response_model=list[Daily_profit])
 def get_profit_users(session : Annotated[Session, Depends(get_db)]):
     profit_users = session.exec(select(Daily_profit)).all()
     return profit_users
 
+
+
+schedule.every().second.do(update_balance_gold_platinum, session=Annotated[Session, Depends(get_db)])
+
+
+# while True:
+#     schedule.run_pending()
+#     time.sleep(1)

@@ -1,19 +1,25 @@
 "use client"
 import React, { useEffect } from 'react'
 import cron from 'node-cron'
+import { Button } from '@/components/ui/button'
 function AutoProfit() {
-useEffect(() => {
-    
-    const task = cron.schedule('* * * * *', () => {
-        fetch('/api/update_balance_gold_platinum'), {
-            method: 'PUT',
-        }
-    });
-    return () => task.stop();
-},[]);
+  const updateBalance = async () => {
+    const res = await fetch('/api/update_balance_gold_platinum', {
+      method: 'PUT'
+    })
+  
+    if (res.ok) {
+      alert('Balance updated successfully')
+    } else {
+      alert('Error updating balance')
+    }
+  }
+ 
 
   return (
-    <div></div>
+    <div>
+      <Button onClick={updateBalance}>Click to update</Button>
+    </div>
   )
 }
 

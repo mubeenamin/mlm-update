@@ -1,7 +1,23 @@
 /** @type {import('next').NextConfig} */
+// import cron from 'node-cron';
+// const cron = require('node-cron');
 
+// cron.schedule('* * * * *', function () {
+//   console.log('Scheduled task runs every minute');
+// });
 const nextConfig = {
-  
+  webpack: (config, { isServer }) => {
+    // Fixes npm packages that depend on `child_process` module
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        "child_process": false,
+      };
+    }
+
+    return config;
+  },
+ 
   rewrites: async () => {
     return [
       {
