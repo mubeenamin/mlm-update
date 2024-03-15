@@ -2,7 +2,7 @@
     "crons":[
         {
             "path": "/api/update_balance_gold_platinum",
-            "schedule": "* * * * *"
+            "schedule": "0 0 * * *"
         }
     ]
 }
