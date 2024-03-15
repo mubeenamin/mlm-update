@@ -2,6 +2,7 @@
     "crons":[
         {
             "path": "/api/update_balance_gold_platinum",
+            "method": "PUT",
             "schedule": "0 0 * * *"
         }
     ]
