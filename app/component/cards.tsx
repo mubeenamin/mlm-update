@@ -17,15 +17,15 @@ function CardsUser({ users }: any) {
         </div>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        <Card className="p-8 shadow-md grid items-center gap-8">
+        <Card className="p-8 shadow-md grid items-center gap-8 bg-orange-400">
           <div className="col-span-2 text-lg">Daily Profit From Package</div>
           <div className="col-span-1 text-4xl">${users.balance}</div>
         </Card>
-        <Card className="p-8 shadow-md grid items-center gap-8">
+        <Card className="p-8 shadow-md grid items-center gap-8 bg-green-400">
           <div className="col-span-2 text-lg">Referrral Profit</div>
           <div className="col-span-1  text-4xl">$0</div>
         </Card>
-        <Card className="p-8 shadow-md grid  items-center gap-8">
+        <Card className="p-8 shadow-md grid  items-center gap-8 bg-blue-400">
           <div className="col-span-2 text-lg">Total Earnings</div>
           <div className="col-span-1  text-4xl">$0</div>
         </Card>
