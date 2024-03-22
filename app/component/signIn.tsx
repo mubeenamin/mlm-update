@@ -2,7 +2,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
-
 import {
   Form,
   FormControl,
@@ -14,9 +13,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { z } from "zod";
-
-import Link from "next/link";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+
 
 const FormSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -53,7 +52,6 @@ const SignIn = () => {
         data.email === newdata.email &&
         data.password === newdata.password &&
         newdata.role === "user"
-        
       ) {
         router.push(`/${newdata.id}`);
       } else {
@@ -122,7 +120,7 @@ const SignIn = () => {
               {invalidUser && "Wrong email or password"}
             </p>
           </div>
-          
+
           <Button
             type="submit"
             className="bg-red-500/70 hover:bg-red-500/90 text-white"

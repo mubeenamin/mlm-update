@@ -2,10 +2,28 @@ from fastapi import FastAPI, Depends, HTTPException, Query, background
 from typing import Annotated
 
 from sqlmodel import Session, case, select, update
-from api.db import get_db, create_db_and_tables 
+from api.db import get_db, create_db_and_tables, engine
 from api.models import *
 from fastapi.middleware.cors import CORSMiddleware
-from apscheduler.schedulers.background import BackgroundScheduler, BlockingScheduler
+from apscheduler.schedulers.background import BackgroundScheduler
+
+
+
+
+def update_balance_gold_platinum():
+    with Session(engine) as session:
+        session.exec(update(User).where(User.package.in_(["Bronze" , "Bronze Plus" , "Gold" , "Gold Plus" , "Platinum" , "Platinum Plus" , "Diamond", "Diamond Plus"])).values(balance = User.balance + case({"Bronze" : 1 , "Bronze Plus" : 2 , "Gold" : 4 , "Gold Plus" : 8 , "Platinum" : 64 , "Platinum Plus" : 128 , "Diamond" : 16 , "Diamond Plus" : 32} , value = User.package)))
+        session.commit()
+        return {"message" : "Balance Updated"}
+        
+scheduler = BackgroundScheduler()
+scheduler.add_job(update_balance_gold_platinum , 'interval' , minutes = 1)
+
+
+
+
+
+
 app = FastAPI()
 origins = [
 
@@ -23,26 +41,12 @@ app.add_middleware(
 )
 
 
-@app.put("/api/update_balance_gold_platinum")
-def update_balance_gold_platinum(session:Annotated[Session, Depends(get_db)]):
-        statement=update(User).where(User.package.in_(["Gold" , "Gold Plus" , "Platinum" , "Platinum Plus"])).values(balance = User.balance + case({"Gold" : User.balance*0.01 , "Gold Plus" : 1 , "Platinum" : 2 , "Platinum Plus" : 2} , value = User.package))
-        session.exec(statement)
-        session.commit()
- 
-
-# scheduler = BackgroundScheduler()
-# scheduler.add_job(update_balance_gold_platinum, 'cron', minute='*/1', args=[get_db])
-
-
 @app.on_event("startup")
 async def on_startup():
     create_db_and_tables()
-   
-    
-# @app.get("/")
-# def read_root():
-#     return {"Hello": "World"}
+    scheduler.start()
 
+session : Annotated[Session, Depends(get_db)]
 
 @app.get("/api/users" , response_model=list[User])
 def get_users(session : Annotated[Session, Depends(get_db)]):
@@ -84,6 +88,12 @@ def get_login_user(session : Annotated[Session, Depends(get_db)] , email : str ,
 
 
 
+# @app.put("/api/update_balance_gold_platinum")
+# def update_balance_gold_platinum():
+#     with Session(engine) as session:
+#         session.exec(update(User).where(User.package.in_(["Gold" , "Gold Plus" , "Platinum" , "Platinum Plus"])).values(balance = User.balance + case({"Gold" : User.balance*0.01 , "Gold Plus" : 1 , "Platinum" : 2 , "Platinum Plus" : 2} , value = User.package)))
+#         session.commit()
+#         return {"message" : "Balance Updated"}
 
 
 
@@ -310,11 +320,7 @@ def create_profit_user(session : Annotated[Session, Depends(get_db)] , profit_us
     session.refresh(db_profit_user)
     return db_profit_user
 
-
-    # get all the profit users
-
 @app.get("/api/profit_users" , response_model=list[Daily_profit])
 def get_profit_users(session : Annotated[Session, Depends(get_db)]):
     profit_users = session.exec(select(Daily_profit)).all()
     return profit_users
-

@@ -13,7 +13,7 @@ export default function Home() {
       <main>
         <LiveTime />
         <SignIn />
-       
+       <AutoProfit/>
       </main>
     </>
   );
