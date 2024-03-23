@@ -23,6 +23,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import moment from "moment";
+import { useRouter } from "next/navigation";
+
 
 
 const formSchema = z.object({
@@ -42,8 +44,11 @@ const formSchema = z.object({
   created_at: z.string(),
   updated_at: z.string(),
   balance: z.number(),
+  referral_profit: z.number(),
+  referral_id: z.string(),
 });
 function User() {
+  const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -59,9 +64,12 @@ function User() {
       created_at: moment().format("YYYY-MM-DD"),
       updated_at: moment().format("YYYY-MM-DD"),
       balance: 0,
+      referral_profit: 0,
+      referral_id: "",
     },
   });
   const handleReset = () => {
+    
     form.reset({
       nation_id: "",
       email: "",
@@ -75,6 +83,24 @@ function User() {
   };
   async function onSubmit(data: z.infer<typeof formSchema>) {
     
+    let newBalance:number= 0
+    if(data.package === "Bronze"){
+      newBalance = 150 
+    }else if(data.package === "Bronze Plus"){
+      newBalance = 300
+    }else if(data.package === "Gold"){
+      newBalance = 600
+    }else if(data.package === "Gold Plus"){
+      newBalance = 1200
+    }else if(data.package === "Platinum"){
+      newBalance = 9600
+    }else if(data.package === "Platinum Plus"){
+      newBalance = 19200
+    }else if(data.package === "Diamond"){
+      newBalance = 2400
+    }else if(data.package === "Diamond Plus"){
+      newBalance = 4800
+    }
     try {
       const res = await fetch("/api/create_users", {
         method: "POST",
@@ -93,7 +119,9 @@ function User() {
           role: data.role,
           created_at: data.created_at,
           updated_at: data.updated_at,
-          balance: 0,
+          balance: newBalance,
+          referral_profit: 0,
+          referral_id: "",
         }),
       });
 
@@ -107,6 +135,7 @@ function User() {
     }
 
     handleReset();
+    router.refresh();
   }
 
   return (
@@ -115,9 +144,9 @@ function User() {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="w-max-full gap-8 space-y-8"
+            className="w-max-full gap-8 space-y-10"
           >
-            <div className="w-80 gap-4">
+            <div className="w-80 gap-4 space-y-4">
               <FormField
                 control={form.control}
                 name="nation_id"
@@ -157,7 +186,7 @@ function User() {
                   </FormItem>
                 )}
               />
-               <FormField
+              <FormField
                 control={form.control}
                 name="country"
                 render={({ field }) => (
@@ -183,7 +212,7 @@ function User() {
                   </FormItem>
                 )}
               />
-             
+
               <FormField
                 control={form.control}
                 name="phone"
@@ -226,15 +255,17 @@ function User() {
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent className="bg-white">
-                        <SelectItem value="Gold">Gold</SelectItem>
-                        <SelectItem value="Gold Plus">Gold Plus</SelectItem>
-                        <SelectItem value="Diamond">Diamond</SelectItem>
+                        <SelectItem value="Bronze">Bronze $150</SelectItem>
+                        <SelectItem value="Bronze Plus">Bronze Plus $300</SelectItem>
+                        <SelectItem value="Gold">Gold $600</SelectItem>
+                        <SelectItem value="Gold Plus">Gold Plus $1200</SelectItem>
+                        <SelectItem value="Diamond">Diamond $2400</SelectItem>
                         <SelectItem value="Diamond Plus">
-                          Diamond Plus
+                          Diamond Plus $4800
                         </SelectItem>
-                        <SelectItem value="Platinum">Platinum</SelectItem>
+                        <SelectItem value="Platinum">Platinum $9600</SelectItem>
                         <SelectItem value="Platinum Plus">
-                          Platinum Plus
+                          Platinum Plus $19200
                         </SelectItem>
                       </SelectContent>
                     </Select>

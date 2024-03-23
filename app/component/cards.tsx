@@ -1,6 +1,7 @@
-import { Card } from '@tremor/react'
-import React from 'react'
-import Chart from './chart'
+"use client";
+import { Card } from "@tremor/react";
+import React from "react";
+import Chart from "./chart";
 
 function CardsUser({ users }: any) {
   return (
@@ -23,24 +24,32 @@ function CardsUser({ users }: any) {
         </Card>
         <Card className="p-8 shadow-md grid items-center gap-8 bg-green-400">
           <div className="col-span-2 text-lg">Referrral Profit</div>
-          <div className="col-span-1  text-4xl">$0</div>
+          <div className="col-span-1  text-4xl">${users.referral_profit}</div>
         </Card>
         <Card className="p-8 shadow-md grid  items-center gap-8 bg-blue-400">
           <div className="col-span-2 text-lg">Total Earnings</div>
-          <div className="col-span-1  text-4xl">$0</div>
+          <div className="col-span-1  text-4xl">
+            ${users.balance}+${users.referral_profit}
+          </div>
         </Card>
         <Card className="p-8 shadow-md grid  items-center gap-8">
           <div className="col-span-2 text-lg">Total Referral Count</div>
-          <div className="col-span-1  text-4xl">$0</div>
+          <div className="col-span-1 text-4xl">$0</div>
         </Card>
-        <Card className="p-8 shadow-md grid  items-center text-lg">Total Earning</Card>
-        <Card className="p-8 shadow-md grid  items-center text-lg">Total Profit</Card>
+        <Card className="p-8 shadow-md grid  items-center text-lg">
+          <div className="col-span-2 text-lg">Total Earning</div>
+          <div className="col-span-1 text-4xl">$0</div>
+        </Card>
+        <Card className="p-8 shadow-md grid  items-center text-lg">
+          <div className="col-span-2 text-lg">Total Profit</div>
+          <div className="col-span-1 text-4xl">$0</div>
+        </Card>
       </div>
       <div className="">
         <Chart />
       </div>
     </div>
-  )
+  );
 }
 
-export default CardsUser
+export default CardsUser;
