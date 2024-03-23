@@ -56,6 +56,7 @@ class userBase(SQLModel):
     created_at: str
     updated_at: str
     balance : Decimal = Field(default = 0.00)
+    referral_profit: Decimal = Field(default = 0.00)
     referral_id : str 
 
     
