@@ -2,7 +2,7 @@
 import { Card } from "@tremor/react";
 import React from "react";
 import Chart from "./chart";
-
+ 
 function CardsUser({ users }: any) {
   return (
     <div className="space-y-4">
