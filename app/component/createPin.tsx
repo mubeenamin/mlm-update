@@ -15,11 +15,11 @@ import { Input } from "@/components/ui/input";
 import { z } from "zod";
 
 const FormSchema = z.object({
-  account_number: z.string().min(2, {
-    message: "Account number must be at least 2 characters.",
+  create_pin: z.string().min(4, {
+    message: "Create pin must be at least 4 characters.",
   }),
-  Amount: z.string().min(2, {
-    message: "Amount must be at least 2 characters.",
+  confirm_pin: z.string().min(4, {
+    message: "Confirm pin must be at least 4 characters.",
   }),
 });
 
@@ -27,12 +27,13 @@ const onSubmit = (data: z.infer<typeof FormSchema>) => {
   console.log(data);
 };
 
-function FundTransfer() {
+function CreatePin() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
       
-      account_number: "",
+      create_pin: "",
+      confirm_pin: "",
     },
   });
 
@@ -43,17 +44,17 @@ function FundTransfer() {
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex flex-col gap-5 p-5"
         >
-          <h1 className="text-2xl font-bold ">Fund Transfer</h1>
+          <h1 className="text-2xl font-bold ">Create Pin</h1>
           <div className="w-70 space-y-4 gap-4">
           <FormField
           
                 control={form.control}
-                name="account_number"
+                name="create_pin"
                 render={({ field }) => (
                   <FormItem className="gap-4">
                    
                     <FormControl>
-                      <Input placeholder="Enter Your Account Number" {...field} />
+                      <Input placeholder="Enter your Pin" {...field} />
                     </FormControl>
                     <FormMessage className="text-red-500" />
                   </FormItem>
@@ -61,12 +62,12 @@ function FundTransfer() {
               />
                <FormField
                 control={form.control}
-                name="Amount"
+                name="confirm_pin"
                 render={({ field }) => (
                   <FormItem className="gap-4">
                    
                     <FormControl>
-                      <Input placeholder="Enter Your Amount" {...field} />
+                      <Input placeholder="Confirm your Pin" {...field} />
                     </FormControl>
                     <FormMessage className="text-red-500" />
                   </FormItem>
@@ -84,4 +85,4 @@ function FundTransfer() {
   );
 }
 
-export default FundTransfer;
+export default CreatePin;

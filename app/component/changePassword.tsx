@@ -15,11 +15,14 @@ import { Input } from "@/components/ui/input";
 import { z } from "zod";
 
 const FormSchema = z.object({
-  account_number: z.string().min(2, {
-    message: "Account number must be at least 2 characters.",
+    old_password: z.string().min(6, {
+        message: "Old password must be at least 2 characters.",
+      }),
+  create_new_password: z.string().min(6, {
+    message: "New password must be at least 2 characters.",
   }),
-  Amount: z.string().min(2, {
-    message: "Amount must be at least 2 characters.",
+  confirm_new_password: z.string().min(6, {
+    message: "Confirm new password must be at least 2 characters.",
   }),
 });
 
@@ -27,12 +30,13 @@ const onSubmit = (data: z.infer<typeof FormSchema>) => {
   console.log(data);
 };
 
-function FundTransfer() {
+function ChangePassword() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      
-      account_number: "",
+      old_password: "",
+      create_new_password: "",
+      confirm_new_password: "",
     },
   });
 
@@ -43,17 +47,31 @@ function FundTransfer() {
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex flex-col gap-5 p-5"
         >
-          <h1 className="text-2xl font-bold ">Fund Transfer</h1>
+          <h1 className="text-2xl font-bold ">Password Change</h1>
           <div className="w-70 space-y-4 gap-4">
           <FormField
           
+          control={form.control}
+          name="old_password"
+          render={({ field }) => (
+            <FormItem className="gap-4">
+             
+              <FormControl>
+                <Input placeholder="Enter your Old Password" {...field} />
+              </FormControl>
+              <FormMessage className="text-red-500" />
+            </FormItem>
+          )}
+        />
+          <FormField
+          
                 control={form.control}
-                name="account_number"
+                name="create_new_password"
                 render={({ field }) => (
                   <FormItem className="gap-4">
                    
                     <FormControl>
-                      <Input placeholder="Enter Your Account Number" {...field} />
+                      <Input placeholder="Enter your New Password" {...field} />
                     </FormControl>
                     <FormMessage className="text-red-500" />
                   </FormItem>
@@ -61,12 +79,12 @@ function FundTransfer() {
               />
                <FormField
                 control={form.control}
-                name="Amount"
+                name="confirm_new_password"
                 render={({ field }) => (
                   <FormItem className="gap-4">
                    
                     <FormControl>
-                      <Input placeholder="Enter Your Amount" {...field} />
+                      <Input placeholder="Confirm Password" {...field} />
                     </FormControl>
                     <FormMessage className="text-red-500" />
                   </FormItem>
@@ -84,4 +102,4 @@ function FundTransfer() {
   );
 }
 
-export default FundTransfer;
+export default ChangePassword;

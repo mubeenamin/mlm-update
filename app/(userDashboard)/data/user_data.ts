@@ -14,7 +14,7 @@ export const user_data = [
   },
   {
     name: "FUND TRANSFER",
-    href: "/fundTransfer",
+    href: "/user-fundTransfer",
   },
   {
     name: "ACCOUNT HISTORY",

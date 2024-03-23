@@ -157,6 +157,19 @@ function User() {
                   </FormItem>
                 )}
               />
+               <FormField
+                control={form.control}
+                name="country"
+                render={({ field }) => (
+                  <FormItem className="gap-4">
+                    <FormLabel>Country</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter Your Country" {...field} />
+                    </FormControl>
+                    <FormMessage className="text-red-500" />
+                  </FormItem>
+                )}
+              />
               <FormField
                 control={form.control}
                 name="city"
@@ -170,19 +183,7 @@ function User() {
                   </FormItem>
                 )}
               />
-              <FormField
-                control={form.control}
-                name="country"
-                render={({ field }) => (
-                  <FormItem className="gap-4">
-                    <FormLabel>Country</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Enter Your Country" {...field} />
-                    </FormControl>
-                    <FormMessage className="text-red-500" />
-                  </FormItem>
-                )}
-              />
+             
               <FormField
                 control={form.control}
                 name="phone"
