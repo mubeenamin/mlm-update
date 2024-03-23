@@ -25,13 +25,13 @@ const FormSchema = z.object({
 
 const onSubmit = (data: z.infer<typeof FormSchema>) => {
   console.log(data);
+
 };
 
 function CreatePin() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      
       create_pin: "",
       confirm_pin: "",
     },
