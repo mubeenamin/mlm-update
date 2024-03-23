@@ -4,35 +4,12 @@ from typing import Optional
 from decimal import Decimal
 
 
-
-
-class ReferralBase(SQLModel):
-    referral_code : str 
-    # user_id : Optional[int] = Field(default = None , foreign_key = "user.id")
-
-    
-
-class Referral(ReferralBase , table = True):
-    id : Optional[int] = Field(default = None , primary_key = True)
-    user : Optional["User"] = Relationship(back_populates = "referral")
-    
-
-class ReferralCreate(ReferralBase):
-    pass
-
-class ReferralRead(ReferralBase):
-    id : int
-
-class ReferralUpdate(ReferralBase):
-    referral_id : Optional[str]
-
-
 class withdrawalBase(SQLModel):
     withdrawal_amount : str 
     status : str
     user_id : Optional[int] = Field(default = None , foreign_key = "user.id")
-   
-
+    
+    
 class Withdrawal(withdrawalBase , table = True):
     id : Optional[int] = Field(default = None , primary_key = True)
     user : Optional["User"] = Relationship(back_populates = "withdrawal")
@@ -66,27 +43,6 @@ class PinRead(pinBase):
 class PinUpdate(pinBase):
     pin_id : str
 
-class daily_profitBase(SQLModel):
-    daily_profit : Decimal = Field(default = 0.00)
-    value_to_update : Decimal = Field(default = 0.00)
-    last_updated : datetime = Field(default = datetime.now())
-    
-    user_id : Optional[int] = Field(default = None , foreign_key = "user.id")
-
-class Daily_profit(daily_profitBase , table = True):
-    id : Optional[int] = Field(default = None , primary_key = True)
-    user : Optional["User"] = Relationship(back_populates = "daily_profit")
-
-class Daily_profitRead(daily_profitBase):
-    id : int
-
-class Daily_profitCreate(daily_profitBase):
-    pass
-
-class Daily_profitUpdate(daily_profitBase):
-    daily_profit : str
-
-
 class userBase(SQLModel):
     nation_id : str
     email : str 
@@ -100,15 +56,14 @@ class userBase(SQLModel):
     created_at: str
     updated_at: str
     balance : Decimal = Field(default = 0.00)
-    referral_id : Optional[int] = Field(default = None , foreign_key = "referral.id") 
+    referral_id : str 
 
     
 class User(userBase , table = True):
     id : Optional[int] = Field(default = None , primary_key = True)
     withdrawal : Optional[Withdrawal] = Relationship(back_populates = "user")
     pin : Optional[Pin] = Relationship(back_populates = "user")
-    referral : Optional[Referral] = Relationship(back_populates = "user")
-    daily_profit : Optional[Daily_profit] = Relationship(back_populates = "user")
+    
 
 
 class UserCreate(userBase):
@@ -135,7 +90,6 @@ class UserUpdate(userBase):
 class UserWithAll(UserRead):
     withdrawal : WithdrawalRead
     pin : PinRead
-    referral : ReferralRead
     
     
 

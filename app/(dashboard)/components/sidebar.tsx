@@ -38,7 +38,7 @@ export function SideBar({ children }: any) {
                 <Link
                   href={value.href}
                   key={i}
-                  className="flex items-center gap-3 hover:underline underline-offset-4  px-6 py-3 text-gray-900  transition-all hover:text-gray-900 "
+                  className="flex items-center gap-3 hover:bg-gray-200/50  px-6 py-3 text-gray-900  transition-all hover:text-gray-900 "
                 >
                   <span>{value.name}</span>
                 </Link>

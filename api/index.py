@@ -139,65 +139,7 @@ def delete_user(session : Annotated[Session, Depends(get_db)] , user_id : int):
     session.commit()
     return {"message" : "User deleted"}
 
-# get all the referrals
-
-
-@app.get("/api/referrals" , response_model=list[Referral])
-def get_referrals(session : Annotated[Session, Depends(get_db)]):
-    referrals = session.exec(select(Referral)).all()
-    return referrals
-
-# get single referral by id
-
-
-@app.get("/api/single_referral/{referral_id}" , response_model=Referral)
-def get_referral_by_id(session : Annotated[Session, Depends(get_db)] , referral_id : int):
-    referral = session.get(Referral , referral_id)
-    if not referral:
-        raise HTTPException(status_code=404 , detail="Referral not found")
-    return referral
-
-# create a new referral
-
-
-@app.post("/api/create_referral" , response_model=Referral)
-def create_referral(session : Annotated[Session, Depends(get_db)] , referral : ReferralCreate):
-    db_referral = Referral.model_validate(referral)
-    session.add(db_referral)
-    session.commit()
-    session.refresh(db_referral)
-    return db_referral
-
-# update referral
-
-
-@app.put("/api/update_referral/{referral_id}")
-def update_referral(referral_id : int , referral : ReferralUpdate , session : Annotated[Session, Depends(get_db)]):
-    referral_to_update = session.get(Referral , referral_id)
-    if not referral_to_update:
-        raise HTTPException(status_code=404 , detail="Referral not found")
-    referral_to_update.referral_code = referral.referral_code
-
-    session.add(referral_to_update)
-    session.commit()
-    session.refresh(referral_to_update)
-    return referral_to_update
-
-# delete referral
-
-
-@app.delete("/api/delete_referral/{referral_id}")
-def delete_referral(session : Annotated[Session, Depends(get_db)] , referral_code : int):
-    db_referral = session.get(Referral , referral_code)
-    if not db_referral:
-        raise HTTPException(status_code=404 , detail="Referral not found")
-    session.delete(db_referral)
-    session.commit()
-    return {"message" : "Referral deleted"}
-
 # get all the withdrawals
-
-
 @app.get("/api/withdrawals" , response_model=list[Withdrawal])
 def get_withdrawals(session : Annotated[Session, Depends(get_db)]):
     withdrawals = session.exec(select(Withdrawal)).all()
@@ -312,15 +254,3 @@ def delete_pin(session : Annotated[Session, Depends(get_db)] , pin_id : int):
 
 
 
-@app.post("/api/create_profit_user" , response_model=Daily_profit)
-def create_profit_user(session : Annotated[Session, Depends(get_db)] , profit_user : Daily_profitCreate ):
-    db_profit_user = Daily_profit.model_validate(profit_user)
-    session.add(db_profit_user)
-    session.commit()
-    session.refresh(db_profit_user)
-    return db_profit_user
-
-@app.get("/api/profit_users" , response_model=list[Daily_profit])
-def get_profit_users(session : Annotated[Session, Depends(get_db)]):
-    profit_users = session.exec(select(Daily_profit)).all()
-    return profit_users
