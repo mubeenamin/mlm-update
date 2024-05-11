@@ -21,7 +21,7 @@ function CardsUser({ users }: any) {
           Package:<div>{users.package}</div>
         </div>
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         <Card className="p-8 shadow-md grid items-center gap-8 bg-orange-400">
           <div className="col-span-2 text-lg">Daily Profit From Package</div>
           <div className="col-span-1 text-4xl">${users.balance}</div>
@@ -49,9 +49,7 @@ function CardsUser({ users }: any) {
           <div className="col-span-1 text-4xl">$0</div>
         </Card>
       </div>
-      <div className="">
-        <Chart />
-      </div>
+     
     </div>
   );
 }

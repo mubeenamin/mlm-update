@@ -24,25 +24,6 @@ class WithdrawalUpdate(withdrawalBase):
     withdrawal_amount : Optional[str]
 
 
-class pinBase(SQLModel):
-    pin_id : str 
-    user_id : Optional[int] = Field(default = None , foreign_key = "user.id")
-    
-
-
-class Pin(pinBase , table = True):
-    id : Optional[int] = Field(default = None , primary_key = True)
-    user : Optional["User"] = Relationship(back_populates = "pin")
-
-class PinCreate(pinBase):
-    pass
-
-class PinRead(pinBase):
-    id : int
-
-class PinUpdate(pinBase):
-    pin_id : str
-
 class userBase(SQLModel):
     nation_id : str
     email : str 
@@ -63,7 +44,6 @@ class userBase(SQLModel):
 class User(userBase , table = True):
     id : Optional[int] = Field(default = None , primary_key = True)
     withdrawal : Optional[Withdrawal] = Relationship(back_populates = "user")
-    pin : Optional[Pin] = Relationship(back_populates = "user")
     
 
 
@@ -90,7 +70,6 @@ class UserUpdate(userBase):
 
 class UserWithAll(UserRead):
     withdrawal : WithdrawalRead
-    pin : PinRead
     
     
 
