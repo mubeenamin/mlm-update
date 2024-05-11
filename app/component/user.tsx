@@ -46,6 +46,7 @@ const formSchema = z.object({
   balance: z.number(),
   referral_profit: z.number(),
   referral_id: z.string(),
+  pin: z.string(),
 });
 function User() {
   const router = useRouter();
@@ -66,6 +67,7 @@ function User() {
       balance: 0,
       referral_profit: 0,
       referral_id: "",
+      pin: "",
     },
   });
   const handleReset = () => {
@@ -79,6 +81,7 @@ function User() {
       phone: "",
       currency: "USD",
       package: "",
+      pin: "",
     });
   };
   async function onSubmit(data: z.infer<typeof formSchema>) {
@@ -181,6 +184,19 @@ function User() {
                     <FormLabel>Password</FormLabel>
                     <FormControl>
                       <Input placeholder="Enter Password" {...field} />
+                    </FormControl>
+                    <FormMessage className="text-red-500" />
+                  </FormItem>
+                )}
+              />
+               <FormField
+                control={form.control}
+                name="pin"
+                render={({ field }) => (
+                  <FormItem className="gap-4">
+                    <FormLabel>PIN</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter PIN" {...field} />
                     </FormControl>
                     <FormMessage className="text-red-500" />
                   </FormItem>

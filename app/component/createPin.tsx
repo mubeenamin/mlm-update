@@ -23,12 +23,14 @@ const FormSchema = z.object({
   }),
 });
 
-const onSubmit = (data: z.infer<typeof FormSchema>) => {
-  console.log(data);
+// const onSubmit = (data: z.infer<typeof FormSchema>) => {
+//   console.log(data);
 
-};
+// };
 
 function CreatePin() {
+
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -36,6 +38,39 @@ function CreatePin() {
       confirm_pin: "",
     },
   });
+
+  const handleReset = () => {
+    form.reset({
+      create_pin: "",
+      confirm_pin: "",
+    })
+  }
+
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
+   
+    try {
+      const res = await fetch("/api/create_pin", {
+        method: "POST",        
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          pin_id : data.create_pin
+          }),
+      });
+
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      } else {
+        console.log(await res.json());
+      }
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
+
+    handleReset();
+  }
+
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between">

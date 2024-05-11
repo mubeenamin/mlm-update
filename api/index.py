@@ -10,14 +10,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 
 
 
-def update_balance_gold_platinum():
-    with Session(engine) as session:
-        session.exec(update(User).where(User.package.in_(["Bronze" , "Bronze Plus" , "Gold" , "Gold Plus" , "Platinum" , "Platinum Plus" , "Diamond", "Diamond Plus"])).values(balance = User.balance + case({"Bronze" : 1 , "Bronze Plus" : 2 , "Gold" : 4 , "Gold Plus" : 8 , "Platinum" : 64 , "Platinum Plus" : 128 , "Diamond" : 16 , "Diamond Plus" : 32} , value = User.package)))
-        session.commit()
-        return {"message" : "Balance Updated"}
-        
-scheduler = BackgroundScheduler()
-scheduler.add_job(update_balance_gold_platinum , 'interval' , minutes = 1)
+
 
 
 
@@ -48,6 +41,15 @@ async def on_startup():
 
 session : Annotated[Session, Depends(get_db)]
 
+def update_balance_gold_platinum():
+    with Session(engine) as session:
+        session.exec(update(User).where(User.package.in_(["Bronze" , "Bronze Plus" , "Gold" , "Gold Plus" , "Platinum" , "Platinum Plus" , "Diamond", "Diamond Plus"])).values(balance = User.balance + case({"Bronze" : 1 , "Bronze Plus" : 2 , "Gold" : 4 , "Gold Plus" : 8 , "Platinum" : 64 , "Platinum Plus" : 128 , "Diamond" : 16 , "Diamond Plus" : 32} , value = User.package)))
+        session.commit()
+        return {"message" : "Balance Updated"}
+        
+scheduler = BackgroundScheduler()
+scheduler.add_job(update_balance_gold_platinum , 'interval' , minutes = 1)
+
 @app.get("/api/users" , response_model=list[User])
 def get_users(session : Annotated[Session, Depends(get_db)]):
     return session.exec(select(User)).all()
@@ -64,8 +66,7 @@ def get_user_by_id(session : Annotated[Session, Depends(get_db)], id : int):
         raise HTTPException(status_code=404 , detail="User not found")
     return user
 
-# create a new user
-
+# create new User 
 
 @app.post("/api/create_users" , response_model=UserRead)
 def create_user(session : Annotated[Session, Depends(get_db)] , user : UserCreate):
@@ -193,61 +194,7 @@ def delete_withdrawal(session : Annotated[Session, Depends(get_db)] , withdrawal
     session.commit()
     return {"message" : "Withdrawal deleted"}
 
-# get all the pins
 
-
-@app.get("/api/pins" , response_model=list[Pin])
-def get_pins(session : Annotated[Session, Depends(get_db)]):
-    pins = session.exec(select(Pin)).all()
-    return pins
-
-# get single pin by id
-
-
-@app.get("/api/single_pin/{pin_id}" , response_model=Pin)
-def get_pin_by_id(session : Annotated[Session, Depends(get_db)] , pin_id : int):
-    pin = session.get(Pin , pin_id)
-    if not pin:
-        raise HTTPException(status_code=404 , detail="Pin not found")
-    return pin
-
-# create a new pin
-
-
-@app.post("/api/create_pin" , response_model=Pin)
-def create_pin(session : Annotated[Session, Depends(get_db)] , pin : PinCreate):
-    db_pin = Pin.model_validate(pin)
-    session.add(db_pin)
-    session.commit()
-    session.refresh(db_pin)
-    return db_pin
-
-# update pin
-
-
-@app.put("/api/update_pin/{pin_id}")
-def update_pin(pin_id : int , pin : PinUpdate , session : Annotated[Session, Depends(get_db)]):
-    pin_to_update = session.get(Pin , pin_id)
-    if not pin_to_update:
-        raise HTTPException(status_code=404 , detail="Pin not found")
-    pin_to_update.pin_id = pin.pin_id
-
-    session.add(pin_to_update)
-    session.commit()
-    session.refresh(pin_to_update)
-    return pin_to_update
-
-# delete pin
-
-
-@app.delete("/api/delete_pin/{pin_id}")
-def delete_pin(session : Annotated[Session, Depends(get_db)] , pin_id : int):
-    db_pin = session.get(Pin , pin_id)
-    if not db_pin:
-        raise HTTPException(status_code=404 , detail="Pin not found")
-    session.delete(db_pin)
-    session.commit()
-    return {"message" : "Pin deleted"}
 
 
 
