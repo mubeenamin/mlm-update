@@ -193,63 +193,6 @@ def delete_withdrawal(session : Annotated[Session, Depends(get_db)] , withdrawal
     session.commit()
     return {"message" : "Withdrawal deleted"}
 
-# get all the pins
-
-
-@app.get("/api/pins" , response_model=list[Pin])
-def get_pins(session : Annotated[Session, Depends(get_db)]):
-    pins = session.exec(select(Pin)).all()
-    return pins
-
-# get single pin by id
-
-
-@app.get("/api/single_pin/{pin_id}" , response_model=Pin)
-def get_pin_by_id(session : Annotated[Session, Depends(get_db)] , pin_id : int):
-    pin = session.get(Pin , pin_id)
-    if not pin:
-        raise HTTPException(status_code=404 , detail="Pin not found")
-    return pin
-
-# create a new pin
-
-
-@app.post("/api/create_pin" , response_model=Pin)
-def create_pin(session : Annotated[Session, Depends(get_db)] , pin : PinCreate):
-    db_pin = Pin.model_validate(pin)
-    session.add(db_pin)
-    session.commit()
-    session.refresh(db_pin)
-    return db_pin
-
-# update pin
-
-
-@app.put("/api/update_pin/{pin_id}")
-def update_pin(pin_id : int , pin : PinUpdate , session : Annotated[Session, Depends(get_db)]):
-    pin_to_update = session.get(Pin , pin_id)
-    if not pin_to_update:
-        raise HTTPException(status_code=404 , detail="Pin not found")
-    pin_to_update.pin_id = pin.pin_id
-
-    session.add(pin_to_update)
-    session.commit()
-    session.refresh(pin_to_update)
-    return pin_to_update
-
-# delete pin
-
-
-@app.delete("/api/delete_pin/{pin_id}")
-def delete_pin(session : Annotated[Session, Depends(get_db)] , pin_id : int):
-    db_pin = session.get(Pin , pin_id)
-    if not db_pin:
-        raise HTTPException(status_code=404 , detail="Pin not found")
-    session.delete(db_pin)
-    session.commit()
-    return {"message" : "Pin deleted"}
-
-
 
 
 
