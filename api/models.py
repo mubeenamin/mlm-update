@@ -40,6 +40,9 @@ class userBase(SQLModel):
     referral_profit: Decimal = Field(default = 0.00)
     referral_id : str 
 
+    pin : Optional[str] 
+
+
     
 class User(userBase , table = True):
     id : Optional[int] = Field(default = None , primary_key = True)
