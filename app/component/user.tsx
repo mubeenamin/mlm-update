@@ -114,6 +114,7 @@ function User() {
           phone: data.phone,
           currency: data.currency,
           country: data.country,
+          pin:"",
           city: data.city,
           package: data.package,
           role: data.role,
