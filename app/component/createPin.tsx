@@ -3,6 +3,16 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogClose,
+} from "@/components/ui/dialog";
+import {
   Form,
   FormControl,
   FormDescription,
@@ -24,8 +34,7 @@ const FormSchema = z.object({
 });
 
 const onSubmit = (data: z.infer<typeof FormSchema>) => {
-  console.log(data);
-
+  console.log(data)
 };
 
 function CreatePin() {
@@ -38,50 +47,62 @@ function CreatePin() {
   });
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between">
-      <Form {...form} >
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col gap-5 p-5"
-        >
-          <h1 className="text-2xl font-bold ">Create Pin</h1>
-          <div className="w-70 space-y-4 gap-4">
-          <FormField
-          
-                control={form.control}
-                name="create_pin"
-                render={({ field }) => (
-                  <FormItem className="gap-4">
-                   
-                    <FormControl>
-                      <Input placeholder="Enter your Pin" {...field} />
-                    </FormControl>
-                    <FormMessage className="text-red-500" />
-                  </FormItem>
-                )}
-              />
-               <FormField
-                control={form.control}
-                name="confirm_pin"
-                render={({ field }) => (
-                  <FormItem className="gap-4">
-                   
-                    <FormControl>
-                      <Input placeholder="Confirm your Pin" {...field} />
-                    </FormControl>
-                    <FormMessage className="text-red-500" />
-                  </FormItem>
-                )}
-              />
-          </div>
-          <div>
-          <Button type="submit" className="bg-red-500/70">
-                  Submit
-                </Button>
-          </div>
-        </form>
-      </Form>
-    </main>
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button variant="outline">Create pin</Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader className="text-white">
+          <DialogTitle>Create pin</DialogTitle>
+          <DialogDescription>
+            Create your account pin
+          </DialogDescription>
+        </DialogHeader>
+        <Form {...form} >
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-8 text-white"
+          >
+            <FormField
+              control={form.control}
+              name="create_pin"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Create pin</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Create pin" {...field} />
+                  </FormControl>
+                  <FormDescription>
+                    Create your account pin
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="confirm_pin"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Confirm pin</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Confirm pin" {...field} />
+                  </FormControl>
+                  <FormDescription>
+                    Confirm your account pin
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button type="submit">Submit</Button>
+          </form>
+        </Form>
+        <DialogClose asChild>
+          <Button className="text-white" variant="ghost">Close</Button>
+        </DialogClose>  
+      </DialogContent>
+    </Dialog>
   );
 }
 

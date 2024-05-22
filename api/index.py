@@ -17,7 +17,7 @@ def update_balance_gold_platinum():
         return {"message" : "Balance Updated"}
         
 scheduler = BackgroundScheduler()
-scheduler.add_job(update_balance_gold_platinum , 'interval' , minutes = 1)
+scheduler.add_job(update_balance_gold_platinum , 'interval' , minutes = 60)
 
 
 
@@ -77,6 +77,15 @@ def create_user(session : Annotated[Session, Depends(get_db)] , user : UserCreat
 
 
 # get login user
+
+
+@app.get("/api/login_users")
+def login_user(session: Annotated[Session, Depends(get_db)], email: str, password: str):
+    user = session.exec(select(User).where(User.email == email, User.password == password)).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    return {"user": user}
+
 
 
 @app.get("/api/login_users" , response_model=UserRead)

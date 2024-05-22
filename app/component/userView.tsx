@@ -68,7 +68,7 @@ function UserView() {
                 <TableCell>{user.phone}</TableCell>
                 <TableCell>{user.package}</TableCell>
                 <TableCell>{user.currency}</TableCell>
-                <TableCell>{user.pin_id}</TableCell>
+                <TableCell>{user.pin}</TableCell>
               </TableRow>
             ))}
           </TableBody>
