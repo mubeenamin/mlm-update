@@ -40,7 +40,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
 @app.on_event("startup")
 async def on_startup():
     create_db_and_tables()
@@ -85,27 +84,6 @@ def login_user(session: Annotated[Session, Depends(get_db)], email: str, passwor
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     return {"user": user}
-
-
-
-@app.get("/api/login_users" , response_model=UserRead)
-def get_login_user(session : Annotated[Session, Depends(get_db)] , email : str , password : str):
-    user = session.exec(select(User).where(User.email == email , User.password == password)).first()
-    if not user:
-        raise HTTPException(status_code=404 , detail="User not found")
-    return user
-
-
-
-# @app.put("/api/update_balance_gold_platinum")
-# def update_balance_gold_platinum():
-#     with Session(engine) as session:
-#         session.exec(update(User).where(User.package.in_(["Gold" , "Gold Plus" , "Platinum" , "Platinum Plus"])).values(balance = User.balance + case({"Gold" : User.balance*0.01 , "Gold Plus" : 1 , "Platinum" : 2 , "Platinum Plus" : 2} , value = User.package)))
-#         session.commit()
-#         return {"message" : "Balance Updated"}
-
-
-
 
 # update user
 

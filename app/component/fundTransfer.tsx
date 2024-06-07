@@ -44,7 +44,7 @@ function FundTransfer() {
           className="flex flex-col gap-5 p-5"
         >
           <h1 className="text-2xl font-bold ">Fund Transfer</h1>
-          <div className="w-70 space-y-4 gap-4">
+          <div className="w-96 space-y-4 gap-4">
           <FormField
           
                 control={form.control}
@@ -53,7 +53,7 @@ function FundTransfer() {
                   <FormItem className="gap-4">
                    
                     <FormControl>
-                      <Input placeholder="Enter Your Account Number" {...field} />
+                      <Input placeholder="Enter user id" {...field} />
                     </FormControl>
                     <FormMessage className="text-red-500" />
                   </FormItem>

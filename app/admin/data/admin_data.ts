@@ -1,37 +1,52 @@
-export const user_data = [
+export const admin_data = [
   {
     name: "HOME",
-    href: "/userDashboard",
+    href: "/admin/dashboard",
   },
   {
     name: "CREATE USER ACCOUNT",
-    href: "/userCreate",
+    href: "/admin/createUser",
   },
-
   {
     name: "DAILY CREATED ACCOUNTS LIST ",
-    href: "/",
+    href: "/admin/dailyAccounts",
   },
   {
     name: "FUND TRANSFER",
-    href: "/user-fundTransfer",
+    href: "/admin/fundTransfer",
   },
   {
     name: "ACCOUNT HISTORY",
-    href: "/accountHistory",
+    href: "/admin/accountHistory",
   },
   {
     name: "All ACCOUNTS HISTORY",
-    href: "/allAccountHistory",
+    href: "/admin/allAccountHistory",
+  },
+  {
+    name: "PASSWORD CHANGE",
+    href: "/admin/passwordChange",
+  },
+  {
+    name: "PIN CHANGE",
+    href: "/admin/pinChange",
+  },
+  {
+    name: "MESSAGE",
+    href: "/admin/message",
+  },
+  {
+    name: "DEACTIVATE ACCOUNT",
+    href: "/admin/deactivateAccount",
   },
   {
     name: "NOTIFICATION",
-    href: "/notification",
+    href: "/admin/notification",
   },
   {
     name: "CASH WITHDRAWAL",
-    href: "/cashWithdrawal",
-  },
+    href: "/admin/cashWithdrawal",
+  }
 ];
 
 export const submit_Form_data = [
@@ -70,34 +85,5 @@ export const submit_Form_data = [
     placeHolder:"Enter Refferal Id",
     defaultValue: "refferral_id",
   },
-  // {
-  //   name: "National Id",
-  //   placeHolder:"Enter National Id",
-  //   defaultValue: "/dashboard",
-  // },
-  // {
-  //   name: "National Id",
-  //   placeHolder:"Enter National Id",
-  //   defaultValue: "/dashboard",
-  // },
-  // {
-  //   name: "National Id",
-  //   placeHolder:"Enter National Id",
-  //   defaultValue: "/dashboard",
-  // },
-  // {
-  //   name: "National Id",
-  //   placeHolder:"Enter National Id",
-  //   defaultValue: "/dashboard",
-  // },
-  // {
-  //   name: "National Id",
-  //   placeHolder:"Enter National Id",
-  //   defaultValue: "/dashboard",
-  // },
-  // {
-  //   name: "National Id",
-  //   placeHolder:"Enter National Id",
-  //   defaultValue: "/dashboard",
-  // },
+  
 ];

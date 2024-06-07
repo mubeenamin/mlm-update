@@ -119,10 +119,9 @@ const SignIn = () => {
               {invalidUser && "Wrong email or password"}
             </p>
           </div>
-
           <Button
             type="submit"
-            className="bg-red-500/70 hover:bg-red-500/90 text-white"
+            className="primary"
           >
             {loading ? <>loading....</> : <span>Login</span>}
           </Button>

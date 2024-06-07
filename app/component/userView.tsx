@@ -9,7 +9,7 @@ import {
   TableHeader,
 } from "@/components/ui/table";
 import { Skeleton } from "@/components/ui/skeleton";
-import TableSkeleton from "../(dashboard)/components/tableSkeleton";
+import TableSkeleton from "../admin/components/tableSkeleton";
 function UserView() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
