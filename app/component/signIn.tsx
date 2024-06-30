@@ -39,7 +39,7 @@ const SignIn = () => {
 
         throw new Error(`HTTP error! status: ${res.status}`);
       }
-      
+
       const newdata = await res.json();
       console.log(newdata.user.email);
       if (
@@ -47,13 +47,13 @@ const SignIn = () => {
         data.password === newdata.user.password &&
         newdata.user.role === "admin"
       ) {
-        router.push("/dashboard");
+        router.push("admin/dashboard");
       } else if (
         data.email === newdata.user.email &&
         data.password === newdata.user.password &&
         newdata.user.role === "user"
       ) {
-        router.push(`/${newdata.user.id}`);
+        router.push(`user/${newdata.user.id}`);
       } else {
         setinvalidUser(true);
       }
@@ -77,7 +77,7 @@ const SignIn = () => {
     },
   });
   return (
-    <main className="flex min-h-screen flex-col items-center  justify-between">
+    <main className="flex min-h-screen flex-col items-center justify-between">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -119,10 +119,7 @@ const SignIn = () => {
               {invalidUser && "Wrong email or password"}
             </p>
           </div>
-          <Button
-            type="submit"
-            className="primary"
-          >
+          <Button type="submit" className="primary">
             {loading ? <>loading....</> : <span>Login</span>}
           </Button>
         </form>

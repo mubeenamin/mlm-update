@@ -1,6 +1,5 @@
-from fastapi import FastAPI, Depends, HTTPException, Query, background
+from fastapi import FastAPI, Depends, HTTPException, APIRouter
 from typing import Annotated
-
 from sqlmodel import Session, case, select, update
 from api.db import get_db, create_db_and_tables, engine
 from api.models import *
@@ -51,7 +50,7 @@ session : Annotated[Session, Depends(get_db)]
 def get_users(session : Annotated[Session, Depends(get_db)]):
     return session.exec(select(User)).all()
 
-    
+
 
 #get user by single id 
 
@@ -62,6 +61,8 @@ def get_user_by_id(session : Annotated[Session, Depends(get_db)], id : int):
     if not user:
         raise HTTPException(status_code=404 , detail="User not found")
     return user
+
+
 
 # create a new user
 
