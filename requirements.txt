@@ -8,4 +8,6 @@ python-dotenv
 dateTime
 apscheduler
 python-jose[cryptography]
+
 passlib[bcrypt] 
+

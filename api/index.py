@@ -1,9 +1,5 @@
-from fastapi import FastAPI, Depends, HTTPException, Query, background
+from fastapi import FastAPI, Depends, HTTPException, APIRouter
 from typing import Annotated
-from api.utils import decode_access_token , create_access_token
-from fastapi.security import OAuth2PasswordRequestForm , OAuth2PasswordBearer
-from datetime import datetime, timedelta
-
 from sqlmodel import Session, case, select, update
 from api.db import get_db, create_db_and_tables, engine
 from api.models import *
@@ -30,7 +26,7 @@ scheduler.add_job(update_balance_gold_platinum , 'interval' , minutes = 60)
 
 app = FastAPI()
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/login")
+
 
 
 origins = [
@@ -47,7 +43,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 
 @app.on_event("startup")
 async def on_startup():
@@ -71,6 +66,8 @@ def get_user_by_id(session : Annotated[Session, Depends(get_db)], id : int):
         raise HTTPException(status_code=404 , detail="User not found")
     return user
 
+
+
 # create a new user
 
 
@@ -93,34 +90,9 @@ def login_user(session: Annotated[Session, Depends(get_db)], email: str, passwor
         raise HTTPException(status_code=404, detail="User not found")
     return {"user": user}
 
-#create user with jwt
 
 
-@app.post("/api/create_users_jwt")
-def create_user_jwt(session: Annotated[Session, Depends(get_db)], user: UserCreate):
-    db_user = User.model_validate(user)
-    session.add(db_user)
-    session.commit()
-    session.refresh(db_user)
-    access_token_expires = timedelta(minutes=30)
-    access_token = create_access_token(
-        data={"sub": db_user.email}, expires_delta=access_token_expires
-    )
-    return {"access_token": access_token, "token_type": "bearer"}
 
-# get login user with jwt
-
-
-@app.get("/api/login_users_jwt")
-def login_user_jwt(session: Annotated[Session, Depends(get_db)], email: str, password: str):
-    user = session.exec(select(User).where(User.email == email, User.password == password)).first()
-    if not user:
-        raise HTTPException(status_code=404, detail="User not found")
-    access_token_expires = timedelta(minutes=30)
-    access_token = create_access_token(
-        data={"sub": user.email}, expires_delta=access_token_expires
-    )
-    return {"access_token": access_token, "token_type": "bearer"}
 
 
 @app.get("/api/login_users" , response_model=UserRead)
@@ -132,12 +104,6 @@ def get_login_user(session : Annotated[Session, Depends(get_db)] , email : str ,
 
 
 
-# @app.put("/api/update_balance_gold_platinum")
-# def update_balance_gold_platinum():
-#     with Session(engine) as session:
-#         session.exec(update(User).where(User.package.in_(["Gold" , "Gold Plus" , "Platinum" , "Platinum Plus"])).values(balance = User.balance + case({"Gold" : User.balance*0.01 , "Gold Plus" : 1 , "Platinum" : 2 , "Platinum Plus" : 2} , value = User.package)))
-#         session.commit()
-#         return {"message" : "Balance Updated"}
 
 
 
