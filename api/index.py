@@ -1,11 +1,15 @@
 from fastapi import FastAPI, Depends, HTTPException, Query, background
 from typing import Annotated
+from api.utils import decode_access_token , create_access_token
+from fastapi.security import OAuth2PasswordRequestForm , OAuth2PasswordBearer
+from datetime import datetime, timedelta
 
 from sqlmodel import Session, case, select, update
 from api.db import get_db, create_db_and_tables, engine
 from api.models import *
 from fastapi.middleware.cors import CORSMiddleware
 from apscheduler.schedulers.background import BackgroundScheduler
+
 
 
 
@@ -25,6 +29,10 @@ scheduler.add_job(update_balance_gold_platinum , 'interval' , minutes = 60)
 
 
 app = FastAPI()
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/login")
+
+
 origins = [
 
     "http://localhost",
@@ -52,7 +60,6 @@ session : Annotated[Session, Depends(get_db)]
 def get_users(session : Annotated[Session, Depends(get_db)]):
     return session.exec(select(User)).all()
 
-    
 
 #get user by single id 
 
@@ -86,6 +93,34 @@ def login_user(session: Annotated[Session, Depends(get_db)], email: str, passwor
         raise HTTPException(status_code=404, detail="User not found")
     return {"user": user}
 
+#create user with jwt
+
+
+@app.post("/api/create_users_jwt")
+def create_user_jwt(session: Annotated[Session, Depends(get_db)], user: UserCreate):
+    db_user = User.model_validate(user)
+    session.add(db_user)
+    session.commit()
+    session.refresh(db_user)
+    access_token_expires = timedelta(minutes=30)
+    access_token = create_access_token(
+        data={"sub": db_user.email}, expires_delta=access_token_expires
+    )
+    return {"access_token": access_token, "token_type": "bearer"}
+
+# get login user with jwt
+
+
+@app.get("/api/login_users_jwt")
+def login_user_jwt(session: Annotated[Session, Depends(get_db)], email: str, password: str):
+    user = session.exec(select(User).where(User.email == email, User.password == password)).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    access_token_expires = timedelta(minutes=30)
+    access_token = create_access_token(
+        data={"sub": user.email}, expires_delta=access_token_expires
+    )
+    return {"access_token": access_token, "token_type": "bearer"}
 
 
 @app.get("/api/login_users" , response_model=UserRead)
