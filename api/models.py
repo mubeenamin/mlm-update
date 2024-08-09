@@ -4,25 +4,6 @@ from typing import Optional
 from decimal import Decimal
 
 
-class withdrawalBase(SQLModel):
-    withdrawal_amount : str 
-    status : str
-    user_id : Optional[int] = Field(default = None , foreign_key = "user.id")
-    
-    
-class Withdrawal(withdrawalBase , table = True):
-    id : Optional[int] = Field(default = None , primary_key = True)
-    user : Optional["User"] = Relationship(back_populates = "withdrawal")
-
-class WithdrawalCreate(withdrawalBase):
-    pass
-
-class WithdrawalRead(withdrawalBase):
-    id : int
-
-class WithdrawalUpdate(withdrawalBase):
-    withdrawal_amount : Optional[str]
-
 
 class userBase(SQLModel):
     nation_id : str
@@ -36,27 +17,18 @@ class userBase(SQLModel):
     role : str
     created_at: str
     updated_at: str
-    balance : Decimal = Field(default = 0.00)
-    referral_profit: Decimal = Field(default = 0.00)
-    referral_id : str 
-
-    pin : Optional[str] 
-
-
     
 class User(userBase , table = True):
-    id : Optional[int] = Field(default = None , primary_key = True)
-    withdrawal : Optional[Withdrawal] = Relationship(back_populates = "user")
+    id : Optional[int] = Field(default = None , primary_key = True, index=True)
+    Balance : Optional["Balance"] = Relationship(back_populates="user") 
+    Withdrawals : list['Withdrawal'] = Relationship(back_populates="user")
+    Pin : Optional["Pin"] = Relationship(back_populates="user")
+    DirectRefferal : Optional["DirectRefferal"] = Relationship(back_populates="user")
+    InDirectRefferal : list["InDirectRefferal"] = Relationship(back_populates="user")
+    
     
 
-
-class UserCreate(userBase):
-    pass
-
-class UserRead(userBase):
-    id : int
-
-class UserUpdate(userBase):
+class UserUpdate(SQLModel):
     nation_id : Optional[str]
     email : Optional[str]
     password : Optional[str]
@@ -69,10 +41,78 @@ class UserUpdate(userBase):
     created_at: Optional[str]
     updated_at: Optional[str]
     balance : Optional[Decimal]
+
+class UserCreate(userBase):
+    pass
+
+
+class balanceBase(SQLModel):
+    user_id : int
+    balance : Decimal
+    user_id : Optional[int] = Field(default = None , foreign_key = "user.id")
+    
+class BalanceCreate(balanceBase):
+    pass
+    
+class Balance(balanceBase , table = True):
+    id : Optional[int] = Field(default = None , primary_key = True, index=True)
+    user : Optional["User"] = Relationship(back_populates = "Balance")
+
+class WithdrawalBase(SQLModel):
+    withdrawal_amount : str
+    status : str
+    user_id : Optional[int] = Field(default = None , foreign_key = "user.id")
+    
+class WithdrawalCreate(WithdrawalBase):
+    pass
+
+class Withdrawal(WithdrawalBase , table = True):
+    id : Optional[int] = Field(default = None , primary_key = True, index=True)
+    user : Optional["User"] = Relationship(back_populates = "Withdrawals")
+    
+    
+class WithdrawalUpdate(SQLModel):
+    status : Optional[str]
+
+class pinBase(SQLModel):
+    pin : str
+    user_id : Optional[int] = Field(default = None , foreign_key = "user.id")
+    
+class PinCreate(pinBase):
+    pass
+
+class Pin(pinBase , table = True):
+    id : Optional[int] = Field(default = None , primary_key = True, index=True)
+    user : Optional["User"] = Relationship(back_populates = "Pin")
+    
+class PinUpdate(SQLModel):
+    pin : Optional[str]
+
+
+class directRefferalBase(SQLModel):
+    refferal_id : str
+    user_id : Optional[int] = Field(default = None , foreign_key = "user.id")
+
+class DirectRefferalCreate(directRefferalBase):
+    pass
+
+class DirectRefferal(directRefferalBase , table = True):
+    id : Optional[int] = Field(default = None , primary_key = True, index=True)
+    user : Optional["User"] = Relationship(back_populates = "DirectRefferal")
     
 
-class UserWithAll(UserRead):
-    withdrawal : WithdrawalRead
-    
+class inDirectRefferalBase(SQLModel):
+    user_id : Optional[int] = Field(default = None , foreign_key = "user.id")
+
+class InDirectRefferalCreate(inDirectRefferalBase):
+    pass
+
+class InDirectRefferal(inDirectRefferalBase , table = True):
+    id : Optional[int] = Field(default = None , primary_key = True, index=True)
+    user : Optional["User"] = Relationship(back_populates = "InDirectRefferal")
     
 
+
+class Token(SQLModel):
+    access_token: str
+    token_type: str
