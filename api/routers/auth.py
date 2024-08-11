@@ -5,8 +5,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 from jose import jwt
 from dotenv import load_dotenv
 from sqlmodel import select
-from sqlalchemy.orm import selectinload
-from api.models import User, UserCreate, Token, UserRead
+from api.models import User, Token
 from api.dep import bcrypt_context, db_dependency
 
 
@@ -40,27 +39,7 @@ def create_access_token(username: str, user_id: int, expires_delta: timedelta | 
     return jwt.encode(encode, SECRET_KEY, algorithm=ALGORITHM)
 
 
-@router.post("/", status_code=status.HTTP_201_CREATED)
-async def create_user(db: db_dependency , user: UserCreate):
-    # Hash the password
-    hashed_password = bcrypt_context.hash(user.password)
-    
-    # Create a new user instance with the hashed password
-    user_data = user.model_dump()
-    user_data['password'] = hashed_password
-    db_user = User.model_validate(user_data)
-    db.add(db_user)
-    db.commit()
-    db.refresh(db_user)
-    return db_user
 
-
-
-@router.get("/me", response_model=List[UserRead])
-async def get_users(db: db_dependency):
-    statement  = select(User)
-    users = db.exec(statement).all()
-    return users
 
 
 

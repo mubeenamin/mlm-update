@@ -28,11 +28,23 @@ class UserRead(userBase):
     Balances: Optional["Balance"]
     Withdrawals: List["Withdrawal"]
     Pin: Optional["Pin"]
+    referrals: List["Referral"]
 
     
 
-class UserCreate(userBase):
-    pass
+class UserCreate(SQLModel):
+    nation_id : str
+    email : str 
+    password : str
+    phone : str
+    currency : str
+    country : str
+    city : str
+    package : str
+    role : str
+    created_at: str
+    referrer_user_id: int
+    referral_type_name: str
 
 
 class balanceBase(SQLModel):
