@@ -7,8 +7,8 @@ from api.models import User, UserCreate, Token, UserRead, Referral, ReferralType
 
 
 router = APIRouter(
-    prefix="/api/routers/referral_type",
-    tags=["Referral Type"]
+    prefix="/api/routers/user",
+    tags=["User"]
 )
 
 @router.post("/", status_code=status.HTTP_201_CREATED)
