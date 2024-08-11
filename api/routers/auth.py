@@ -1,12 +1,12 @@
 from datetime import timedelta, datetime, timezone
-from typing import Annotated
+from typing import Annotated, List
 from fastapi import APIRouter, Depends, HTTPException, status 
 from fastapi.security import OAuth2PasswordRequestForm
 from jose import jwt
 from dotenv import load_dotenv
 from sqlmodel import select
-import os
-from api.models import User, UserCreate, Token
+from sqlalchemy.orm import selectinload
+from api.models import User, UserCreate, Token, UserRead
 from api.dep import bcrypt_context, db_dependency
 
 
@@ -56,9 +56,11 @@ async def create_user(db: db_dependency , user: UserCreate):
 
 
 
-@router.get("/me", response_model=list[User])
+@router.get("/me", response_model=List[UserRead])
 async def get_users(db: db_dependency):
-    return db.exec(select(User)).all()
+    statement  = select(User)
+    users = db.exec(statement).all()
+    return users
 
 
 

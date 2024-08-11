@@ -14,9 +14,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { z } from "zod";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useRouter } from "next/navigation";
-
+import AuthContext from "../context/AuthContext";
 const FormSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
   password: z.string().min(2, {
@@ -25,44 +25,50 @@ const FormSchema = z.object({
 });
 
 const SignIn = () => {
-  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [invalidUser, setinvalidUser] = useState(false);
-  const onSubmit = async (data: z.infer<typeof FormSchema>) => {
-    console.log(data);
-    try {
-      const res = await fetch(
-        `/api/login_users?email=${data.email}&password=${data.password}`
-      );
-      if (!res.ok) {
-        // res.ok returns false if the HTTP status is not 200-299
+  const { login } = useContext(AuthContext);
+  // const onSubmit = async (data: z.infer<typeof FormSchema>) => {
+  //   console.log(data);
+  //   try {
+  //     const res = await fetch(
+  //       `/api/login_users?email=${data.email}&password=${data.password}`
+  //     );
+  //     if (!res.ok) {
+  //       // res.ok returns false if the HTTP status is not 200-299
 
-        throw new Error(`HTTP error! status: ${res.status}`);
-      }
+  //       throw new Error(`HTTP error! status: ${res.status}`);
+  //     }
 
-      const newdata = await res.json();
-      console.log(newdata.user.email);
-      if (
-        data.email === newdata.user.email &&
-        data.password === newdata.user.password &&
-        newdata.user.role === "admin"
-      ) {
-        router.push("admin/dashboard");
-      } else if (
-        data.email === newdata.user.email &&
-        data.password === newdata.user.password &&
-        newdata.user.role === "user"
-      ) {
-        router.push(`user/${newdata.user.id}`);
-      } else {
-        setinvalidUser(true);
-      }
-      setLoading(true);
-      handleReset();
-    } catch (error) {
-      setinvalidUser(true);
-    }
+  //     const newdata = await res.json();
+  //     console.log(newdata.user.email);
+  //     if (
+  //       data.email === newdata.user.email &&
+  //       data.password === newdata.user.password &&
+  //       newdata.user.role === "admin"
+  //     ) {
+  //       router.push("admin/dashboard");
+  //     } else if (
+  //       data.email === newdata.user.email &&
+  //       data.password === newdata.user.password &&
+  //       newdata.user.role === "user"
+  //     ) {
+  //       router.push(`user/${newdata.user.id}`);
+  //     } else {
+  //       setinvalidUser(true);
+  //     }
+  //     setLoading(true);
+  //     handleReset();
+  //   } catch (error) {
+  //     setinvalidUser(true);
+  //   }
+  // };
+
+  const onSubmit = (data: z.infer<typeof FormSchema>) => {
+    login(data.email, data.password);
+    handleReset();
   };
+
   const handleReset = () => {
     form.reset({
       email: "",

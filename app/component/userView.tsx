@@ -16,7 +16,7 @@ function UserView() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch("/api/users", { mode: "no-cors" });
+        const res = await fetch("/api/routers/auth/me", { mode: "no-cors" });
         if (!res.ok) {
           // res.ok returns false if the HTTP status is not 200-299
           throw new Error(`HTTP error! status: ${res.status}`);
@@ -34,7 +34,7 @@ function UserView() {
     id: "ID",
     national_id: "National ID",
     email: "Email",
-    password:"Password",
+    password: "Password",
     Phone: "Phone",
     package: "Package",
     currency: "Currency",

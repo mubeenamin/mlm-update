@@ -1,6 +1,6 @@
 from datetime import datetime
 from sqlmodel import Field, SQLModel, Relationship
-from typing import Optional
+from typing import Optional, List
 from decimal import Decimal
 
 
@@ -16,38 +16,26 @@ class userBase(SQLModel):
     package : str
     role : str
     created_at: str
-    updated_at: str
     
 class User(userBase , table = True):
     id : Optional[int] = Field(default = None , primary_key = True, index=True)
-    Balance : Optional["Balance"] = Relationship(back_populates="user") 
-    Withdrawals : list['Withdrawal'] = Relationship(back_populates="user")
+    Balances : Optional["Balance"] = Relationship(back_populates="user") 
+    Withdrawals : List['Withdrawal'] = Relationship(back_populates="user")
     Pin : Optional["Pin"] = Relationship(back_populates="user")
-    DirectRefferal : Optional["DirectRefferal"] = Relationship(back_populates="user")
-    InDirectRefferal : list["InDirectRefferal"] = Relationship(back_populates="user")
+    referrals: List["Referral"] = Relationship(back_populates="referrer",sa_relationship_kwargs={"foreign_keys": "[Referral.referrer_user_id]"})
     
-    
+class UserRead(userBase):
+    Balances: Optional["Balance"]
+    Withdrawals: List["Withdrawal"]
+    Pin: Optional["Pin"]
 
-class UserUpdate(SQLModel):
-    nation_id : Optional[str]
-    email : Optional[str]
-    password : Optional[str]
-    phone : Optional[str]
-    currency : Optional[str]
-    country : Optional[str]
-    city : Optional[str]
-    package : Optional[str]
-    role : Optional[str]
-    created_at: Optional[str]
-    updated_at: Optional[str]
-    balance : Optional[Decimal]
+    
 
 class UserCreate(userBase):
     pass
 
 
 class balanceBase(SQLModel):
-    user_id : int
     balance : Decimal
     user_id : Optional[int] = Field(default = None , foreign_key = "user.id")
     
@@ -56,7 +44,7 @@ class BalanceCreate(balanceBase):
     
 class Balance(balanceBase , table = True):
     id : Optional[int] = Field(default = None , primary_key = True, index=True)
-    user : Optional["User"] = Relationship(back_populates = "Balance")
+    user : Optional["User"] = Relationship(back_populates = "Balances")
 
 class WithdrawalBase(SQLModel):
     withdrawal_amount : str
@@ -89,27 +77,17 @@ class PinUpdate(SQLModel):
     pin : Optional[str]
 
 
-class directRefferalBase(SQLModel):
-    refferal_id : str
-    user_id : Optional[int] = Field(default = None , foreign_key = "user.id")
+class ReferralType(SQLModel, table=True):
+    referral_type_id: Optional[int] = Field(default=None, primary_key=True, index=True)
+    referral_type_name: str
 
-class DirectRefferalCreate(directRefferalBase):
-    pass
+class Referral(SQLModel, table=True):
+    referral_id: Optional[int] = Field(default=None, primary_key=True, index=True)
+    referrer_user_id: int = Field(foreign_key = "user.id")
+    referred_user_id: int = Field(foreign_key = "user.id")
+    referral_type_id: Optional[int] = Field(default = None , foreign_key="referraltype.referral_type_id")
 
-class DirectRefferal(directRefferalBase , table = True):
-    id : Optional[int] = Field(default = None , primary_key = True, index=True)
-    user : Optional["User"] = Relationship(back_populates = "DirectRefferal")
-    
-
-class inDirectRefferalBase(SQLModel):
-    user_id : Optional[int] = Field(default = None , foreign_key = "user.id")
-
-class InDirectRefferalCreate(inDirectRefferalBase):
-    pass
-
-class InDirectRefferal(inDirectRefferalBase , table = True):
-    id : Optional[int] = Field(default = None , primary_key = True, index=True)
-    user : Optional["User"] = Relationship(back_populates = "InDirectRefferal")
+    referrer: User = Relationship(back_populates="referrals", sa_relationship_kwargs={"foreign_keys": "[Referral.referrer_user_id]"})
     
 
 
