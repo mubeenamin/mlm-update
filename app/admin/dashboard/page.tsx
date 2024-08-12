@@ -1,10 +1,7 @@
-"use client";
-import User from "@/app/component/user";
 import React from "react";
-import { SideBar } from "../components/sidebar";
-import CreateSingleUser from "@/app/component/createSingleUser";
 import UserView from "@/app/component/userView";
 
+<<<<<<< HEAD
 function Dashboard() {
   return (
     <div className="h-[calc(100vh-96px] rounded-lg p-4 bg-white">
@@ -12,5 +9,10 @@ function Dashboard() {
     </div>
   );
 }
+=======
+import { getUser } from "@/lib/apiCalling";
+>>>>>>> c6427d8b177f041f6aa8c3a945361acfd260e794
 
-export default Dashboard;
+export default async function Dashboard() {
+  return <UserView />;
+}

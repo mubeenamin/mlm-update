@@ -1,12 +1,11 @@
 from datetime import timedelta, datetime, timezone
-from typing import Annotated
+from typing import Annotated, List
 from fastapi import APIRouter, Depends, HTTPException, status 
 from fastapi.security import OAuth2PasswordRequestForm
 from jose import jwt
 from dotenv import load_dotenv
 from sqlmodel import select
-import os
-from api.models import User, UserCreate, Token
+from api.models import User, Token
 from api.dep import bcrypt_context, db_dependency
 
 
@@ -38,31 +37,6 @@ def create_access_token(username: str, user_id: int, expires_delta: timedelta | 
     expires = datetime.now(timezone.utc) + expires_delta
     encode.update({'exp': expires})
     return jwt.encode(encode, SECRET_KEY, algorithm=ALGORITHM)
-
-
-@router.post("/", status_code=status.HTTP_201_CREATED)
-async def create_user(db: db_dependency , user: UserCreate):
-    # Hash the password
-    hashed_password = bcrypt_context.hash(user.password)
-    
-    # Create a new user instance with the hashed password
-    user_data = user.model_dump()
-    user_data['password'] = hashed_password
-    db_user = User.model_validate(user_data)
-    db.add(db_user)
-    db.commit()
-    db.refresh(db_user)
-    return db_user
-
-
-
-@router.get("/me", response_model=list[User])
-async def get_users(db: db_dependency):
-    return db.exec(select(User)).all()
-
-
-
-
 
 
 

@@ -1,9 +1,10 @@
 from fastapi import FastAPI
+from sqlmodel import Session
 from api.db import  engine
 from api.models import *
 from fastapi.middleware.cors import CORSMiddleware
 from apscheduler.schedulers.background import BackgroundScheduler
-from api.routers import auth, withdrawal, pin, directRefferal, indirectRefferal
+from api.routers import auth, withdrawal, pin, referral_type, balance, user
 
 
 
@@ -25,6 +26,13 @@ app = FastAPI()
 
 SQLModel.metadata.create_all(bind=engine)
 
+# with Session(engine) as session:
+#         direct_referral = ReferralType(referral_type_name="Direct")
+#         indirect_referral = ReferralType(referral_type_name="Indirect")
+#         session.add(direct_referral)
+#         session.add(indirect_referral)
+#         session.commit()
+
 origins = [
 
     "http://localhost",
@@ -44,9 +52,9 @@ app.add_middleware(
 def health_check():
     return {"message" : "Hello World"}
 
-
+app.include_router(user.router)
 app.include_router(auth.router)
 app.include_router(withdrawal.router)
 app.include_router(pin.router)
-app.include_router(directRefferal.router)
-app.include_router(indirectRefferal.router)
+app.include_router(referral_type.router)
+app.include_router(balance.router)

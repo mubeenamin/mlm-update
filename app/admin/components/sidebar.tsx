@@ -14,18 +14,24 @@ import {
 import { admin_data } from "../data/admin_data";
 import Image from "next/image";
 import { UserIcon } from "lucide-react";
+import AuthContext from "@/app/context/AuthContext";
+import { useContext } from "react";
 
 export function SideBar({ children }: any) {
+  const { logout } = useContext(AuthContext);
   return (
     <div className="grid min-h-screen w-full lg:grid-cols-[280px_1fr]">
       <div className="hidden border-r bg-gray-100/40 lg:block ">
         <div className="flex h-full max-h-screen flex-col gap-2">
           <div className="flex h-[60px] items-center border-b px-6">
             <Link className="flex items-center gap-2 font-semibold" href="#">
-              
-              <Image src="/logo.jpeg" alt="logo" width={32} height={32} className="rounded-full h-10 w-10">
-
-              </Image>
+              <Image
+                src="/logo.jpeg"
+                alt="logo"
+                width={32}
+                height={32}
+                className="rounded-full h-10 w-10"
+              ></Image>
             </Link>
             <Button className="ml-auto h-8 w-8" size="icon" variant="outline">
               <BellIcon className="h-4 w-4" />
@@ -66,17 +72,26 @@ export function SideBar({ children }: any) {
           </div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Image src="/next.svg" alt="logo" width={30} height={30} className="rounded-full border border-black w-8 h-8 dark:border-gray-800">
-                
-              </Image>
+              <Image
+                src="/next.svg"
+                alt="logo"
+                width={30}
+                height={30}
+                className="rounded-full border border-black w-8 h-8 dark:border-gray-800"
+              ></Image>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="bg-white">
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem>Settings</DropdownMenuItem>
-              
+
               <DropdownMenuSeparator />
-              <DropdownMenuItem ><Link href="/"> Logout </Link></DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link onClick={logout} href={""}>
+                  {" "}
+                  Logout{" "}
+                </Link>
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </header>
