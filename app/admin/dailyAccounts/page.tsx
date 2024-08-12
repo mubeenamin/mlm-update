@@ -7,11 +7,9 @@ import UserView from "@/app/component/userView";
 import { getUser } from "@/lib/apiCalling";
 
 export default async function Page() {
-  const res = await getUser();
-
   return (
     <div>
-      <UserView data={res} />
+      <UserView />
     </div>
   );
 }

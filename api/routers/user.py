@@ -3,7 +3,7 @@ from sqlmodel import select
 from api.models import ReferralType, Referral
 from api.dep import db_dependency, user_dependency, bcrypt_context
 from typing import Annotated, List
-from api.models import User, UserCreate, Referral, ReferralType
+from api.models import User, UserCreate, UserRead, Referral, ReferralType
 
 
 router = APIRouter(
@@ -59,7 +59,7 @@ async def create_user(db: db_dependency , user: UserCreate):
 
 
 
-@router.get("/me", response_model=List[User])
+@router.get("/me", response_model=List[UserRead])
 async def get_users(db: db_dependency):
     statement  = select(User)
     users = db.exec(statement).all()

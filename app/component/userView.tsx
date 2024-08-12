@@ -11,23 +11,29 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import TableSkeleton from "../admin/components/tableSkeleton";
 import ProtectedRoute from "./protectedRoute";
-type User = [
-  {
-    id: number;
-    national_id: string;
-    email: string;
-    password: string;
-    Phone: string;
-    package: string;
-    currency: string;
-    pin: { user_id: number; pin: string; id: number };
-  },
-];
 
-function UserView({ data }: { data: User }) {
-  const users = data;
-  console.log(users);
+function UserView() {
+  const [users, setUsers] = useState<any>([]);
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch("/api/routers/user/me", { mode: "no-cors" });
+        if (!res.ok) {
+          // res.ok returns false if the HTTP status is not 200-299
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        const data = await res.json();
+        console.log(data);
+        setUsers(data);
+        setLoading(false);
+      } catch (error) {
+        console.error("An error occurred:", error);
+      }
+    };
+    fetchData();
+  }, []);
   const headName = {
     id: "ID",
     national_id: "National ID",
