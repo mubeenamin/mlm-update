@@ -41,7 +41,7 @@ function UserView() {
     pin: "Pin",
   };
   return (
-    <main>
+    <main className="h-[calc(100vh-96px] rounded-lg p-4 bg-white">
       {loading ? (
         <TableSkeleton />
       ) : (

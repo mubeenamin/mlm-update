@@ -22,6 +22,7 @@ const config = {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
+        pink : "#FD4B6B",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {

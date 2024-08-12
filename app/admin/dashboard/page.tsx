@@ -7,7 +7,7 @@ import UserView from "@/app/component/userView";
 
 function Dashboard() {
   return (
-    <div>
+    <div className="h-[calc(100vh-96px] rounded-lg p-4 bg-white">
      <UserView/>
     </div>
   );

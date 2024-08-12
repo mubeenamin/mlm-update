@@ -119,7 +119,7 @@ const SignIn = () => {
               {invalidUser && "Wrong email or password"}
             </p>
           </div>
-          <Button type="submit" className="primary">
+          <Button type="submit" className="bg-pink">
             {loading ? <>loading....</> : <span>Login</span>}
           </Button>
         </form>
