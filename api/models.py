@@ -24,12 +24,6 @@ class User(userBase , table = True):
     Pin : Optional["Pin"] = Relationship(back_populates="user")
     referrals: List["Referral"] = Relationship(back_populates="referrer",sa_relationship_kwargs={"foreign_keys": "[Referral.referrer_user_id]"})
     
-class UserRead(userBase):
-    Balances: Optional["Balance"]
-    Withdrawals: List["Withdrawal"]
-    Pin: Optional["Pin"]
-    referrals: List["Referral"]
-
     
 
 class UserCreate(SQLModel):
@@ -101,6 +95,7 @@ class Referral(SQLModel, table=True):
 
     referrer: User = Relationship(back_populates="referrals", sa_relationship_kwargs={"foreign_keys": "[Referral.referrer_user_id]"})
     
+
 
 
 class Token(SQLModel):

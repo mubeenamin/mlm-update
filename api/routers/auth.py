@@ -40,13 +40,6 @@ def create_access_token(username: str, user_id: int, expires_delta: timedelta | 
 
 
 
-
-
-
-
-
-
-
 @router.post('/token', response_model=Token)
 async def login_for_access_token(form_data: Annotated[OAuth2PasswordRequestForm, Depends()], db:db_dependency):
     user = authenticate_user(form_data.username, form_data.password, db)

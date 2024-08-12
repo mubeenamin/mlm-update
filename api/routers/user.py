@@ -3,13 +3,15 @@ from sqlmodel import select
 from api.models import ReferralType, Referral
 from api.dep import db_dependency, user_dependency, bcrypt_context
 from typing import Annotated, List
-from api.models import User, UserCreate, Token, UserRead, Referral, ReferralType
+from api.models import User, UserCreate, Referral, ReferralType
 
 
 router = APIRouter(
     prefix="/api/routers/user",
     tags=["User"]
 )
+
+
 
 @router.post("/", status_code=status.HTTP_201_CREATED)
 async def create_user(db: db_dependency , user: UserCreate):
@@ -57,7 +59,7 @@ async def create_user(db: db_dependency , user: UserCreate):
 
 
 
-@router.get("/me", response_model=List[UserRead])
+@router.get("/me", response_model=List[User])
 async def get_users(db: db_dependency):
     statement  = select(User)
     users = db.exec(statement).all()

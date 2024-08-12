@@ -1,15 +1,9 @@
-"use client";
-
 import React from "react";
 import UserView from "@/app/component/userView";
-import ProtectedRoute from "@/app/component/protectedRoute";
 
-function Dashboard() {
-  return (
-    <ProtectedRoute>
-      <UserView />
-    </ProtectedRoute>
-  );
+import { getUser } from "@/lib/apiCalling";
+
+export default async function Dashboard() {
+  const res = await getUser();
+  return <UserView data={res} />;
 }
-
-export default Dashboard;
