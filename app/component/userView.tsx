@@ -10,41 +10,37 @@ import {
 } from "@/components/ui/table";
 import { Skeleton } from "@/components/ui/skeleton";
 import TableSkeleton from "../admin/components/tableSkeleton";
-function UserView() {
-  const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await fetch("/api/users", { mode: "no-cors" });
-        if (!res.ok) {
-          // res.ok returns false if the HTTP status is not 200-299
-          throw new Error(`HTTP error! status: ${res.status}`);
-        }
-        const data = await res.json();
-        setUsers(data);
-        setLoading(false);
-      } catch (error) {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
+import ProtectedRoute from "./protectedRoute";
+type User = [
+  {
+    id: number;
+    national_id: string;
+    email: string;
+    password: string;
+    Phone: string;
+    package: string;
+    currency: string;
+    pin: { user_id: number; pin: string; id: number };
+  },
+];
+
+function UserView({ data }: { data: User }) {
+  const users = data;
+  console.log(users);
+
   const headName = {
     id: "ID",
     national_id: "National ID",
     email: "Email",
-    password:"Password",
+    password: "Password",
     Phone: "Phone",
     package: "Package",
     currency: "Currency",
     pin: "Pin",
   };
   return (
-    <main>
-      {loading ? (
-        <TableSkeleton />
-      ) : (
+    <ProtectedRoute>
+      <main>
         <Table>
           <TableHeader>
             <TableRow>
@@ -68,13 +64,15 @@ function UserView() {
                 <TableCell>{user.phone}</TableCell>
                 <TableCell>{user.package}</TableCell>
                 <TableCell>{user.currency}</TableCell>
-                <TableCell>{user.pin}</TableCell>
+                <TableCell>
+                  {user.pin ? user.pin.pin : "Pin not available"}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
-      )}
-    </main>
+      </main>
+    </ProtectedRoute>
   );
 }
 

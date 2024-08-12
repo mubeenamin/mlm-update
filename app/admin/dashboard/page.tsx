@@ -1,16 +1,9 @@
-"use client";
-import User from "@/app/component/user";
 import React from "react";
-import { SideBar } from "../components/sidebar";
-import CreateSingleUser from "@/app/component/createSingleUser";
 import UserView from "@/app/component/userView";
 
-function Dashboard() {
-  return (
-    <div>
-     <UserView/>
-    </div>
-  );
-}
+import { getUser } from "@/lib/apiCalling";
 
-export default Dashboard;
+export default async function Dashboard() {
+  const res = await getUser();
+  return <UserView data={res} />;
+}
