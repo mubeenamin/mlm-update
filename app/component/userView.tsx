@@ -45,15 +45,8 @@ function UserView() {
     pin: "Pin",
   };
   return (
-<<<<<<< HEAD
-    <main className="h-[calc(100vh-96px] rounded-lg p-4 bg-white">
-      {loading ? (
-        <TableSkeleton />
-      ) : (
-=======
     <ProtectedRoute>
       <main>
->>>>>>> c6427d8b177f041f6aa8c3a945361acfd260e794
         <Table>
           <TableHeader>
             <TableRow>

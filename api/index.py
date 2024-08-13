@@ -4,7 +4,7 @@ from api.db import  engine
 from api.models import *
 from fastapi.middleware.cors import CORSMiddleware
 from apscheduler.schedulers.background import BackgroundScheduler
-from api.routers import auth, withdrawal, pin, referral_type, balance, user
+from api.routers import auth, withdrawal, pin, referral_type, balance, user , notification
 
 
 
@@ -58,3 +58,4 @@ app.include_router(withdrawal.router)
 app.include_router(pin.router)
 app.include_router(referral_type.router)
 app.include_router(balance.router)
+app.include_router(notification.router)

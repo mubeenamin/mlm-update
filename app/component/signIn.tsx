@@ -114,7 +114,9 @@ const SignIn = () => {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter Your Password" {...field} />
+                  <Input
+                   type="password" 
+                   placeholder="Enter Your Password" {...field} />
                 </FormControl>
                 <FormMessage className="text-red-500" />
               </FormItem>
