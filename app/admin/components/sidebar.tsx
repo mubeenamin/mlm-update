@@ -88,8 +88,7 @@ export function SideBar({ children }: any) {
               <DropdownMenuSeparator />
               <DropdownMenuItem>
                 <Link onClick={logout} href={""}>
-                  {" "}
-                  Logout{" "}
+                  Logout
                 </Link>
               </DropdownMenuItem>
             </DropdownMenuContent>
