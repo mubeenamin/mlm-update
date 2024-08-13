@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  reactStrictMode: true,
+  swcMinify: true,
   webpack: (config, { isServer }) => {
     // Fixes npm packages that depend on `child_process` module
     if (!isServer) {

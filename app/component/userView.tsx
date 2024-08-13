@@ -45,40 +45,38 @@ function UserView() {
     pin: "Pin",
   };
   return (
-    <ProtectedRoute>
-      <main>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>{headName.id}</TableHead>
-              <TableHead>{headName.national_id}</TableHead>
-              <TableHead>{headName.email}</TableHead>
-              <TableHead>{headName.password}</TableHead>
-              <TableHead>{headName.Phone}</TableHead>
-              <TableHead>{headName.package}</TableHead>
-              <TableHead>{headName.currency}</TableHead>
-              <TableHead>{headName.pin}</TableHead>
+    <main>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>{headName.id}</TableHead>
+            <TableHead>{headName.national_id}</TableHead>
+            <TableHead>{headName.email}</TableHead>
+            <TableHead>{headName.password}</TableHead>
+            <TableHead>{headName.Phone}</TableHead>
+            <TableHead>{headName.package}</TableHead>
+            <TableHead>{headName.currency}</TableHead>
+            <TableHead>{headName.pin}</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {users.map((user: any) => (
+            <TableRow key={user.id}>
+              <TableCell>{user.id}</TableCell>
+              <TableCell>{user.nation_id}</TableCell>
+              <TableCell>{user.email}</TableCell>
+              <TableCell>{user.password}</TableCell>
+              <TableCell>{user.phone}</TableCell>
+              <TableCell>{user.package}</TableCell>
+              <TableCell>{user.currency}</TableCell>
+              <TableCell>
+                {user.pin ? user.pin.pin : "Pin not available"}
+              </TableCell>
             </TableRow>
-          </TableHeader>
-          <TableBody>
-            {users.map((user: any) => (
-              <TableRow key={user.id}>
-                <TableCell>{user.id}</TableCell>
-                <TableCell>{user.nation_id}</TableCell>
-                <TableCell>{user.email}</TableCell>
-                <TableCell>{user.password}</TableCell>
-                <TableCell>{user.phone}</TableCell>
-                <TableCell>{user.package}</TableCell>
-                <TableCell>{user.currency}</TableCell>
-                <TableCell>
-                  {user.pin ? user.pin.pin : "Pin not available"}
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </main>
-    </ProtectedRoute>
+          ))}
+        </TableBody>
+      </Table>
+    </main>
   );
 }
 

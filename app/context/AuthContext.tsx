@@ -22,8 +22,9 @@ export const AuthProvider = ({ children }: any) => {
       axios.defaults.headers.common["Authorization"] =
         `Bearer ${res.data.access_token}`;
 
-      setCookie("token", res.data.access_token, { path: "/" });
-      console.log(res.data.access_token);
+      localStorage.setItem("token", res.data.access_token);
+
+      setCookie("token", res.data.access_token, { maxAge: 60 * 60 * 24 * 30 });
       setUser(res.data);
 
       router.push("/admin/dashboard");
@@ -36,7 +37,7 @@ export const AuthProvider = ({ children }: any) => {
       setUser(null);
       delete axios.defaults.headers.common["Authorization"];
       deleteCookie("token", { path: "/" });
-      router.push("/signIn");
+      router.push("/");
     } catch (error) {
       console.log(error);
     }
