@@ -81,7 +81,9 @@ const SignIn = () => {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter Your Password" {...field} />
+                  <Input
+                   type="password" 
+                   placeholder="Enter Your Password" {...field} />
                 </FormControl>
                 <FormMessage className="text-red-500" />
               </FormItem>
@@ -92,7 +94,7 @@ const SignIn = () => {
               {invalidUser && "Wrong email or password"}
             </p>
           </div>
-          <Button type="submit" className="primary">
+          <Button type="submit" className="bg-pink">
             {loading ? <>loading....</> : <span>Login</span>}
           </Button>
         </form>
