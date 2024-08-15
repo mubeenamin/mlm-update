@@ -1,10 +1,10 @@
 "use client";
 
+import NotificationView from "@/app/component/notificationView";
 import ProtectedRoute from "@/app/component/protectedRoute";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
-import { METHODS } from "http";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
 
@@ -28,6 +28,9 @@ const handleSubmit = async (event: any) => {
     console.error(error);
   }
 };
+
+
+
   return (
     <ProtectedRoute>
     <div className="flex flex-col items-center justify-center h-screen">
@@ -54,7 +57,7 @@ const handleSubmit = async (event: any) => {
           </label>
           <input
             type='text'
-            className='border border-gray-400 p-2 w-96 h-40'
+            className='border border-gray-400 p-2 w-96 '
             onChange={(e) => setmessage(e.target.value )}
           />
         </div>
@@ -62,7 +65,10 @@ const handleSubmit = async (event: any) => {
         </form>
       </div>    
   </div>
+  
   </ProtectedRoute>
 
     )
 }
+
+
