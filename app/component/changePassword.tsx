@@ -92,7 +92,7 @@ function ChangePassword() {
               />
           </div>
           <div>
-          <Button type="submit" className="bg-red-500/70">
+          <Button type="submit" className="bg-pink">
                   Submit
                 </Button>
           </div>

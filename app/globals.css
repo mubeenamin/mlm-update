@@ -2,7 +2,11 @@
   @tailwind components;
   @tailwind utilities;
 
-  
+ 
+  .notification-box {
+    @apply w-80;
+  } 
+
 @layer base {
   :root {
     --background: 0 0% 100%;
