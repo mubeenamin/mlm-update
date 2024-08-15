@@ -87,9 +87,9 @@ export function SideBar({ children }: any) {
 
               <DropdownMenuSeparator />
               <DropdownMenuItem>
-                <Link onClick={logout} href={""}>
-                  Logout
-                </Link>
+                <Button variant="outline" className="w-full" onClick={logout}>
+                  Log out
+                </Button>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

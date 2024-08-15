@@ -1,8 +1,11 @@
 import React from "react";
 import UserView from "@/app/component/userView";
+import ProtectedRoute from "@/app/component/protectedRoute";
 
-import { getUser } from "@/lib/apiCalling";
-
-export default async function Dashboard() {
-  return <UserView />;
+export default function Dashboard() {
+  return (
+    <ProtectedRoute>
+      <UserView />;
+    </ProtectedRoute>
+  );
 }

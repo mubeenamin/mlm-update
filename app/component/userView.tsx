@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -11,11 +11,13 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import TableSkeleton from "../admin/components/tableSkeleton";
 import ProtectedRoute from "./protectedRoute";
-
+import { Button } from "@/components/ui/button";
+import AuthContext from "../context/AuthContext";
+import { LogOut } from "lucide-react";
 function UserView() {
   const [users, setUsers] = useState<any>([]);
   const [loading, setLoading] = useState(true);
-
+  const { logout } = useContext(AuthContext);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -25,7 +27,7 @@ function UserView() {
           throw new Error(`HTTP error! status: ${res.status}`);
         }
         const data = await res.json();
-        console.log(data);
+
         setUsers(data);
         setLoading(false);
       } catch (error) {
