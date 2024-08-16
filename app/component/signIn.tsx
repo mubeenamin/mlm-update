@@ -26,10 +26,19 @@ const FormSchema = z.object({
 });
 
 const SignIn = () => {
-  const { data: session } = useSession();
-  console.log(session);
-  if (session) {
+  const { data: session, status } = useSession();
+  console.log(session?.user?.email);
+  // @ts-ignore
+  if (
+    status === "authenticated" &&
+    session?.user?.email === "admin@gmail.com"
+  ) {
     redirect("/admin/dashboard");
+  } else if (
+    status === "authenticated" &&
+    session?.user?.email !== "admin@gmail.com"
+  ) {
+    redirect(`/user/dashboard`);
   }
 
   const [loading, setLoading] = useState(false);

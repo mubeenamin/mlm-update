@@ -1,16 +1,16 @@
 "use client";
 
-
 import CardsUser from "@/app/component/cards";
 import React, { useEffect, useState } from "react";
-
+import { useSession } from "next-auth/react";
 type Prop = {
   id: number;
 };
 
-function Page({ params }: { params: { id: Prop } }) {
-  const userdata = params.id;
-  const userID:number = Number(userdata);
+function Page() {
+  const { data: session } = useSession();
+  const userdata = session?.user?.id;
+  const userID: number = Number(userdata);
   const [users, setUsers] = useState({
     nation_id: "",
     email: "",
@@ -28,9 +28,8 @@ function Page({ params }: { params: { id: Prop } }) {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchData = async () => {
-      
       try {
-        const res = await fetch(`/api/single_users/${userID}`, {
+        const res = await fetch(`/api/routers/single_users/${userID}`, {
           mode: "no-cors",
         });
         if (!res.ok) {
@@ -47,8 +46,9 @@ function Page({ params }: { params: { id: Prop } }) {
   }, []);
 
   return (
-    <><CardsUser users={users}/></>
-    
+    <>
+      <CardsUser users={users} />
+    </>
   );
 }
 

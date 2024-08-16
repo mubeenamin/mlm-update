@@ -10,14 +10,17 @@ import {
 } from "@/components/ui/table";
 import { Skeleton } from "@/components/ui/skeleton";
 import TableSkeleton from "../admin/components/tableSkeleton";
-import ProtectedRoute from "./protectedRoute";
+
 import { Button } from "@/components/ui/button";
-import AuthContext from "../context/AuthContext";
+
 import { LogOut } from "lucide-react";
+import { signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 function UserView() {
   const [users, setUsers] = useState<any>([]);
   const [loading, setLoading] = useState(true);
-  // const { logout } = useContext(AuthContext);
+  const { data: session } = useSession();
+  console.log(session?.user?.id);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -50,6 +53,9 @@ function UserView() {
   };
   return (
     <main>
+      <Button variant="outline" onClick={() => signOut()}>
+        logout
+      </Button>
       <Table>
         <TableHeader>
           <TableRow>

@@ -2,29 +2,13 @@ import axios from "axios";
 import { NextAuthOptions } from "next-auth";
 
 import Credentials from "next-auth/providers/credentials";
-
+type User = {
+  id: number;
+  email: string;
+  name: string;
+  role: string;
+};
 const authOptions: NextAuthOptions = {
-  session: {
-    strategy: "jwt",
-  },
-  pages: {
-    signIn: "/",
-  },
-  callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        token.user = user;
-      }
-      return token;
-    },
-    async session({ session, token }) {
-      if (token) {
-        session.user = token.user as any;
-      }
-      return session;
-    },
-  },
-  secret: "jnnxycv32",
   providers: [
     Credentials({
       name: "Credentials",
@@ -40,7 +24,7 @@ const authOptions: NextAuthOptions = {
           if (res.status !== 200) {
             throw new Error("Invalid credentials");
           }
-          const user = await res.data;
+          const user: any = await res.data;
           console.log(user);
           if (user.error) {
             throw new Error(user.error);
@@ -50,6 +34,26 @@ const authOptions: NextAuthOptions = {
       },
     }),
   ],
+  session: {
+    strategy: "jwt",
+  },
+  pages: {
+    signIn: "/signIn",
+    signOut: "/",
+  },
+  callbacks: {
+    async jwt({ token, user }: any) {
+      if (user) {
+        token.id = user.id;
+      }
+      return token;
+    },
+    async session({ session, token }: any) {
+      session.user = token;
+      return session;
+    },
+  },
+  secret: "jnnxycv32",
 };
 
 export default authOptions;
