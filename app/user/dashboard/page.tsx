@@ -3,14 +3,13 @@
 import CardsUser from "@/app/component/cards";
 import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
-type Prop = {
-  id: number;
-};
 
 function Page() {
-  const { data: session } = useSession();
-  const userdata = session?.user?.id;
-  const userID: number = Number(userdata);
+  const { data: session, status } = useSession();
+  // @ts-ignore
+  const userdata: number = session?.user?.id;
+  console.log(userdata);
+
   const [users, setUsers] = useState({
     nation_id: "",
     email: "",
@@ -29,13 +28,12 @@ function Page() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-<<<<<<< HEAD:app/user/[id]/page.tsx
-        const res = await fetch(`/api/routers/user/${userID}`, {
-=======
-        const res = await fetch(`/api/routers/single_users/${userID}`, {
->>>>>>> 6bbaf760fcfed92409193ce1b2b1e808032c557a:app/user/dashboard/page.tsx
-          mode: "no-cors",
-        });
+        const res = await fetch(
+          `/fastapi/api/routers/user/single_user/${userdata}`,
+          {
+            mode: "no-cors",
+          }
+        );
         if (!res.ok) {
           // res.ok returns false if the HTTP status is not 200-299
           throw new Error(`HTTP error! status: ${res.status}`);

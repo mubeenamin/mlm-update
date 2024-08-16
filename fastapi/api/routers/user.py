@@ -80,7 +80,7 @@ async def get_users(db: db_dependency):
 
 # get single user 
 
-@router.get("/{user_id}", response_model=UserRead)
+@router.get("/single_user/{user_id}", response_model=UserRead)
 async def get_user(user_id: int, db: db_dependency):
     return db.exec(select(User).where(User.id == user_id)).first()
 
