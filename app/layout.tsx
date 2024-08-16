@@ -1,4 +1,5 @@
-import { AuthProvider } from "./context/AuthContext";
+import SessionWrapper from "./component/sessionWrapper";
+
 import "./globals.css";
 import { Inter } from "next/font/google";
 
@@ -16,9 +17,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <div className="">{children}</div>
-      </body>
+      <SessionWrapper>
+        <body className={inter.className}>
+          <div className="">{children}</div>
+        </body>
+      </SessionWrapper>
     </html>
   );
 }

@@ -17,7 +17,7 @@ import { LogOut } from "lucide-react";
 function UserView() {
   const [users, setUsers] = useState<any>([]);
   const [loading, setLoading] = useState(true);
-  const { logout } = useContext(AuthContext);
+  // const { logout } = useContext(AuthContext);
   useEffect(() => {
     const fetchData = async () => {
       try {

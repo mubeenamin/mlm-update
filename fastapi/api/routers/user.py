@@ -7,7 +7,7 @@ from api.models import User, UserCreate, UserRead, Referral, ReferralType
 
 
 router = APIRouter(
-    prefix="/api/routers/user",
+    prefix="/fastapi/api/routers/user",
     tags=["User"]
 )
 
@@ -57,6 +57,17 @@ async def create_user(db: db_dependency , user: UserCreate):
 
     return {"user": db_user, "referral": referral}
 
+
+
+@router.get("/login", response_model=UserRead)
+async def get_user(email: str, password: str, db: db_dependency):
+    statement  = select(User).where(User.email == email)
+    user = db.exec(statement).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    if not bcrypt_context.verify(password, user.password):
+        raise HTTPException(status_code=400, detail="Incorrect password")
+    return user
 
 
 @router.get("/me", response_model=List[UserRead])

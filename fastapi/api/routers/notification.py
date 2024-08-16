@@ -4,7 +4,7 @@ from api.models import notification
 from api.dep import db_dependency, user_dependency
 
 router = APIRouter(
-    prefix="/api/routers/notification",
+    prefix="/fastapi/api/routers/notification",
     tags=["Notification"]
 )
 

@@ -14,7 +14,7 @@ load_dotenv()
 
 
 router = APIRouter(
-    prefix="/api/routers/auth",
+    prefix="/fastapi/api/routers/auth",
     tags=["auth"]
 )
 

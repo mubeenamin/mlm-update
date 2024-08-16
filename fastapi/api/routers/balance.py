@@ -4,7 +4,7 @@ from api.models import Balance
 from api.dep import db_dependency, user_dependency
 
 router = APIRouter(
-    prefix="/api/routers/balance",
+    prefix="/fastapi/api/routers/balance",
     tags=["Balance"]
 )
 
