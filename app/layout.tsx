@@ -1,4 +1,5 @@
-import { AuthProvider } from "./context/AuthContext";
+import SessionWrapper from "./component/sessionWrapper";
+
 import "./globals.css";
 import { Inter } from "next/font/google";
 
@@ -15,12 +16,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <AuthProvider>
-      <html lang="en">
+    <html lang="en">
+      <SessionWrapper>
         <body className={inter.className}>
-          <div className="h-full">{children}</div>
+          <div className="">{children}</div>
         </body>
-      </html>
-    </AuthProvider>
+      </SessionWrapper>
+    </html>
   );
 }

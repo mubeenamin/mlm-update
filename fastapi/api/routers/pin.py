@@ -5,7 +5,7 @@ from api.models import Pin, PinUpdate
 from api.dep import db_dependency, user_dependency
 
 router = APIRouter(
-    prefix="/api/routers/pin",
+    prefix="/fastapi/api/routers/pin",
     tags=["pin"]
 )
 @router.get("/get_all", response_model=list[Pin])

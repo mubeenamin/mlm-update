@@ -5,7 +5,7 @@ from api.models import Withdrawal, WithdrawalUpdate
 from api.dep import db_dependency, user_dependency
 
 router = APIRouter(
-    prefix="/api/routers/withdrawal",
+    prefix="/fastapi/api/routers/withdrawal",
     tags=["withdrawal"]
 )
 

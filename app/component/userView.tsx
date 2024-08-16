@@ -10,18 +10,22 @@ import {
 } from "@/components/ui/table";
 import { Skeleton } from "@/components/ui/skeleton";
 import TableSkeleton from "../admin/components/tableSkeleton";
-import ProtectedRoute from "./protectedRoute";
+
 import { Button } from "@/components/ui/button";
-import AuthContext from "../context/AuthContext";
+
 import { LogOut } from "lucide-react";
+import { signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 function UserView() {
   const [users, setUsers] = useState<any>([]);
   const [loading, setLoading] = useState(true);
-  const { logout } = useContext(AuthContext);
+  const { data: session } = useSession();
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch("/api/routers/user/me", { mode: "no-cors" });
+        const res = await fetch("/fastapi/api/routers/user/me", {
+          mode: "no-cors",
+        });
         if (!res.ok) {
           // res.ok returns false if the HTTP status is not 200-299
           throw new Error(`HTTP error! status: ${res.status}`);
@@ -48,6 +52,9 @@ function UserView() {
   };
   return (
     <main>
+      <Button variant="outline" onClick={() => signOut()}>
+        logout
+      </Button>
       <Table>
         <TableHeader>
           <TableRow>
@@ -67,7 +74,7 @@ function UserView() {
               <TableCell>{user.id}</TableCell>
               <TableCell>{user.nation_id}</TableCell>
               <TableCell>{user.email}</TableCell>
-              <TableCell>{user.password}</TableCell>
+              <TableCell className="">{user.password}</TableCell>
               <TableCell>{user.phone}</TableCell>
               <TableCell>{user.package}</TableCell>
               <TableCell>{user.currency}</TableCell>

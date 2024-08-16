@@ -1,5 +1,6 @@
 "use client";
 import {} from "@hookform/resolvers/zod";
+import { signIn, useSession } from "next-auth/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
@@ -15,8 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { z } from "zod";
 import { useContext, useState } from "react";
-
-import AuthContext from "../context/AuthContext";
+import { redirect } from "next/navigation";
 
 const FormSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -26,13 +26,38 @@ const FormSchema = z.object({
 });
 
 const SignIn = () => {
+  const { data: session, status } = useSession();
+  console.log(session?.user?.email);
+  // @ts-ignore
+  if (
+    status === "authenticated" &&
+    session?.user?.email === "admin@gmail.com"
+  ) {
+    redirect("/admin/dashboard");
+  } else if (
+    status === "authenticated" &&
+    session?.user?.email !== "admin@gmail.com"
+  ) {
+    redirect(`/user/dashboard`);
+  }
+
   const [loading, setLoading] = useState(false);
   const [invalidUser, setinvalidUser] = useState(false);
 
-  const { login } = useContext(AuthContext);
-
-  const onSubmit = (data: z.infer<typeof FormSchema>) => {
-    login(data.email, data.password);
+  const onSubmit = async (data: z.infer<typeof FormSchema>) => {
+    const email = data.email;
+    const password = data.password;
+    try {
+      const res = await signIn("credentials", {
+        email,
+        password,
+      });
+      if (res?.error) {
+        setinvalidUser(true);
+      }
+    } catch (error) {
+      setinvalidUser(true);
+    }
     handleReset();
   };
 
@@ -82,8 +107,10 @@ const SignIn = () => {
                 <FormLabel>Password</FormLabel>
                 <FormControl>
                   <Input
-                   type="password" 
-                   placeholder="Enter Your Password" {...field} />
+                    type="password"
+                    placeholder="Enter Your Password"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage className="text-red-500" />
               </FormItem>

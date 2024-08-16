@@ -18,7 +18,7 @@ import AuthContext from "@/app/context/AuthContext";
 import { useContext } from "react";
 
 export function SideBar({ children }: any) {
-  const { logout } = useContext(AuthContext);
+  // const { logout } = useContext(AuthContext);
   return (
     <div className="grid min-h-screen w-full lg:grid-cols-[280px_1fr]">
       <div className="hidden border-r bg-gray-100/40 lg:block ">
@@ -87,7 +87,7 @@ export function SideBar({ children }: any) {
 
               <DropdownMenuSeparator />
               <DropdownMenuItem>
-                <Button variant="outline" className="w-full" onClick={logout}>
+                <Button variant="outline" className="w-full">
                   Log out
                 </Button>
               </DropdownMenuItem>

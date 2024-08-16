@@ -6,6 +6,7 @@ from decimal import Decimal
 
 
 class userBase(SQLModel):
+    id: Optional[int] = Field(default = None , primary_key = True, index=True)
     nation_id : str
     email : str 
     password : str
@@ -18,7 +19,7 @@ class userBase(SQLModel):
     created_at: str
     
 class User(userBase , table = True):
-    id : Optional[int] = Field(default = None , primary_key = True, index=True)
+    
     Balances : Optional["Balance"] = Relationship(back_populates="user") 
     Withdrawals : List['Withdrawal'] = Relationship(back_populates="user")
     Pin : Optional["Pin"] = Relationship(back_populates="user")
