@@ -16,6 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { z } from "zod";
 import { useContext, useState } from "react";
+import { redirect } from "next/navigation";
 
 const FormSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -25,6 +26,12 @@ const FormSchema = z.object({
 });
 
 const SignIn = () => {
+  const { data: session } = useSession();
+  console.log(session);
+  if (session) {
+    redirect("/admin/dashboard");
+  }
+
   const [loading, setLoading] = useState(false);
   const [invalidUser, setinvalidUser] = useState(false);
 

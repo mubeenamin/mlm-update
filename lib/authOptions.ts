@@ -35,13 +35,13 @@ const authOptions: NextAuthOptions = {
       async authorize(credentials) {
         try {
           const res = await axios.get(
-            `http://localhost:8000/fastapi/api/routers/user/login?email=${credentials?.email}&password=${credentials?.password}`
+            `http://localhost:3000/fastapi/api/routers/user/login?email=${credentials?.email}&password=${credentials?.password}`
           );
           if (res.status !== 200) {
             throw new Error("Invalid credentials");
           }
           const user = await res.data;
-          console.log(user.role);
+          console.log(user);
           if (user.error) {
             throw new Error(user.error);
           }
