@@ -64,3 +64,12 @@ async def get_users(db: db_dependency):
     statement  = select(User)
     users = db.exec(statement).all()
     return users
+
+
+
+# get single user 
+
+@router.get("/{user_id}", response_model=UserRead)
+async def get_user(user_id: int, db: db_dependency):
+    return db.exec(select(User).where(User.id == user_id)).first()
+

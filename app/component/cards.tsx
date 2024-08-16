@@ -9,7 +9,7 @@ function CardsUser({ users }: any) {
 
   const totalEarnings: number = userBalance + Number(userReferral);
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 bg-white">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 pb-10 prose-h3:text-xl ">
         <h3>
           Username:<div>{users.nation_id}</div>

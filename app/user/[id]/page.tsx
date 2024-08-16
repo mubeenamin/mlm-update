@@ -30,7 +30,7 @@ function Page({ params }: { params: { id: Prop } }) {
     const fetchData = async () => {
       
       try {
-        const res = await fetch(`/api/single_users/${userID}`, {
+        const res = await fetch(`/api/routers/user/${userID}`, {
           mode: "no-cors",
         });
         if (!res.ok) {
