@@ -20,7 +20,6 @@ function UserView() {
   const [users, setUsers] = useState<any>([]);
   const [loading, setLoading] = useState(true);
   const { data: session } = useSession();
-  console.log(session?.user?.id);
   useEffect(() => {
     const fetchData = async () => {
       try {
