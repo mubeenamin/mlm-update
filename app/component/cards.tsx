@@ -3,8 +3,8 @@ import { Card } from "@tremor/react";
 import React from "react";
 import Chart from "./chart";
 
-function CardsUser({ users }: any) {
-  let userBalance: number = Number(users.balance);
+function CardsUser({ user }: any) {
+  let userBalance: number = Number(user.balance);
   let userReferral: any = Number(userBalance * 0.1).toFixed(2);
 
   const totalEarnings: number = userBalance + Number(userReferral);
@@ -12,19 +12,19 @@ function CardsUser({ users }: any) {
     <div className="space-y-4 bg-white">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 pb-10 prose-h3:text-xl ">
         <h3>
-          Username:<div>{users.nation_id}</div>
+          Username:<div>{user.nation_id}</div>
         </h3>
         <h3>
-          Email:<div>{users.email}</div>
+          Email:<div>{user.email}</div>
         </h3>
         <h3>
-          Package:<div>{users.package}</div>
+          Package:<div>{user.package}</div>
         </h3>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         <Card className="p-8 shadow-md grid items-center gap-8 bg-orange-400 rounded-md">
           <div className="col-span-2 text-lg">Daily Profit From Package</div>
-          <div className="col-span-1 text-4xl">${users.balance}</div>
+          <div className="col-span-1 text-4xl">${user.balance}</div>
         </Card>
         <Card className="p-8 shadow-md grid items-center gap-8 bg-green-400 rounded-md">
           <div className="col-span-2 text-lg">Referrral Profit</div>

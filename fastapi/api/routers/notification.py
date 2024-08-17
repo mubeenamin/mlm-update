@@ -23,12 +23,13 @@ async def create_notification(db: db_dependency, notification: notification):
     return notification
 
 
+# delete notification by id
 @router.delete("/delete_notification_by_id/{notification_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_notification_by_id(db: db_dependency,  notification_id: int):
     result = db.exec(select(notification).where(notification.id == notification_id)).first()
     db.delete(result)
     db.commit()
-    return result
+    return {"message": "Notification deleted" , "result" : result}
 
 
 @router.put("/update_notification_by_id/{notification_id}", status_code=status.HTTP_204_NO_CONTENT)

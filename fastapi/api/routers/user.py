@@ -84,3 +84,13 @@ async def get_users(db: db_dependency):
 async def get_user(user_id: int, db: db_dependency):
     return db.exec(select(User).where(User.id == user_id)).first()
 
+
+# delete user
+
+
+@router.delete("/delete_user/{user_id}", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_user(db: db_dependency, user_id: int):
+    result = db.exec(select(User).where(User.id == user_id)).first()
+    db.delete(result)
+    db.commit()
+    return result

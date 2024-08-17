@@ -30,6 +30,8 @@ function Page() {
     const fetchData = async () => {
       try {
 
+        const userId = userdata
+
 
         const res = await fetch(`fastapi/api/routers/user/single_user/${userId}`, {
 

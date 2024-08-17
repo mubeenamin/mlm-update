@@ -1,8 +1,34 @@
 "use client"
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
 const page = () => {
-const [open, setOpen] = React.useState(false)
+const [open, setOpen] = useState(false)
+const [users, setUsers] = useState<any>([]);
+  const [loading, setLoading] = useState(true);
+  const { data: session } = useSession();
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch("/fastapi/api/routers/notification/notifications", {
+          mode: "no-cors",
+        });
+        console.log(res)
+        if (!res.ok) {
+          // res.ok returns false if the HTTP status is not 200-299
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        const data = await res.json();
+
+        setUsers(data);
+        setLoading(false);
+      } catch (error) {
+        console.error("An error occurred:", error);
+      }
+    };
+    fetchData();
+  }, []);
 
 const handleToggle = () => {
     setOpen(!open);
@@ -26,15 +52,18 @@ const handleToggle = () => {
   </div>
 
   {open && <div className='mt-8 '>
+
+{users.map((user: any) => (
   <h1 className="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
   <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-    Title
+    {user.title}
   </h5>
   <p className="font-normal text-gray-700 dark:text-gray-400">
-    Here are the biggest enterprise technology acquisitions of 2021 so far, in
-    reverse chronological order.
+   {user.message}
   </p>
 </h1>
+))}
+  
   </div>
   }
   

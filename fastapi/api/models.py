@@ -25,6 +25,7 @@ class User(userBase , table = True):
     Pin : Optional["Pin"] = Relationship(back_populates="user")
     referrals: List["Referral"] = Relationship(back_populates="referrer",sa_relationship_kwargs={"foreign_keys": "[Referral.referrer_user_id]"})
     notifications: List["notification"] = Relationship(back_populates="user")
+    messages: List["message"] = Relationship(back_populates="user")
     
     
 class UserRead(userBase):
@@ -32,6 +33,8 @@ class UserRead(userBase):
     Withdrawals: List["Withdrawal"]
     Pin : Optional["Pin"]
     referrals: List["Referral"]
+    notifications: List["notification"]
+    messages: List["message"]
     
     
 
@@ -63,6 +66,17 @@ class notification(notificationBase , table = True):
     user : Optional["User"] = Relationship(back_populates = "notifications")
 
 
+class messageBase(SQLModel):
+    message : str
+    content : str
+    user_id : Optional[int] = Field(default = None , foreign_key = "user.id")
+
+class message(messageBase , table = True):
+    id : Optional[int] = Field(default = None , primary_key = True, index=True)
+    user : Optional["User"] = Relationship(back_populates = "messages")
+
+class messageCreate(messageBase):
+    pass
 
 class balanceBase(SQLModel):
     balance : Decimal
