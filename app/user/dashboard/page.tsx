@@ -32,7 +32,7 @@ function Page() {
       try {
 
 
-        const res = await fetch(`/api/routers/user/${userID}`, {
+        const res = await fetch(`fastapi/api/routers/user/single_user/${userId}`, {
 
           mode: "no-cors",
         });
