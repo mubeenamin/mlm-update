@@ -27,7 +27,6 @@ const FormSchema = z.object({
 
 const SignIn = () => {
   const { data: session, status } = useSession();
-  console.log(session?.user?.email);
   // @ts-ignore
   if (
     status === "authenticated" &&

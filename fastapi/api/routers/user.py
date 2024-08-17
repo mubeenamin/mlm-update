@@ -41,10 +41,10 @@ async def create_user(db: db_dependency , user: UserCreate):
     db.commit()
     db.refresh(referral)
     # Add indirect referrals for all uplines
-    if user.referral_type_name == "Direct":
+    if user.referral_type_name == "direct":
         # Get all uplines of the referrer
         uplines = db.exec(select(Referral).where(Referral.referred_user_id == user.referrer_user_id)).all()
-        indirect_referral_type = db.exec(select(ReferralType).where(ReferralType.referral_type_name == "Indirect")).first()
+        indirect_referral_type = db.exec(select(ReferralType).where(ReferralType.referral_type_name == "indirect")).first()
         for upline in uplines:
             indirect_referral = Referral(
                 referrer_user_id=upline.referrer_user_id,
