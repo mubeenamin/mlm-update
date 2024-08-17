@@ -15,6 +15,7 @@ const authOptions: NextAuthOptions = {
       credentials: {
         email: { label: "Email", type: "text" },
         password: { label: "Password", type: "password" },
+        id: { label: "ID", type: "text" },
       },
       async authorize(credentials) {
         try {
@@ -53,7 +54,7 @@ const authOptions: NextAuthOptions = {
       return session;
     },
   },
-  secret: "jnnxycv32",
+  secret: process.env.NEXTAUTH_SECRET,
 };
 
 export default authOptions;
