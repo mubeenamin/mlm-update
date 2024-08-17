@@ -14,14 +14,12 @@ export default function UserDashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <SessionWrapper>
-      <div className="flex ">
-        <SidebarUser />
-        <div className="w-full h-full">
-          <UserNavbar />
-          <div className="bg-white p-4 h-(calc(100vh-64px)">{children}</div>
-        </div>
+    <div className="flex ">
+      <SidebarUser />
+      <div className="w-full h-full">
+        <UserNavbar />
+        <div className="bg-white p-4 h-(calc(100vh-64px)">{children}</div>
       </div>
-    </SessionWrapper>
+    </div>
   );
 }
