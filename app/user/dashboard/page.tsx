@@ -9,6 +9,7 @@ type Prop = {
 
 function Page() {
   const { data: session } = useSession();
+  
   const userdata = session?.user?.id;
   const userID: number = Number(userdata);
   const [users, setUsers] = useState({
@@ -29,11 +30,9 @@ function Page() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-<<<<<<< HEAD:app/user/[id]/page.tsx
+
         const res = await fetch(`/api/routers/user/${userID}`, {
-=======
-        const res = await fetch(`/api/routers/single_users/${userID}`, {
->>>>>>> 6bbaf760fcfed92409193ce1b2b1e808032c557a:app/user/dashboard/page.tsx
+
           mode: "no-cors",
         });
         if (!res.ok) {
