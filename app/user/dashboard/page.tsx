@@ -9,7 +9,6 @@ function Page() {
   const { data: session, status } = useSession();
   // @ts-ignore
   const userdata: number = session?.user?.id;
-  console.log(userdata);
 
 
   const [users, setUsers] = useState({
@@ -43,7 +42,6 @@ function Page() {
         }
         const data = await res.json();
         setUsers(data);
-        console.log(data);
       } catch (error) {}
     };
 
