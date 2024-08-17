@@ -19,7 +19,8 @@ function NotificationView() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch("/api/routers/notification/notifications", { mode: "no-cors" });
+        const res = await fetch("fastapi/api/routers/notification/notifications", { mode: "no-cors" });
+        console.log(res);
         if (!res.ok) {
           // res.ok returns false if the HTTP status is not 200-299
           throw new Error(`HTTP error! status: ${res.status}`);
