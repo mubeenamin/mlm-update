@@ -99,7 +99,7 @@ function User() {
       newBalance = 4800;
     }
     try {
-      const res = await fetch("/fastapi/api/routers/user/", {
+      const res = await fetch("/fastapi/api/routers/user/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
