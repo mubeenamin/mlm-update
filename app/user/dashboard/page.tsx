@@ -1,6 +1,6 @@
 "use client";
 
-import CardsUser from "@/app/component/cards";
+import CardsUser, { User } from "@/app/component/cards";
 import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 
@@ -10,18 +10,36 @@ function Page() {
   const userdata: number = session?.user?.id;
 
   const [users, setUsers] = useState({
-    nation_id: "",
-    email: "",
-    password: "",
-    phone: "",
-    currency: "",
-    country: "",
-    city: "",
-    package: "",
-    role: "",
-    created_at: "",
-    referral_id: null,
-    id: null,
+    id: 0,
+    nation_id: "string",
+    email: "string",
+    password: "string",
+    phone: "string",
+    currency: "string",
+    country: "string",
+    city: "string",
+    package: "string",
+    role: "string",
+    created_at: "string",
+    Balances: {
+      balance: "string",
+      user_id: 0,
+      id: 0,
+    },
+    Withdrawals: [
+      {
+        withdrawal_amount: "string",
+        status: "string",
+        user_id: 0,
+        id: 0,
+      },
+    ],
+    Pin: {
+      pin: "string",
+      user_id: 0,
+      id: 0,
+    },
+    referrals: [],
   });
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -39,6 +57,7 @@ function Page() {
           throw new Error(`HTTP error! status: ${res.status}`);
         }
         const data = await res.json();
+        console.log(data);
         setUsers(data);
       } catch (error) {}
     };
@@ -47,9 +66,9 @@ function Page() {
   }, []);
 
   return (
-    <>
+    <main>
       <CardsUser users={users} />
-    </>
+    </main>
   );
 }
 
