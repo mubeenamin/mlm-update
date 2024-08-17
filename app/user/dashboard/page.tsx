@@ -5,11 +5,9 @@ import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 
 function Page() {
-
   const { data: session, status } = useSession();
   // @ts-ignore
   const userdata: number = session?.user?.id;
-
 
   const [users, setUsers] = useState({
     nation_id: "",
@@ -29,10 +27,7 @@ function Page() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-
-
-        const res = await fetch(`/api/routers/user/${userID}`, {
-
+        const res = await fetch(`/fastapi/api/routers/user/${userdata}`, {
           mode: "no-cors",
         });
 

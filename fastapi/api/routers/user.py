@@ -13,7 +13,7 @@ router = APIRouter(
 
 
 
-@router.post("/", status_code=status.HTTP_201_CREATED)
+@router.post("/create", status_code=status.HTTP_201_CREATED)
 async def create_user(db: db_dependency , user: UserCreate):
     # Hash the password
     hashed_password = bcrypt_context.hash(user.password)

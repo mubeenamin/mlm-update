@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
+import { useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -25,8 +25,6 @@ import {
 import moment from "moment";
 import { useRouter } from "next/navigation";
 
-
-
 const formSchema = z.object({
   nation_id: z.string().min(2, {
     message: "National ID must be at least 2 characters.",
@@ -44,10 +42,13 @@ const formSchema = z.object({
   created_at: z.string(),
   updated_at: z.string(),
   balance: z.number(),
-  referral_profit: z.number(),
-  referral_id: z.string(),
+  referrer_user_id: z.number(),
+  referral_type_name: z.string(),
 });
 function User() {
+  const { data: session } = useSession();
+  // @ts-ignore
+  const referral_id = session?.user?.id;
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -62,14 +63,11 @@ function User() {
       package: "",
       role: "user",
       created_at: moment().format("YYYY-MM-DD"),
-      updated_at: moment().format("YYYY-MM-DD"),
-      balance: 0,
-      referral_profit: 0,
-      referral_id: "",
+      referrer_user_id: referral_id,
+      referral_type_name: "direct",
     },
   });
   const handleReset = () => {
-    
     form.reset({
       nation_id: "",
       email: "",
@@ -82,27 +80,26 @@ function User() {
     });
   };
   async function onSubmit(data: z.infer<typeof formSchema>) {
-    
-    let newBalance:number= 0
-    if(data.package === "Bronze"){
-      newBalance = 150 
-    }else if(data.package === "Bronze Plus"){
-      newBalance = 300
-    }else if(data.package === "Gold"){
-      newBalance = 600
-    }else if(data.package === "Gold Plus"){
-      newBalance = 1200
-    }else if(data.package === "Platinum"){
-      newBalance = 9600
-    }else if(data.package === "Platinum Plus"){
-      newBalance = 19200
-    }else if(data.package === "Diamond"){
-      newBalance = 2400
-    }else if(data.package === "Diamond Plus"){
-      newBalance = 4800
+    let newBalance: number = 0;
+    if (data.package === "Bronze") {
+      newBalance = 150;
+    } else if (data.package === "Bronze Plus") {
+      newBalance = 300;
+    } else if (data.package === "Gold") {
+      newBalance = 600;
+    } else if (data.package === "Gold Plus") {
+      newBalance = 1200;
+    } else if (data.package === "Platinum") {
+      newBalance = 9600;
+    } else if (data.package === "Platinum Plus") {
+      newBalance = 19200;
+    } else if (data.package === "Diamond") {
+      newBalance = 2400;
+    } else if (data.package === "Diamond Plus") {
+      newBalance = 4800;
     }
     try {
-      const res = await fetch("/api/create_users", {
+      const res = await fetch("/fastapi/api/routers/user/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -114,15 +111,12 @@ function User() {
           phone: data.phone,
           currency: data.currency,
           country: data.country,
-          pin:"",
           city: data.city,
           package: data.package,
           role: data.role,
           created_at: data.created_at,
-          updated_at: data.updated_at,
-          balance: newBalance,
-          referral_profit: 0,
-          referral_id: "",
+          referrer_user_id: data.referrer_user_id,
+          referral_type_name: data.referral_type_name,
         }),
       });
 
@@ -257,9 +251,13 @@ function User() {
                       </FormControl>
                       <SelectContent className="bg-white">
                         <SelectItem value="Bronze">Bronze $150</SelectItem>
-                        <SelectItem value="Bronze Plus">Bronze Plus $300</SelectItem>
+                        <SelectItem value="Bronze Plus">
+                          Bronze Plus $300
+                        </SelectItem>
                         <SelectItem value="Gold">Gold $600</SelectItem>
-                        <SelectItem value="Gold Plus">Gold Plus $1200</SelectItem>
+                        <SelectItem value="Gold Plus">
+                          Gold Plus $1200
+                        </SelectItem>
                         <SelectItem value="Diamond">Diamond $2400</SelectItem>
                         <SelectItem value="Diamond Plus">
                           Diamond Plus $4800
@@ -275,12 +273,11 @@ function User() {
                 )}
               />
             </div>
-            <div className="">
-              <div>
-                <Button type="submit" className="bg-pink">
-                  Submit
-                </Button>
-              </div>
+
+            <div>
+              <Button type="submit" className="bg-pink">
+                Submit
+              </Button>
             </div>
           </form>
         </Form>
