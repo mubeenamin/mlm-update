@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
+import { useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -25,7 +25,7 @@ import {
 import moment from "moment";
 import { useRouter } from "next/navigation";
 
-
+import axios from "axios";
 
 const formSchema = z.object({
   nation_id: z.string().min(2, {
@@ -42,12 +42,13 @@ const formSchema = z.object({
   package: z.string({ required_error: "Please select a package" }),
   role: z.string(),
   created_at: z.string(),
-  updated_at: z.string(),
-  balance: z.number(),
-  referral_profit: z.number(),
-  referral_id: z.string(),
+  referrer_user_id: z.number(),
+  referral_type_name: z.string(),
 });
 function User() {
+  const { data: session } = useSession();
+  // @ts-ignore
+  const referral_id = session?.user?.id;
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -62,14 +63,11 @@ function User() {
       package: "",
       role: "user",
       created_at: moment().format("YYYY-MM-DD"),
-      updated_at: moment().format("YYYY-MM-DD"),
-      balance: 0,
-      referral_profit: 0,
-      referral_id: "",
+      referrer_user_id: referral_id,
+      referral_type_name: "direct",
     },
   });
   const handleReset = () => {
-    
     form.reset({
       nation_id: "",
       email: "",
@@ -81,63 +79,42 @@ function User() {
       package: "",
     });
   };
-  async function onSubmit(data: z.infer<typeof formSchema>) {
-    
-    let newBalance:number= 0
-    if(data.package === "Bronze"){
-      newBalance = 150 
-    }else if(data.package === "Bronze Plus"){
-      newBalance = 300
-    }else if(data.package === "Gold"){
-      newBalance = 600
-    }else if(data.package === "Gold Plus"){
-      newBalance = 1200
-    }else if(data.package === "Platinum"){
-      newBalance = 9600
-    }else if(data.package === "Platinum Plus"){
-      newBalance = 19200
-    }else if(data.package === "Diamond"){
-      newBalance = 2400
-    }else if(data.package === "Diamond Plus"){
-      newBalance = 4800
-    }
-    try {
-      const res = await fetch("/api/create_users", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          nation_id: data.nation_id,
-          email: data.email,
-          password: data.password,
-          phone: data.phone,
-          currency: data.currency,
-          country: data.country,
-          pin:"",
-          city: data.city,
-          package: data.package,
-          role: data.role,
-          created_at: data.created_at,
-          updated_at: data.updated_at,
-          balance: newBalance,
-          referral_profit: 0,
-          referral_id: "",
-        }),
-      });
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
+    console.log(data);
 
-      if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`);
+    try {
+      const res = await axios.post(
+        "/fastapi/api/routers/user/create",
+        data
+        //   {
+
+        //   national_id: data.nation_id,
+        //   email: data.email,
+        //   password: data.password,
+        //   city: data.city,
+        //   country: data.country,
+        //   phone: data.phone,
+        //   currency: data.currency,
+        //   package: data.package,
+        //   created_at: data.created_at,
+        //   referrer_user_id: data.referrer_user_id,
+        //   referral_type_name: data.referral_type_name,
+        // }
+      );
+
+      if (!res) {
+        throw new Error(`HTTP error! status:`);
       } else {
-        console.log(await res.json());
+        console.log(await res.data);
       }
     } catch (error) {
       console.error("An error occurred:", error);
     }
 
     handleReset();
+
     router.refresh();
-  }
+  };
 
   return (
     <main className="space-y-4">
@@ -147,141 +124,137 @@ function User() {
             onSubmit={form.handleSubmit(onSubmit)}
             className="w-max-full gap-8 space-y-10"
           >
-            <div className="w-80 gap-4 space-y-4">
-              <FormField
-                control={form.control}
-                name="nation_id"
-                render={({ field }) => (
-                  <FormItem className="gap-4">
-                    <FormLabel>National ID</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Enter National ID" {...field} />
-                    </FormControl>
-                    <FormMessage className="text-red-500" />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem className="gap-4">
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Enter Email" {...field} />
-                    </FormControl>
-                    <FormMessage className="text-red-500" />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem className="gap-4">
-                    <FormLabel>Password</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Enter Password" {...field} />
-                    </FormControl>
-                    <FormMessage className="text-red-500" />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="country"
-                render={({ field }) => (
-                  <FormItem className="gap-4">
-                    <FormLabel>Country</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Enter Your Country" {...field} />
-                    </FormControl>
-                    <FormMessage className="text-red-500" />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="city"
-                render={({ field }) => (
-                  <FormItem className="gap-4">
-                    <FormLabel>City</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Enter Your City" {...field} />
-                    </FormControl>
-                    <FormMessage className="text-red-500" />
-                  </FormItem>
-                )}
-              />
+            <FormField
+              control={form.control}
+              name="nation_id"
+              render={({ field }) => (
+                <FormItem className="gap-4">
+                  <FormLabel>National ID</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter National ID" {...field} />
+                  </FormControl>
+                  <FormMessage className="text-red-500" />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem className="gap-4">
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter Email" {...field} />
+                  </FormControl>
+                  <FormMessage className="text-red-500" />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem className="gap-4">
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter Password" {...field} />
+                  </FormControl>
+                  <FormMessage className="text-red-500" />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="country"
+              render={({ field }) => (
+                <FormItem className="gap-4">
+                  <FormLabel>Country</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter Your Country" {...field} />
+                  </FormControl>
+                  <FormMessage className="text-red-500" />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="city"
+              render={({ field }) => (
+                <FormItem className="gap-4">
+                  <FormLabel>City</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter Your City" {...field} />
+                  </FormControl>
+                  <FormMessage className="text-red-500" />
+                </FormItem>
+              )}
+            />
 
-              <FormField
-                control={form.control}
-                name="phone"
-                render={({ field }) => (
-                  <FormItem className="gap-4">
-                    <FormLabel>Phone Number</FormLabel>
+            <FormField
+              control={form.control}
+              name="phone"
+              render={({ field }) => (
+                <FormItem className="gap-4">
+                  <FormLabel>Phone Number</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter Phone number" {...field} />
+                  </FormControl>
+                  <FormMessage className="text-red-500" />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="currency"
+              render={({ field }) => (
+                <FormItem className="gap-4">
+                  <FormLabel>Currency</FormLabel>
+                  <FormControl>
+                    <Input placeholder="" {...field} />
+                  </FormControl>
+                  <FormMessage className="text-red-500" />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="package"
+              render={({ field }) => (
+                <FormItem className="gap-4">
+                  <FormLabel>Package</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
                     <FormControl>
-                      <Input placeholder="Enter Phone number" {...field} />
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a Package" />
+                      </SelectTrigger>
                     </FormControl>
-                    <FormMessage className="text-red-500" />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="currency"
-                render={({ field }) => (
-                  <FormItem className="gap-4">
-                    <FormLabel>Currency</FormLabel>
-                    <FormControl>
-                      <Input placeholder="" {...field} />
-                    </FormControl>
-                    <FormMessage className="text-red-500" />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="package"
-                render={({ field }) => (
-                  <FormItem className="gap-4">
-                    <FormLabel>Package</FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select a Package" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent className="bg-white">
-                        <SelectItem value="Bronze">Bronze $150</SelectItem>
-                        <SelectItem value="Bronze Plus">Bronze Plus $300</SelectItem>
-                        <SelectItem value="Gold">Gold $600</SelectItem>
-                        <SelectItem value="Gold Plus">Gold Plus $1200</SelectItem>
-                        <SelectItem value="Diamond">Diamond $2400</SelectItem>
-                        <SelectItem value="Diamond Plus">
-                          Diamond Plus $4800
-                        </SelectItem>
-                        <SelectItem value="Platinum">Platinum $9600</SelectItem>
-                        <SelectItem value="Platinum Plus">
-                          Platinum Plus $19200
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="">
-              <div>
-                <Button type="submit" className="bg-pink">
-                  Submit
-                </Button>
-              </div>
-            </div>
+                    <SelectContent className="bg-white">
+                      <SelectItem value="Bronze">Bronze $150</SelectItem>
+                      <SelectItem value="Bronze Plus">
+                        Bronze Plus $300
+                      </SelectItem>
+                      <SelectItem value="Gold">Gold $600</SelectItem>
+                      <SelectItem value="Gold Plus">Gold Plus $1200</SelectItem>
+                      <SelectItem value="Diamond">Diamond $2400</SelectItem>
+                      <SelectItem value="Diamond Plus">
+                        Diamond Plus $4800
+                      </SelectItem>
+                      <SelectItem value="Platinum">Platinum $9600</SelectItem>
+                      <SelectItem value="Platinum Plus">
+                        Platinum Plus $19200
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button type="submit" className="bg-pink">
+              Submit
+            </Button>
           </form>
         </Form>
       </div>
