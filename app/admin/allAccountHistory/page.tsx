@@ -1,5 +1,10 @@
+import UserView from "@/app/component/userView";
 import React from "react";
 
 export default function AllAccountHistory() {
-  return <div>AllAccountHistory</div>;
+  return (
+    <div>
+      <UserView />
+    </div>
+  );
 }

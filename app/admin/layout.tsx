@@ -22,8 +22,12 @@ export default function DashboardLayout({
       <Sidebaradmin />
       <div className="w-full h-full">
         <Navbar />
+<<<<<<< HEAD
         <div className="bg-gray-200 p-4 h-(calc(100vh-64px)">{children}</div>
         {/* {isLoading && <Loader/>} */}
+=======
+        <div className="pt-4 px-4">{children}</div>
+>>>>>>> 156d1fa90c9a73e07bf54584c462b07c8f8ddd06
       </div>
     </div>
   );

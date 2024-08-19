@@ -42,3 +42,7 @@ async def create_referral_type(referral_type: ReferralType, db: db_dependency):
     db.commit()
     db.refresh(referral_type)
     return referral_type
+
+@router.get("/get_all_types", response_model=List[ReferralType])
+def get_all_referral_type(db: db_dependency):
+    return db.exec(select(ReferralType)).all()

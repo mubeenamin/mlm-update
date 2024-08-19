@@ -51,12 +51,14 @@ const Page = () => {
   }, [notificationCount]);
 
   const handleToggle = () => {
+  const handleToggle = () => {
     setOpen(!open);
     if (!open) {
       setNotificationCount(users.length); 
       setNewNotificationCount(0);
     }
   };
+
 
   return (
     <div className='flex flex-col place-items-center p-4'>
