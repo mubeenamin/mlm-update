@@ -1,22 +1,15 @@
 "use client";
-import {} from "@hookform/resolvers/zod";
 import { signIn, useSession } from "next-auth/react";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useContext, useState } from "react";
-import { redirect } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import Toast from "./toast";
+import Loader from "./Loader"; // Import the Loader component
+import 'react-toastify/dist/ReactToastify.css';
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { setLoading } from "@/redux/loader/LoadingSlice"; // Ensure this path is correct
 
 const FormSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -27,36 +20,37 @@ const FormSchema = z.object({
 
 const SignIn = () => {
   const { data: session, status } = useSession();
-  // @ts-ignore
-  if (
-    status === "authenticated" &&
-    session?.user?.email === "admin@gmail.com"
-  ) {
-    redirect("/admin/dashboard");
-  } else if (
-    status === "authenticated" &&
-    session?.user?.email !== "admin@gmail.com"
-  ) {
-    redirect(`/user/dashboard`);
-  }
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+  const loading = useAppSelector((state) => state.LoadingReducer);
+  const [invalidUser, setInvalidUser] = useState(false);
 
-  const [loading, setLoading] = useState(false);
-  const [invalidUser, setinvalidUser] = useState(false);
+  useEffect(() => {
+    if (status === "authenticated") {
+      dispatch(setLoading(false));
+      if (session?.user?.email === "admin@gmail.com") {
+        router.push("/admin/dashboard");
+      } else {
+        router.push("/user/dashboard");
+      }
+    }
+  }, [status, session, dispatch, router]);
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
-    const email = data.email;
-    const password = data.password;
+    dispatch(setLoading(true));
+    const { email, password } = data;
+
     try {
-      const res = await signIn("credentials", {
-        email,
-        password,
-      });
+      const res = await signIn("credentials", { email, password });
       if (res?.error) {
-        setinvalidUser(true);
+        setInvalidUser(true);
+        dispatch(setLoading(false));
       }
     } catch (error) {
-      setinvalidUser(true);
+      setInvalidUser(true);
+      dispatch(setLoading(false));
     }
+
     handleReset();
   };
 
@@ -66,65 +60,59 @@ const SignIn = () => {
       password: "",
     });
   };
-  const form = useForm<z.infer<typeof FormSchema>>({
+
+  const form = useForm({
     resolver: zodResolver(FormSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   });
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-between">
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col gap-5 p-14 mt-4 shadow-xl"
-        >
-          <h1 className="text-4xl font-bold ">OPUS GLOBAL</h1>
-          <h1 className="text-3xl text-slate-900 font-medium text-center">
-            Login
-          </h1>
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input placeholder="Enter you email" {...field} />
-                </FormControl>
 
-                <FormMessage className="text-red-500" />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Password</FormLabel>
-                <FormControl>
-                  <Input
-                    type="password"
-                    placeholder="Enter Your Password"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage className="text-red-500" />
-              </FormItem>
-            )}
-          />
+  return (
+    <main className="flex min-h-screen items-center justify-center bg-white/50">
+      {/* <Toast /> */}
+      {loading && <Loader />} 
+      <div className="w-full max-w-md p-8 space-y-6 bg-white rounded shadow-md">
+        <h1 className="text-4xl font-bold text-center">OPUS GLOBAL</h1>
+        <h2 className="text-2xl font-medium text-center text-gray-700">Login</h2>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <div>
-            <p className="text-red-500">
-              {invalidUser && "Wrong email or password"}
-            </p>
+            <label className="block text-sm font-medium text-gray-700">Email</label>
+            <input
+              type="email"
+              {...form.register("email")}
+              className="w-full px-3 py-2 mt-1 border rounded-md focus:outline-none focus:ring focus:ring-indigo-200"
+              placeholder="Enter your email"
+            />
+            {form.formState.errors.email && (
+              <p className="mt-1 text-sm text-red-500">{form.formState.errors.email.message}</p>
+            )}
           </div>
-          <Button type="submit" className="bg-pink">
-            {loading ? <>loading....</> : <span>Login</span>}
-          </Button>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Password</label>
+            <input
+              type="password"
+              {...form.register("password")}
+              className="w-full px-3 py-2 mt-1 border rounded-md focus:outline-none focus:ring focus:ring-indigo-200"
+              placeholder="Enter your password"
+            />
+            {form.formState.errors.password && (
+              <p className="mt-1 text-sm text-red-500">{form.formState.errors.password.message}</p>
+            )}
+          </div>
+          {invalidUser && (
+            <p className="mt-2 text-sm text-red-500">Wrong email or password</p>
+          )}
+          <button
+            type="submit"
+            className="w-full px-4 py-2 font-medium text-white bg-pink rounded-md hover:bg-pink/90 focus:outline-none focus:ring focus:ring-pink/80"
+            disabled={loading}
+          >
+            Login
+          </button>
         </form>
-      </Form>
+      </div>
     </main>
   );
 };

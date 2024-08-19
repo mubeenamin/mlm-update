@@ -1,3 +1,4 @@
+import App from "./admin/App";
 import SessionWrapper from "./component/sessionWrapper";
 
 import "./globals.css";
@@ -19,7 +20,10 @@ export default function RootLayout({
     <html lang="en">
       <SessionWrapper>
         <body className={inter.className}>
-          <div className="">{children}</div>
+          <div className="">
+            <App>
+            {children}
+            </App></div>
         </body>
       </SessionWrapper>
     </html>
