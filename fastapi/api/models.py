@@ -14,8 +14,7 @@ class userBase(SQLModel):
     currency : str
     country : str
     city : str
-    package : str
-    role : str
+    name : str
     created_at: str
     
 class User(userBase , table = True):
@@ -43,8 +42,7 @@ class UserCreate(SQLModel):
     currency : str
     country : str
     city : str
-    package : str
-    role : str
+    name : str
     created_at: str
     referrer_user_id: int
     referral_type_name: str
@@ -66,6 +64,7 @@ class notification(notificationBase , table = True):
 
 class balanceBase(SQLModel):
     balance : Decimal
+    package: str
     user_id : Optional[int] = Field(default = None , foreign_key = "user.id")
     
 class BalanceCreate(balanceBase):

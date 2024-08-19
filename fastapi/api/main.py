@@ -1,4 +1,4 @@
-from fastapi import Depends, FastAPI
+from fastapi import FastAPI
 from sqlmodel import Session, select, update
 from api.db import  engine
 from api.models import *
@@ -6,17 +6,29 @@ from fastapi.middleware.cors import CORSMiddleware
 from apscheduler.schedulers.background import BackgroundScheduler
 from api.routers import auth, withdrawal, pin, referral_type, balance, user , notification
 import math
-import requests
-from datetime import datetime, timedelta
-from time import sleep 
-from api.dep import db_dependency
+
 def calculate_earnings(user):
     if user.Balances is None:
         print(f"User {user.id} has no balance record.")
         return 0  # or handle this case as needed
     user_balance = round(user.Balances.balance)
-    daily_profit_pkg = 500
-
+    daily_profit_pkg = 0
+    if user.Balances.package == "Bronze":
+        daily_profit_pkg = 1
+    elif user.Balances.package == "Silver":
+        daily_profit_pkg = 2
+    elif user.Balances.package == "Gold":
+        daily_profit_pkg = 4
+    elif user.Balances.package == "Gold Plus":
+        daily_profit_pkg = 8
+    elif user.Balances.package == "Daimond":
+        daily_profit_pkg = 16
+    elif user.Balances.package == "Daimond Plus":
+        daily_profit_pkg = 32
+    elif user.Balances.package == "Platinum":
+        daily_profit_pkg = 64
+    elif user.Balances.package == "Platinum Plus":
+        daily_profit_pkg = 128
     direct_referrals = [ref for ref in user.referrals if ref.referral_type_id == 1]
     indirect_referrals = [ref for ref in user.referrals if ref.referral_type_id == 2]
 
@@ -89,10 +101,6 @@ app.add_middleware(
 def on_startup():
     start_scheduler()
 
-
-@app.get("/")
-def health_check():
-    return {"message" : "Hello World"}
 
 app.include_router(user.router)
 app.include_router(auth.router)

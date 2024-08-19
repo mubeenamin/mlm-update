@@ -14,11 +14,30 @@ function CardsUser({ users }: any) {
   let totalReferralProfit: number;
   let totalEarninggs: number;
   let starCount;
+  let userPackage: string;
   if (users === null) {
-    return null;
+    return <div className="text-3xl">loading...</div>;
   } else {
     userBalance = Math.round(users.Balances.balance);
-    dailyProfitPkg = 500;
+    userPackage = users.Balances.package;
+    dailyProfitPkg = 0;
+    if (userPackage === "Bronze") {
+      dailyProfitPkg = 1;
+    } else if (userPackage === "Silver") {
+      dailyProfitPkg = 2;
+    } else if (userPackage === "Gold") {
+      dailyProfitPkg = 4;
+    } else if (userPackage === "Gold Plus") {
+      dailyProfitPkg = 8;
+    } else if (userPackage === "Daimond") {
+      dailyProfitPkg = 16;
+    } else if (userPackage === "Daimond Plus") {
+      dailyProfitPkg = 32;
+    } else if (userPackage === "Platinum") {
+      dailyProfitPkg = 64;
+    } else if (userPackage === "Platinum Plus") {
+      dailyProfitPkg = 128;
+    }
     directReferrals = users.referrals.filter(
       (referrals: any) => referrals.referral_type_id === 1
     );
@@ -55,23 +74,6 @@ function CardsUser({ users }: any) {
       totalEarninggs = Math.round(dailyProfitPkg + totalReferralProfit);
     }
     starCount = Math.round(percentProfit * 5);
-
-    // useEffect(() => {
-    //   const updateBalance = async () => {
-    //     try {
-    //       await axios.put(
-    //         `/fastapi/api/routers/balance/update_balance_by_id/${users.id}`,
-    //         {
-    //           balance: userBalance + totalEarninggs,
-    //         }
-    //       );
-    //     } catch (err) {
-    //       console.log(err);
-    //     }
-    //   };
-
-    //   updateBalance();
-    // }, [users.id, totalEarninggs]);
   }
   return (
     <main>
@@ -87,7 +89,7 @@ function CardsUser({ users }: any) {
               Email:<div>{users.email}</div>
             </h3>
             <h3>
-              Package:<div>{users.package}</div>
+              Package:<div>{users.Balances.package}</div>
             </h3>
             <div className="flex flex-col">
               <h3>Rating:</h3>
