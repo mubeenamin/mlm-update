@@ -10,7 +10,6 @@ function Page() {
   const userdata: number = session?.user?.id;
 
   const [users, setUsers] = useState(null);
-  const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchData = async () => {
       try {
