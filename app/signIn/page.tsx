@@ -1,12 +1,11 @@
-import SignIn from '@/app/component/signIn'
-import React from 'react'
+import SignIn from "@/app/component/signIn";
 
 const page = () => {
   return (
-    <div className="flex min-h-screen flex-col items-center  justify-between">
-      <SignIn/>
+    <div className="flex min-h-screen items-center justify-center bg-white/50">
+      <SignIn />
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default page;

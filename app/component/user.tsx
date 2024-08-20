@@ -39,11 +39,12 @@ const formSchema = z.object({
   country: z.string(),
   phone: z.string(),
   currency: z.string(),
-  package: z.string({ required_error: "Please select a package" }),
-  role: z.string(),
+  userPackage: z.string({ required_error: "Please select a package" }),
+  name: z.string(),
   created_at: z.string(),
   referrer_user_id: z.number(),
   referral_type_name: z.string(),
+  initial_balance: z.number(),
 });
 function User() {
   const { data: session } = useSession();
@@ -59,12 +60,13 @@ function User() {
       city: "",
       country: "",
       phone: "",
+      userPackage: "",
       currency: "USD",
-      package: "",
-      role: "user",
+      name: "user",
       created_at: moment().format("YYYY-MM-DD"),
       referrer_user_id: referral_id,
       referral_type_name: "direct",
+      initial_balance: 0,
     },
   });
   const handleReset = () => {
@@ -76,31 +78,29 @@ function User() {
       country: "",
       phone: "",
       currency: "USD",
-      package: "",
+      userPackage: "",
     });
   };
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
-    console.log(data);
-
+    if (data.userPackage === "Bronze") {
+      data.initial_balance = 150;
+    } else if (data.userPackage === "Silver") {
+      data.initial_balance = 300;
+    } else if (data.userPackage === "Gold") {
+      data.initial_balance = 600;
+    } else if (data.userPackage === "Gold Plus") {
+      data.initial_balance = 1200;
+    } else if (data.userPackage === "Daimond") {
+      data.initial_balance = 2400;
+    } else if (data.userPackage === "Daimond Plus") {
+      data.initial_balance = 4800;
+    } else if (data.userPackage === "Platinum") {
+      data.initial_balance = 9600;
+    } else if (data.userPackage === "Platinum Plus") {
+      data.initial_balance = 19200;
+    }
     try {
-      const res = await axios.post(
-        "/fastapi/api/routers/user/create",
-        data
-        //   {
-
-        //   national_id: data.nation_id,
-        //   email: data.email,
-        //   password: data.password,
-        //   city: data.city,
-        //   country: data.country,
-        //   phone: data.phone,
-        //   currency: data.currency,
-        //   package: data.package,
-        //   created_at: data.created_at,
-        //   referrer_user_id: data.referrer_user_id,
-        //   referral_type_name: data.referral_type_name,
-        // }
-      );
+      const res = await axios.post("/fastapi/api/routers/user/create", data);
 
       if (!res) {
         throw new Error(`HTTP error! status:`);
@@ -218,7 +218,7 @@ function User() {
             />
             <FormField
               control={form.control}
-              name="package"
+              name="userPackage"
               render={({ field }) => (
                 <FormItem className="gap-4">
                   <FormLabel>Package</FormLabel>

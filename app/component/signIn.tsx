@@ -7,9 +7,9 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Toast from "./toast";
 import Loader from "./Loader"; // Import the Loader component
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { setLoading } from "@/redux/loader/LoadingSlice"; // Ensure this path is correct
+import { setLoading } from "@/redux/loader/LoadingSlice";
 
 const FormSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -20,6 +20,7 @@ const FormSchema = z.object({
 
 const SignIn = () => {
   const { data: session, status } = useSession();
+
   const router = useRouter();
   const dispatch = useAppDispatch();
   const loading = useAppSelector((state) => state.LoadingReducer);
@@ -28,7 +29,7 @@ const SignIn = () => {
   useEffect(() => {
     if (status === "authenticated") {
       dispatch(setLoading(false));
-      if (session?.user?.email === "admin@gmail.com") {
+      if (session?.user?.name === "admin") {
         router.push("/admin/dashboard");
       } else {
         router.push("/user/dashboard");
@@ -70,15 +71,19 @@ const SignIn = () => {
   });
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-white/50">
+    <main>
       {/* <Toast /> */}
-      {loading && <Loader />} 
+      {loading && <Loader />}
       <div className="w-full max-w-md p-8 space-y-6 bg-white rounded shadow-md">
         <h1 className="text-4xl font-bold text-center">OPUS GLOBAL</h1>
-        <h2 className="text-2xl font-medium text-center text-gray-700">Login</h2>
+        <h2 className="text-2xl font-medium text-center text-gray-700">
+          Login
+        </h2>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700">Email</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Email
+            </label>
             <input
               type="email"
               {...form.register("email")}
@@ -86,11 +91,15 @@ const SignIn = () => {
               placeholder="Enter your email"
             />
             {form.formState.errors.email && (
-              <p className="mt-1 text-sm text-red-500">{form.formState.errors.email.message}</p>
+              <p className="mt-1 text-sm text-red-500">
+                {form.formState.errors.email.message}
+              </p>
             )}
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">Password</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Password
+            </label>
             <input
               type="password"
               {...form.register("password")}
@@ -98,7 +107,9 @@ const SignIn = () => {
               placeholder="Enter your password"
             />
             {form.formState.errors.password && (
-              <p className="mt-1 text-sm text-red-500">{form.formState.errors.password.message}</p>
+              <p className="mt-1 text-sm text-red-500">
+                {form.formState.errors.password.message}
+              </p>
             )}
           </div>
           {invalidUser && (

@@ -54,7 +54,8 @@ class UserCreate(SQLModel):
     created_at: str
     referrer_user_id: int
     referral_type_name: str
-
+    initial_balance: Decimal
+    userPackage: str
 
 class notificationBase(SQLModel):
     title : str
