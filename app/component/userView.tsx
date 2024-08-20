@@ -11,8 +11,6 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import TableSkeleton from "../admin/components/tableSkeleton";
 
-import { Button } from "@/components/ui/button";
-
 import { LogOut } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { useSession } from "next-auth/react";
@@ -51,19 +49,12 @@ function UserView() {
     currency: "Currency",
     pin: "Pin",
   };
-  
 
- 
   return (
     <main>
       <div className="flex">
-      <AdminCard title="Users" value={users.length}  />
-      
-      
+        <AdminCard title="Users" value={users.length} />
       </div>
-      <Button variant="outline" onClick={() => signOut()}>
-        logout
-      </Button>
       <Table>
         <TableHeader>
           <TableRow>
