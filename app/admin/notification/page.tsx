@@ -14,61 +14,83 @@ export default  function Notification() {
   const [title, settitle] = useState("");
   const [message, setmessage] = useState("");
   const [user_id, setuser_id] = useState(1)
-const handleSubmit = async (event: any) => {
+ 
+
+  const handleReset = () => {
+    settitle("");
+    setmessage("");
+    setuser_id(1);
+  };
+  const handleSubmit = async (event: any) => {
   event.preventDefault();
   try {
-    const response = await axios.post("/api/routers/notification/create_notification" , {
+    const response = await axios.post("/fastapi/api/routers/notification/create_notification" , {
       title: title,
       message : message,
       user_id: user_id
     });
     
-    console.log(response);
+   // console.log(response);
   } catch (error) {
     console.error(error);
   }
+  handleReset();
+  
 };
 
-
-
-  return (
-    <ProtectedRoute>
-    <div className="flex flex-col items-center justify-center h-screen">
-      <nav>
-       <h1>Notification</h1>  
-      </nav>
+return (
+    <section className="bg-white dark:bg-gray-900">
+  <div className="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
+    <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-center text-gray-900 dark:text-white">
+      Notification 
+    </h2>
+   
+    <form className="space-y-8">
+    
       <div>
-        <form >
-        <div className='mb-3 mt-3 flex flex-col'>
-          <label htmlFor='title' className=''>
-           Title
-          </label>
-          <input
-            id='title'
-            value={title}
-            type='text'
-            className='border border-gray-400 p-2 w-96'
-            onChange={(e) => settitle(e.target.value)}
-          />
-        </div>
-        <div className='mb-3 mt-3 flex flex-col'>
-          <label htmlFor='title' className=''>
-           Description 
-          </label>
-          <input
-            type='text'
-            className='border border-gray-400 p-2 w-96 '
-            onChange={(e) => setmessage(e.target.value )}
-          />
-        </div>
-        <Button type="submit"  onClick={handleSubmit}>Submit</Button>
-        </form>
-      </div>    
+        <label
+          htmlFor="subject"
+          className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+        >
+          Title
+        </label>
+        <input
+          type="text"
+          value={title}
+          onChange={(e) => settitle(e.target.value)}
+          className="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light"
+          placeholder="Title"
+          
+         
+        />
+      </div>
+      <div className="sm:col-span-2">
+        <label
+          htmlFor="message"
+          className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
+        >
+          Your message
+        </label>
+        <textarea
+          value={message}
+          onChange={(e) => setmessage(e.target.value )}
+          rows={6}
+          className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+          placeholder="Leave a comment..."
+          defaultValue={""}
+        />
+      </div>
+      <button
+        type="submit"
+        onClick={handleSubmit}
+        className="py-3 px-5 bg-pink text-sm font-medium text-center text-black rounded-lg bg-primary-700 sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+      >
+        Send message
+      </button>
+    </form>
   </div>
-  
-  </ProtectedRoute>
-
-    )
+</section>
+ )
 }
 
 

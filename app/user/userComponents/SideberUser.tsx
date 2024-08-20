@@ -39,7 +39,7 @@ const menu = [
       },
       {
         title: "MESSAGE",
-        link: "/admin/message",
+        link: "/user/UserMessages",
         icon : <TiMessages />
       },
       {

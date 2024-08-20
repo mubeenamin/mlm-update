@@ -4,7 +4,7 @@ from api.db import  engine
 from api.models import *
 from fastapi.middleware.cors import CORSMiddleware
 from apscheduler.schedulers.background import BackgroundScheduler
-from api.routers import auth, withdrawal, pin, referral_type, balance, user , notification
+from api.routers import auth, withdrawal, pin, referral_type, balance, user , notification , message
 import math
 
 def calculate_earnings(user):

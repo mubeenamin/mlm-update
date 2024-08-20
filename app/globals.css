@@ -1,11 +1,31 @@
 @tailwind base;
-  @tailwind components;
-  @tailwind utilities;
+@tailwind components;
+@tailwind utilities;
 
  
   .notification-box {
     @apply w-80;
   } 
+
+  .loader {
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-left-color: #ffffff;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 0.5s linear infinite; /* Reduced from 1s to 0.5s */
+  }
+  
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+
 
 @layer base {
   :root {
