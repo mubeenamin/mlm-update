@@ -1,6 +1,8 @@
 "use client"
 import React, { useEffect, useState } from 'react'
+import { signOut } from "next-auth/react";
 import { useSession } from "next-auth/react";
+
 const Page = () => {
   const [open, setOpen] = useState(false);
   const [users, setUsers] = useState<any>([]);
@@ -21,7 +23,7 @@ const Page = () => {
         }
         const data = await res.json();
         setUsers(data);
-        setNotificationCount(data.length); 
+        setNotificationCount(data.length); // Update the notification count
         setLoading(false);
       } catch (error) {
         console.error("An error occurred:", error);
@@ -41,24 +43,22 @@ const Page = () => {
         }
         const data = await res.json();
         setUsers(data);
-        setNewNotificationCount(data.length - notificationCount); 
+        setNewNotificationCount(data.length - notificationCount); // Update the new notification count
       } catch (error) {
         console.error("An error occurred:", error);
       }
-    }, 5000); 
+    }, 5000); // Check for new notifications every 5 seconds
 
     return () => clearInterval(interval);
   }, [notificationCount]);
 
   const handleToggle = () => {
-  const handleToggle = () => {
     setOpen(!open);
     if (!open) {
-      setNotificationCount(users.length); 
-      setNewNotificationCount(0);
+      setNotificationCount(users.length); // Reset the notification count when opened
+      setNewNotificationCount(0); // Reset the new notification count when opened
     }
   };
-
 
   return (
     <div className='flex flex-col place-items-center p-4'>
