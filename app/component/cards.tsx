@@ -13,7 +13,7 @@ function CardsUser({ users }: any) {
   let indirectReferralsProfit;
   let totalReferralProfit: number;
   let totalEarninggs: number;
-  let starCount;
+  let starCount: number;
   let userPackage: string;
   if (users === null) {
     return <div className="text-3xl">loading...</div>;
