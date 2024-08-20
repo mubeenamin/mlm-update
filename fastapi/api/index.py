@@ -101,7 +101,7 @@ app.add_middleware(
 def on_startup():
     start_scheduler()
 
-@app.get("/hello")
+@app.get("/fastapi/api/hello")
 def hello_world():
     return {"message": "Hello World"}
 
