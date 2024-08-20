@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, status
 from sqlmodel import select
-from api.models import ReferralType, Referral
+from api.models import Balance, ReferralType, Referral
 from api.dep import db_dependency, user_dependency, bcrypt_context
 from typing import Annotated, List
 from api.models import User, UserCreate, UserRead, Referral, ReferralType
@@ -25,6 +25,11 @@ async def create_user(db: db_dependency , user: UserCreate):
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
+    
+    balance = Balance(user_id=db_user.id, balance=user.initial_balance, package=user.userPackage)
+    db.add(balance)
+    db.commit()
+    db.refresh(balance)
     
     
     referral_type = db.exec(select(ReferralType).where(ReferralType.referral_type_name == user.referral_type_name)).first()

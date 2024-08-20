@@ -50,6 +50,7 @@ class UserCreate(SQLModel):
     created_at: str
     referrer_user_id: int
     referral_type_name: str
+<<<<<<< HEAD
 
 # class messageBase(SQLModel):
 #     content : str
@@ -64,6 +65,10 @@ class UserCreate(SQLModel):
 
 
 
+=======
+    initial_balance: Decimal
+    userPackage: str
+>>>>>>> 846e86b688be6b761099bcb6c9a382d854c27357
 
 class notificationBase(SQLModel):
     title : str

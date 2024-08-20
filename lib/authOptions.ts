@@ -2,12 +2,7 @@ import axios from "axios";
 import { NextAuthOptions } from "next-auth";
 
 import Credentials from "next-auth/providers/credentials";
-type User = {
-  id: number;
-  email: string;
-  name: string;
-  role: string;
-};
+
 const authOptions: NextAuthOptions = {
   providers: [
     Credentials({
@@ -26,7 +21,7 @@ const authOptions: NextAuthOptions = {
             throw new Error("Invalid credentials");
           }
           const user: any = await res.data;
-
+          console.log(user);
           if (user.error) {
             throw new Error(user.error);
           }
@@ -43,14 +38,22 @@ const authOptions: NextAuthOptions = {
     signOut: "/",
   },
   callbacks: {
-    async jwt({ token, user }: any) {
+    async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
+        //@ts-ignore
+        token.balance = user.Balances.balance;
       }
+      const expiryTime = Math.floor(Date.now() / 1000) + 24 * 60 * 60; // Current time in seconds + 24 hours
+      token.exp = expiryTime;
       return token;
     },
-    async session({ session, token }: any) {
-      session.user = token;
+    async session({ session, token }) {
+      //@ts-ignore
+      session.user.id = token.id;
+      //@ts-ignore
+      session.user.balance = token.balance;
+
       return session;
     },
   },
