@@ -24,24 +24,20 @@ class User(userBase , table = True):
     Pin : Optional["Pin"] = Relationship(back_populates="user")
     referrals: List["Referral"] = Relationship(back_populates="referrer",sa_relationship_kwargs={"foreign_keys": "[Referral.referrer_user_id]"})
     notifications: List["notification"] = Relationship(back_populates="user")
+    # messages: List["message"] = Relationship(back_populates="user", sa_relationship_kwargs={"foreign_keys": "[message.user_id]"})
+    # sent_messages: List["message"] = Relationship(back_populates="sender", sa_relationship_kwargs={"foreign_keys": "[message.sender_id]"})
+    # received_messages: List["message"] = Relationship(back_populates="receiver", sa_relationship_kwargs={"foreign_keys": "[message.receiver_id]"})
  
-    
-    
-
-   
-    
-    
+      
 class UserRead(userBase):
     Balances : Optional["Balance"]
     Withdrawals: List["Withdrawal"]
     Pin : Optional["Pin"]
     referrals: List["Referral"]
     notifications: List["notification"]
+    # sent_messages: List["message"]
+    # received_messages: List["message"]
     
-    
-    
-    
-
 class UserCreate(SQLModel):
     nation_id : str
     email : str 
@@ -54,6 +50,19 @@ class UserCreate(SQLModel):
     created_at: str
     referrer_user_id: int
     referral_type_name: str
+
+# class messageBase(SQLModel):
+#     content : str
+#     sender_id : int
+#     receiver_id : int
+#     user_id : Optional[int] = Field(default = None , foreign_key = "user.id")
+
+# class message(messageBase , table = True):
+#     id : Optional[int] = Field(default = None , primary_key = True, index=True)
+#     sender: Optional["User"] = Relationship(back_populates="sent_messages", sa_relationship_kwargs={"foreign_keys": "[Message.sender_id]"})
+#     receiver: Optional["User"] = Relationship(back_populates="received_messages", sa_relationship_kwargs={"foreign_keys": "[Message.receiver_id]"})
+
+
 
 
 class notificationBase(SQLModel):
@@ -123,7 +132,6 @@ class Referral(SQLModel, table=True):
     referrer_user_id: int = Field(foreign_key = "user.id")
     referred_user_id: int = Field(foreign_key = "user.id")
     referral_type_id: Optional[int] = Field(default = None , foreign_key="referraltype.referral_type_id")
-
     referrer: User = Relationship(back_populates="referrals", sa_relationship_kwargs={"foreign_keys": "[Referral.referrer_user_id]"})
     
 

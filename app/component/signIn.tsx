@@ -6,10 +6,10 @@ import { z } from "zod";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Toast from "./toast";
-import Loader from "./Loader"; // Import the Loader component
+import Loader from "./Loader"; 
 import 'react-toastify/dist/ReactToastify.css';
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { setLoading } from "@/redux/loader/LoadingSlice"; // Ensure this path is correct
+import { setLoading } from "@/redux/loader/LoadingSlice"; 
 
 const FormSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -71,7 +71,7 @@ const SignIn = () => {
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-white/50">
-      {/* <Toast /> */}
+      
       {loading && <Loader />} 
       <div className="w-full max-w-md p-8 space-y-6 bg-white rounded shadow-md">
         <h1 className="text-4xl font-bold text-center">OPUS GLOBAL</h1>
