@@ -101,6 +101,9 @@ app.add_middleware(
 def on_startup():
     start_scheduler()
 
+@app.get("/hello")
+def hello_world():
+    return {"message": "Hello World"}
 
 app.include_router(user.router)
 app.include_router(auth.router)
