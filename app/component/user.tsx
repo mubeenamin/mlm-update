@@ -99,21 +99,26 @@ function User() {
     } else if (data.userPackage === "Platinum Plus") {
       data.initial_balance = 19200;
     }
-    try {
-      const res = await axios.post("/fastapi/api/routers/user/create", data);
+    // @ts-ignore
+    if (session?.user?.balance < data.initial_balance) {
+      alert("Insufficient Balance");
+    } else {
+      try {
+        const res = await axios.post("/fastapi/api/routers/user/create", data);
 
-      if (!res) {
-        throw new Error(`HTTP error! status:`);
-      } else {
-        console.log(await res.data);
+        if (!res) {
+          throw new Error(`HTTP error! status:`);
+        } else {
+          console.log(await res.data);
+        }
+      } catch (error) {
+        console.error("An error occurred:", error);
       }
-    } catch (error) {
-      console.error("An error occurred:", error);
+
+      handleReset();
+
+      router.refresh();
     }
-
-    handleReset();
-
-    router.refresh();
   };
 
   return (
