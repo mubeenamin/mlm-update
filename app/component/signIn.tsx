@@ -117,7 +117,7 @@ const SignIn = () => {
           )}
           <button
             type="submit"
-            className="w-full px-4 py-2 font-medium text-white bg-pink rounded-md hover:bg-pink/90 focus:outline-none focus:ring focus:ring-pink/80"
+            className="w-full px-4 py-2 font-medium text-white bg-red-800 rounded-md hover:bg-red-800/90 focus:outline-none focus:ring focus:ring-pink/80"
             disabled={loading}
           >
             Login

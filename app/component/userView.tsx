@@ -8,11 +8,6 @@ import {
   TableCell,
   TableHeader,
 } from "@/components/ui/table";
-import { Skeleton } from "@/components/ui/skeleton";
-import TableSkeleton from "../admin/components/tableSkeleton";
-
-import { LogOut } from "lucide-react";
-import { signOut } from "next-auth/react";
 import { useSession } from "next-auth/react";
 import AdminCard from "./adminCard";
 function UserView() {
