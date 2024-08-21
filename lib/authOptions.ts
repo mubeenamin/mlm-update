@@ -21,7 +21,7 @@ const authOptions: NextAuthOptions = {
             throw new Error("Invalid credentials");
           }
           const user: any = await res.data;
-          console.log(user);
+
           if (user.error) {
             throw new Error(user.error);
           }
