@@ -50,25 +50,8 @@ class UserCreate(SQLModel):
     created_at: str
     referrer_user_id: int
     referral_type_name: str
-<<<<<<< HEAD
-
-# class messageBase(SQLModel):
-#     content : str
-#     sender_id : int
-#     receiver_id : int
-#     user_id : Optional[int] = Field(default = None , foreign_key = "user.id")
-
-# class message(messageBase , table = True):
-#     id : Optional[int] = Field(default = None , primary_key = True, index=True)
-#     sender: Optional["User"] = Relationship(back_populates="sent_messages", sa_relationship_kwargs={"foreign_keys": "[Message.sender_id]"})
-#     receiver: Optional["User"] = Relationship(back_populates="received_messages", sa_relationship_kwargs={"foreign_keys": "[Message.receiver_id]"})
-
-
-
-=======
     initial_balance: Decimal
     userPackage: str
->>>>>>> 846e86b688be6b761099bcb6c9a382d854c27357
 
 class notificationBase(SQLModel):
     title : str
