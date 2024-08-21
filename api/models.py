@@ -39,7 +39,18 @@ class UserRead(userBase):
     notifications: List["notification"]
     
     
-    
+class AdminCreate(SQLModel):
+    nation_id : str
+    email : str 
+    password : str
+    phone : str
+    currency : str
+    country : str
+    city : str
+    name : str
+    created_at: str
+    initial_balance: Decimal
+    userPackage: str
     
 
 class UserCreate(SQLModel):

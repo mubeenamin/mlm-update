@@ -257,7 +257,7 @@ function User() {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="bg-pink">
+            <Button type="submit" className="bg-red-800">
               Submit
             </Button>
           </form>
