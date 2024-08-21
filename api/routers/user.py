@@ -7,7 +7,7 @@ from api.models import User, UserCreate, UserRead, Referral, ReferralType
 
 
 router = APIRouter(
-    prefix="/fastapi/api/routers/user",
+    prefix="/api/routers/user",
     tags=["User"]
 )
 

@@ -104,7 +104,7 @@ function User() {
       alert("Insufficient Balance");
     } else {
       try {
-        const res = await axios.post("/fastapi/api/routers/user/create", data);
+        const res = await axios.post("/api/routers/user/create", data);
 
         if (!res) {
           throw new Error(`HTTP error! status:`);

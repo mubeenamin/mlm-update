@@ -21,9 +21,8 @@ export default function RootLayout({
       <SessionWrapper>
         <body className={inter.className}>
           <div className="">
-            <App>
-            {children}
-            </App></div>
+            <App>{children}</App>
+          </div>
         </body>
       </SessionWrapper>
     </html>

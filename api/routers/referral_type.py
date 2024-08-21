@@ -4,7 +4,7 @@ from api.models import ReferralType, Referral
 from api.dep import db_dependency, user_dependency
 from typing import List
 router = APIRouter(
-    prefix="/fastapi/api/routers/referral_type",
+    prefix="/api/routers/referral_type",
     tags=["Referral Type"]
 )
 
