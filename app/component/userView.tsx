@@ -9,7 +9,7 @@ import {
   TableHeader,
 } from "@/components/ui/table";
 import { useSession } from "next-auth/react";
-import AdminCard from "./adminCard";
+
 function UserView() {
   const [users, setUsers] = useState<any>([]);
   const [loading, setLoading] = useState(true);
@@ -47,9 +47,6 @@ function UserView() {
 
   return (
     <main>
-      <div className="flex">
-        <AdminCard title="Users" value={users.length} />
-      </div>
       <Table>
         <TableHeader>
           <TableRow>
