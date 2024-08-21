@@ -1,16 +1,36 @@
 from fastapi import APIRouter, HTTPException, status
 from sqlmodel import select
 from api.models import Balance, ReferralType, Referral
-from api.dep import db_dependency, user_dependency, bcrypt_context
+from api.dep import db_dependency, bcrypt_context
 from typing import Annotated, List
-from api.models import User, UserCreate, UserRead, Referral, ReferralType
+from api.models import User, UserCreate, UserRead, AdminCreate, Referral, ReferralType
 
 
 router = APIRouter(
-    prefix="/fastapi/api/routers/user",
+    prefix="/api/routers/user",
     tags=["User"]
 )
 
+@router.post("/create_admin", status_code=status.HTTP_201_CREATED)
+async def create_admin(db: db_dependency , user: AdminCreate):
+    # Hash the password
+    hashed_password = bcrypt_context.hash(user.password)
+    
+    # Create a new user instance with the hashed password
+    user_data = user.model_dump()
+    user_data['password'] = hashed_password
+    user_data['is_admin'] = True
+    db_user = User.model_validate(user_data)
+    db.add(db_user)
+    db.commit()
+    db.refresh(db_user)
+    
+    balance = Balance(user_id=db_user.id, balance=user.initial_balance, package=user.userPackage)
+    db.add(balance)
+    db.commit()
+    db.refresh(balance)
+    
+    return db_user
 
 
 @router.post("/create", status_code=status.HTTP_201_CREATED)

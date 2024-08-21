@@ -10,8 +10,6 @@ import {
 } from "@/components/ui/table";
 import ProtectedRoute from "./protectedRoute";
 
-
-
 function NotificationView() {
   const [showdata, setdata] = useState<any>([]);
   const [loading, setLoading] = useState(true);
@@ -19,7 +17,9 @@ function NotificationView() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch("fastapi/api/routers/notification/notifications", { mode: "no-cors" });
+        const res = await fetch("api/routers/notification/notifications", {
+          mode: "no-cors",
+        });
         console.log(res);
         if (!res.ok) {
           // res.ok returns false if the HTTP status is not 200-299
@@ -36,35 +36,28 @@ function NotificationView() {
     fetchData();
   }, []);
   const headName = {
-   
-    title : "title",
-    message : "message",
-    
+    title: "title",
+    message: "message",
   };
   return (
-    
-      <main>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>{headName.title}</TableHead>
-              <TableHead>{headName.message}</TableHead>
-              
+    <main>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>{headName.title}</TableHead>
+            <TableHead>{headName.message}</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {showdata.map((data: any) => (
+            <TableRow key={data.id}>
+              <TableCell>{data.title}</TableCell>
+              <TableCell>{data.message}</TableCell>
             </TableRow>
-          </TableHeader>
-          <TableBody>
-            {showdata.map((data: any) => (
-              <TableRow key={data.id}>
-                <TableCell>{data.title}</TableCell>
-                <TableCell>{data.message}</TableCell>
-                
-               
-</TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </main>
-    
+          ))}
+        </TableBody>
+      </Table>
+    </main>
   );
 }
 

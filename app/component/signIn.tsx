@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 import Toast from "./toast";
 import Loader from "./Loader"; // Import the Loader component
 import "react-toastify/dist/ReactToastify.css";
@@ -21,21 +21,18 @@ const FormSchema = z.object({
 const SignIn = () => {
   const { data: session, status } = useSession();
 
-  const router = useRouter();
   const dispatch = useAppDispatch();
   const loading = useAppSelector((state) => state.LoadingReducer);
   const [invalidUser, setInvalidUser] = useState(false);
 
-  useEffect(() => {
-    if (status === "authenticated") {
-      dispatch(setLoading(false));
-      if (session?.user?.name === "admin") {
-        router.push("/admin/dashboard");
-      } else {
-        router.push("/user/dashboard");
-      }
+  if (status === "authenticated") {
+    dispatch(setLoading(false));
+    if (session?.user?.name === "admin") {
+      redirect("/admin/dashboard");
+    } else {
+      redirect("/user/dashboard");
     }
-  }, [status, session, dispatch, router]);
+  }
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
     dispatch(setLoading(true));
@@ -43,6 +40,8 @@ const SignIn = () => {
 
     try {
       const res = await signIn("credentials", { email, password });
+      console.log(res);
+
       if (res?.error) {
         setInvalidUser(true);
         dispatch(setLoading(false));
@@ -117,7 +116,7 @@ const SignIn = () => {
           )}
           <button
             type="submit"
-            className="w-full px-4 py-2 font-medium text-white bg-pink rounded-md hover:bg-pink/90 focus:outline-none focus:ring focus:ring-pink/80"
+            className="w-full px-4 py-2 font-medium text-white bg-red-800 rounded-md hover:bg-red-800/90 focus:outline-none focus:ring focus:ring-pink/80"
             disabled={loading}
           >
             Login

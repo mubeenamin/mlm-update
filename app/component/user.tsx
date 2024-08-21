@@ -104,7 +104,7 @@ function User() {
       alert("Insufficient Balance");
     } else {
       try {
-        const res = await axios.post("/fastapi/api/routers/user/create", data);
+        const res = await axios.post("/api/routers/user/create", data);
 
         if (!res) {
           throw new Error(`HTTP error! status:`);
@@ -257,7 +257,7 @@ function User() {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="bg-pink">
+            <Button type="submit" className="bg-red-800">
               Submit
             </Button>
           </form>

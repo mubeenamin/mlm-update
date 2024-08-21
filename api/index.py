@@ -71,7 +71,7 @@ def main(db: Session):
 
 def start_scheduler():
     scheduler = BackgroundScheduler()
-    scheduler.add_job(run_main, 'interval', seconds=300)
+    scheduler.add_job(run_main, 'interval', seconds=86400)
     scheduler.start()
 
 def run_main():
@@ -101,6 +101,9 @@ app.add_middleware(
 def on_startup():
     start_scheduler()
 
+@app.get("/api/hello")
+def hello_world():
+    return {"message": "Hello World"}
 
 app.include_router(user.router)
 app.include_router(auth.router)

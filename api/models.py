@@ -24,20 +24,35 @@ class User(userBase , table = True):
     Pin : Optional["Pin"] = Relationship(back_populates="user")
     referrals: List["Referral"] = Relationship(back_populates="referrer",sa_relationship_kwargs={"foreign_keys": "[Referral.referrer_user_id]"})
     notifications: List["notification"] = Relationship(back_populates="user")
-    # messages: List["message"] = Relationship(back_populates="user", sa_relationship_kwargs={"foreign_keys": "[message.user_id]"})
-    # sent_messages: List["message"] = Relationship(back_populates="sender", sa_relationship_kwargs={"foreign_keys": "[message.sender_id]"})
-    # received_messages: List["message"] = Relationship(back_populates="receiver", sa_relationship_kwargs={"foreign_keys": "[message.receiver_id]"})
  
-      
+    
+    
+
+   
+    
+    
 class UserRead(userBase):
     Balances : Optional["Balance"]
     Withdrawals: List["Withdrawal"]
     Pin : Optional["Pin"]
     referrals: List["Referral"]
     notifications: List["notification"]
-    # sent_messages: List["message"]
-    # received_messages: List["message"]
     
+    
+class AdminCreate(SQLModel):
+    nation_id : str
+    email : str 
+    password : str
+    phone : str
+    currency : str
+    country : str
+    city : str
+    name : str
+    created_at: str
+    initial_balance: Decimal
+    userPackage: str
+    
+
 class UserCreate(SQLModel):
     nation_id : str
     email : str 
@@ -120,6 +135,7 @@ class Referral(SQLModel, table=True):
     referrer_user_id: int = Field(foreign_key = "user.id")
     referred_user_id: int = Field(foreign_key = "user.id")
     referral_type_id: Optional[int] = Field(default = None , foreign_key="referraltype.referral_type_id")
+
     referrer: User = Relationship(back_populates="referrals", sa_relationship_kwargs={"foreign_keys": "[Referral.referrer_user_id]"})
     
 
