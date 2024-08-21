@@ -1,3 +1,4 @@
+"use client";
 import "../globals.css";
 import { Inter } from "next/font/google";
 
@@ -18,7 +19,7 @@ export default function UserDashboardLayout({
       <SidebarUser />
       <div className="w-full h-full">
         <Navbar />
-        <div className="bg-white p-4 h-(calc(100vh-64px)">{children}</div>
+        <div className=" p-4 ">{children}</div>
       </div>
     </div>
   );
