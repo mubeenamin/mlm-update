@@ -4,7 +4,6 @@ import { Inter } from "next/font/google";
 import { SideBar } from "./components/sidebar";
 import Sidebaradmin from "./components/Sidebaradmin";
 import Navbar from "../component/Navbar";
-import SessionWrapper from "../component/sessionWrapper";
 import Loader from "../component/Loader";
 import { useAppSelector } from "@/redux/hooks";
 
@@ -25,9 +24,6 @@ export default function DashboardLayout({
 
         <div className="bg-gray-200 p-4 h-(calc(100vh-64px)">{children}</div>
         {/* {isLoading && <Loader/>} */}
-
-       
-
       </div>
     </div>
   );
