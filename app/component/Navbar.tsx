@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useSession, signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 
 const Navbar = () => {
