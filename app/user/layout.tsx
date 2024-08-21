@@ -1,10 +1,10 @@
 import "../globals.css";
 import { Inter } from "next/font/google";
-import { UserSideBar } from "./userComponents/userSidebar";
+
 import SidebarUser from "./userComponents/SideberUser";
 
 import UserNavbar from "./userComponents/UserNavbar";
-import SessionWrapper from "../component/sessionWrapper";
+import Navbar from "../component/Navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,7 +17,7 @@ export default function UserDashboardLayout({
     <div className="flex ">
       <SidebarUser />
       <div className="w-full h-full">
-        <UserNavbar />
+        <Navbar />
         <div className="bg-white p-4 h-(calc(100vh-64px)">{children}</div>
       </div>
     </div>
