@@ -127,9 +127,15 @@ function CardsUser({ users }: any) {
               </div>
             </Card>
             <Card className="p-8 shadow-md grid  items-center text-lg gap-8 rounded-md">
-              <div className="col-span-2 text-lg">Total Referral Count</div>
+              <div className="col-span-2 text-lg">Direct Referral Count</div>
               <div className="col-span-2 text-4xl text-end">
-                {users.referrals.length}
+                {directReferrals.length}
+              </div>
+            </Card>
+            <Card className="p-8 shadow-md grid  items-center text-lg gap-8 rounded-md">
+              <div className="col-span-2 text-lg">Indirect Referral Count</div>
+              <div className="col-span-2 text-4xl text-end">
+                {indirectReferrals.length}
               </div>
             </Card>
             <Card className="p-8 shadow-md grid  items-center text-lg gap-8 rounded-md">
