@@ -1,6 +1,6 @@
 "use client"
 import React, { useEffect, useState } from 'react'
-import { signOut } from "next-auth/react";
+
 import { useSession } from "next-auth/react";
 
 const Page = () => {
@@ -11,31 +11,31 @@ const Page = () => {
   const [newNotificationCount, setNewNotificationCount] = useState(0);
   const { data: session } = useSession();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await fetch("/fastapi/api/routers/notification/notifications", {
-          mode: "no-cors",
-        });
-        console.log(res);
-        if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`);
-        }
-        const data = await res.json();
-        setUsers(data);
-        setNotificationCount(data.length); // Update the notification count
-        setLoading(false);
-      } catch (error) {
-        console.error("An error occurred:", error);
-      }
-    };
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const res = await fetch("/fastapi/api/routers/notification/notifications", {
+  //         mode: "no-cors",
+  //       });
+  //       // console.log(res);
+  //       if (!res.ok) {
+  //         throw new Error(`HTTP error! status: ${res.status}`);
+  //       }
+  //       const data = await res.json();
+  //       setUsers(data);
+  //       setNotificationCount(data.length); // Update the notification count
+  //       setLoading(false);
+  //     } catch (error) {
+  //       console.error("An error occurred:", error);
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
 
   useEffect(() => {
     const interval = setInterval(async () => {
       try {
-        const res = await fetch("/fastapi/api/routers/notification/notifications", {
+        const res = await fetch("api/routers/notification/notifications", {
           mode: "no-cors",
         });
         if (!res.ok) {
@@ -69,7 +69,7 @@ const Page = () => {
         <button
           type="button"
           onClick={handleToggle}
-          className="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
+          className="inline-block rounded bg-red-800 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
           data-twe-ripple-init=""
           data-twe-ripple-color="light"
         >
