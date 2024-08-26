@@ -18,7 +18,7 @@ const menu = [
     icon: <RiShoppingCartLine />,
   },
 
-  { title: "Fund Transfer", link: "#", icon: <MdManageAccounts /> },
+  { title: "Fund Transfer", link: "/user/fundTransfer", icon: <MdManageAccounts /> },
   { title: "Account History", link: "#", icon: <IoAnalytics /> },
   { title: "Referral Account", link: "#", icon: <MdManageAccounts /> },
   {
