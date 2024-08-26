@@ -17,7 +17,7 @@ const Navbar = ({name} : { name: string }) => {
         
         OPUS GLOBAL <span className="text-lamaPurple">{name}</span>
       </h2>
-      <Button className="bg-lamaYellow hover:bg-lamaPurple" variant="outline"  onClick={() => userLogout()}>
+      <Button className="bg-lamaPurple hover:bg-lamaYellow" variant="outline"  onClick={() => userLogout()}>
         Sign Out
       </Button>
     </div>
