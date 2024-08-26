@@ -19,6 +19,12 @@ const config = {
     },
     extend: {
       colors: {
+        lamaSky: "#C3EBFA",
+        lamaSkyLight: "#EDF9FD",
+        lamaPurple: "#CFCEFF",
+        lamaPurpleLight: "#F1F0FF",
+        lamaYellow: "#FAE27C",
+        lamaYellowLight: "#FEFCE8",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

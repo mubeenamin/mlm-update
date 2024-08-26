@@ -33,7 +33,7 @@ const menu = [
   },
   {
     title: "PIN CHANGE",
-    link: "/admin/pinChange",
+    link: "/user/changePin",
     icon: <TbMapPinCode />,
   },
   {
@@ -49,7 +49,7 @@ const menu = [
   },
   {
     title: "Terms & Conditions",
-    link: "#",
+    link: "/user/TermsAndConditions",
     icon: <IoMedicalSharp />,
   },
 ];
@@ -57,7 +57,7 @@ const menu = [
 const SidebarUser = () => {
   const pathname = usePathname();
   return (
-    <div className="bg-white w-[300px] h-screen p-4 shrink-0">
+    <div className="bg-white w-[80px] md:w-[300px] h-screen p-4 shrink-0">
       <div className="flex items-center gap-4">
         <Image
           src="/logo.jpeg"
@@ -68,16 +68,29 @@ const SidebarUser = () => {
         ></Image>
         <h2 className="text-2xl font-semibold">OPUS GLOBAL</h2>
       </div>
-      <ul className="mt-6 space-y-4">
+      <ul className="mt-6 space-y-4 hidden md:block">
         {menu.map((item) => (
           <Link
             key={item.title}
             href={item.link}
-            className={`flex items-center gap-2 p-4 rounded-lg cursor-pointer hover:bg-red-800 hover:text-white
-            ${pathname === item.link ? "bg-red-800 text-white" : "bg-gary-200"}`}
+            className={`flex items-center gap-2 p-4 rounded-lg cursor-pointer hover:odd:bg-lamaPurple hover:even:bg-lamaYellow hover:text-white
+            ${pathname === item.link ? "bg-lamaYellow text-white" : "bg-gary-200"}`}
           >
             <div>{item.icon}</div>
             <div>{item.title}</div>
+          </Link>
+        ))}
+      </ul>
+      <ul className="mt-6 space-y-4 block md:hidden">
+        {menu.map((item) => (
+          <Link
+            key={item.title}
+            href={item.link}
+            className={`flex items-center gap-2 p-4 rounded-lg cursor-pointer hover:odd:bg-lamaPurple hover:even:bg-lamaYellow hover:text-white
+            ${pathname === item.link ? "bg-lamaYellow text-white" : "bg-gary-200"}`}
+          >
+            <div>{item.icon}</div>
+            {/* <div>{item.title}</div> */}
           </Link>
         ))}
       </ul>
