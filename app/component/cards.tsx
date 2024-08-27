@@ -4,6 +4,7 @@ import axios from "axios";
 import React, { useEffect } from "react";
 
 function CardsUser({ users }: any) {
+  console.log(users);
   let userBalance: number;
   let dailyProfitPkg;
   let directReferrals;
@@ -82,11 +83,10 @@ function CardsUser({ users }: any) {
       ) : (
         <div className="space-y-4 bg-white">
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 pb-10 prose-h3:text-xl text-center ">
-          
             <h3>
               Username:<div>{users.nation_id}</div>
             </h3>
-            
+
             <h3>
               Email:<div>{users.email}</div>
             </h3>

@@ -90,15 +90,16 @@ function User() {
       data.initial_balance = 600;
     } else if (data.userPackage === "Gold Plus") {
       data.initial_balance = 1200;
-    } else if (data.userPackage === "Daimond") {
+    } else if (data.userPackage === "Diamond") {
       data.initial_balance = 2400;
-    } else if (data.userPackage === "Daimond Plus") {
+    } else if (data.userPackage === "Diamond Plus") {
       data.initial_balance = 4800;
     } else if (data.userPackage === "Platinum") {
       data.initial_balance = 9600;
     } else if (data.userPackage === "Platinum Plus") {
       data.initial_balance = 19200;
     }
+
     // @ts-ignore
     if (session?.user?.balance < data.initial_balance) {
       alert("Insufficient Balance");
