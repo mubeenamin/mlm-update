@@ -94,6 +94,9 @@ class BalanceUpdate(SQLModel):
 class Balance(balanceBase , table = True):
     id : Optional[int] = Field(default = None , primary_key = True, index=True)
     user : Optional["User"] = Relationship(back_populates = "Balances")
+    
+class TotalBalance(SQLModel):
+    total_balance : Decimal
 
 class WithdrawalBase(SQLModel):
     withdrawal_amount : str
