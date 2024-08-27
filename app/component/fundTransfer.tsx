@@ -74,7 +74,7 @@ function FundTransfer() {
               />
           </div>
           <div>
-          <Button type="submit" className="bg-red-500/70">
+          <Button type="submit" className="bg-lamaYellow hover:bg-lamaPurple">
                   Submit
                 </Button>
           </div>

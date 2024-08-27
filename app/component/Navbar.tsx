@@ -2,7 +2,7 @@ import Image from "next/image";
 import { signOut, useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 
-const Navbar = () => {
+const Navbar = ({name} : { name: string }) => {
   const { data: session } = useSession();
 
   const userLogout = async () => {
@@ -13,11 +13,11 @@ const Navbar = () => {
 
   return (
     <div className="py-3 px-8 bg-white flex justify-between items-center">
-      <h2 className="text-2xl font-semibold">
-        {" "}
-        OPUS GLOBAL <span className="text-pink">Admin-Panel</span>
+      <h2 className="text-2xl text-lamaYellow font-semibold">
+        
+        OPUS GLOBAL <span className="text-lamaPurple">{name}</span>
       </h2>
-      <Button variant="outline" onClick={() => userLogout()}>
+      <Button className="bg-lamaYellow hover:bg-lamaPurple" variant="outline"  onClick={() => userLogout()}>
         Sign Out
       </Button>
     </div>

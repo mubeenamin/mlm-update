@@ -18,7 +18,7 @@ export default function UserDashboardLayout({
     <div className="flex ">
       <SidebarUser />
       <div className="w-full h-full">
-        <Navbar />
+        <Navbar name="User Dashboard" />
         <div className=" p-4 ">{children}</div>
       </div>
     </div>

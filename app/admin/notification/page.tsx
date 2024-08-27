@@ -24,7 +24,7 @@ export default  function Notification() {
   const handleSubmit = async (event: any) => {
   event.preventDefault();
   try {
-    const response = await axios.post("/fastapi/api/routers/notification/create_notification" , {
+    const response = await axios.post("/api/routers/notification/create_notification" , {
       title: title,
       message : message,
       user_id: user_id
@@ -83,7 +83,7 @@ return (
       <button
         type="submit"
         onClick={handleSubmit}
-        className="py-3 px-5 bg-pink text-sm font-medium text-center text-black rounded-lg bg-primary-700 sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+        className="py-3 px-5 bg-red-800 text-sm font-medium text-center text-black rounded-lg bg-primary-700 sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
       >
         Send message
       </button>
