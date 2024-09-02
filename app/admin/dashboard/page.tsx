@@ -12,10 +12,14 @@ function Page() {
   const userdata: number = session?.user?.id;
 
   const [users, setUsers] = useState(null);
+  const [totalBalance, setTotalBalance] = useState({ total_balance: 0 });
   useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await fetch(`/api/routers/user/single_user/${userdata}`, {
+          mode: "no-cors",
+        });
+        const res2 = await fetch(`/api/routers/balance/calculate_balances`, {
           mode: "no-cors",
         });
 
@@ -24,7 +28,10 @@ function Page() {
           throw new Error(`HTTP error! status: ${res.status}`);
         }
         const data = await res.json();
+        const data2 = await res2.json();
+        console.log(data2);
         setUsers(data);
+        setTotalBalance(data2);
       } catch (error) {}
     };
 
@@ -34,8 +41,8 @@ function Page() {
   let directReferrals;
   let indirectReferrals;
   let totalReferral = 0;
-  let totalFunds = 0;
-  let data1;
+  let totalFunds;
+  let totalUsers;
   if (users === null) {
     return <div className="text-3xl">loading...</div>;
   } else {
@@ -48,7 +55,12 @@ function Page() {
       (referrals: any) => referrals.referral_type_id === 2
     );
     totalReferral = directReferrals.length + indirectReferrals.length;
-    data1 = { cardName: "Total users", amount: totalReferral };
+    totalUsers = { cardName: "Total users", amount: totalReferral };
+    // @ts-ignore
+    totalFunds = {
+      cardName: "Total Funds",
+      amount: totalBalance.total_balance,
+    };
   }
 
   return (
@@ -57,15 +69,15 @@ function Page() {
         <div className="w-full  flex flex-col gap-8">
           {/* Admin CARDS */}
           <div className="flex gap-4 justify-between flex-wrap">
-            <AdminCard data={data1} />
-            <AdminCard data={data1} />
-            <AdminCard data={data1} />
+            <AdminCard data={totalUsers} />
+            <AdminCard data={totalFunds} />
+            {/* <AdminCard data={data1} /> */}
           </div>
 
           <div>
-            <h1 className="text-xl font-bold text-center p-4 bg-lamaYellow">
+            <h1 className="text-xl font-bold text-center p-4 bg-[#ADBBDA]">
               {" "}
-              Total referrals
+              Total Referrals
             </h1>
             <div className="flex gap-4 flex-col lg:flex-row">
               {/* COUNT CHART */}
@@ -77,7 +89,7 @@ function Page() {
               </div>
               <div className="w-full lg:w-2/3 h-[450px]">
                 <CountChart
-                  name={"InDirect"}
+                  name={"Indirect"}
                   reffrals={indirectReferrals.length}
                 />
               </div>
