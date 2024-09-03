@@ -10,7 +10,7 @@ function Page() {
   const { data: session, status } = useSession();
   // @ts-ignore
   const userdata: number = session?.user?.id;
-
+  console.log(session);
   const [users, setUsers] = useState(null);
   const [totalBalance, setTotalBalance] = useState({ total_balance: 0 });
   useEffect(() => {
