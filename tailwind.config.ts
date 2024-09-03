@@ -19,8 +19,10 @@ const config = {
     },
     extend: {
       colors: {
-        lamaSky: "#C3EBFA",
-        lamaSkyLight: "#EDF9FD",
+        mlmSky: "#3D52A0",
+        mlmSkyLight: "#7091E6",
+        mlmSkyBg: "#EDE8F5",
+        mlmtext: "#8697C4",
         lamaPurple: "#CFCEFF",
         lamaPurpleLight: "#F1F0FF",
         lamaYellow: "#FAE27C",

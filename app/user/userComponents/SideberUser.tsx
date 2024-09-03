@@ -73,8 +73,8 @@ const SidebarUser = () => {
           <Link
             key={item.title}
             href={item.link}
-            className={`flex items-center gap-2 p-4 rounded-lg cursor-pointer hover:odd:bg-lamaPurple hover:even:bg-lamaYellow hover:text-white
-            ${pathname === item.link ? "bg-lamaYellow text-white" : "bg-gary-200"}`}
+            className={`flex items-center gap-2 p-4 rounded-lg cursor-pointer hover:odd:bg-mlmSky hover:even:bg-mlmSkyLight hover:text-white
+            ${pathname === item.link ? "bg-mlmSky text-white" : "bg-gary-200"}`}
           >
             <div>{item.icon}</div>
             <div>{item.title}</div>
@@ -86,8 +86,8 @@ const SidebarUser = () => {
           <Link
             key={item.title}
             href={item.link}
-            className={`flex items-center gap-2 p-4 rounded-lg cursor-pointer hover:odd:bg-lamaPurple hover:even:bg-lamaYellow hover:text-white
-            ${pathname === item.link ? "bg-lamaYellow text-white" : "bg-gary-200"}`}
+            className={`flex items-center gap-2 p-4 rounded-lg cursor-pointer hover:odd:bg-mlmSkyLight hover:even:bg-mlmSky hover:text-white
+            ${pathname === item.link ? "bg-mlmSky text-white" : "bg-gary-200"}`}
           >
             <div>{item.icon}</div>
             {/* <div>{item.title}</div> */}

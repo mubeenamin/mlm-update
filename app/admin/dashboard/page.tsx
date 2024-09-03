@@ -48,11 +48,11 @@ function Page() {
           </div>
 
           <div>
-            <h1 className="text-xl font-bold text-center p-4 bg-lamaYellow">	Total referrals</h1>
+            <h1 className="text-xl text-mlmSkyBg font-bold text-center p-4 bg-mlmSkyLight">	Total referrals</h1>
             <div className="flex gap-4 flex-col lg:flex-row">
               {/* COUNT CHART */}
               <div className="w-full lg:w-2/3 h-[450px]">
-                <CountChart  name={"Direct "} reffrals={50} />
+                <CountChart  name={"Direct "} reffrals={40} />
               </div>
                <div className="w-full lg:w-2/3 h-[450px]">
               <CountChart name={"InDirect"} reffrals={50} />
