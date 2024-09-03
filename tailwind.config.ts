@@ -23,10 +23,7 @@ const config = {
         mlmSkyLight: "#7091E6",
         mlmSkyBg: "#EDE8F5",
         mlmtext: "#8697C4",
-        lamaPurple: "#CFCEFF",
-        lamaPurpleLight: "#F1F0FF",
-        lamaYellow: "#FAE27C",
-        lamaYellowLight: "#FEFCE8",
+        
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
