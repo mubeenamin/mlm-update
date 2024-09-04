@@ -28,7 +28,7 @@ const data = [
 
 const CountChart = ({name , reffrals}: {name: string , reffrals: number}) => {
   return (
-    <div className="bg-white rounded-xl w-full h-full p-4">
+    <div className=" rounded-xl w-full h-full p-4">
       {/* TITLE */}
       <div className="flex justify-between items-center">
         <h1 className="text-lg  font-semibold">{name}</h1>

@@ -24,6 +24,7 @@ const config = {
         mlmSkyBg: "#EDE8F5",
         mlmtext: "#8697C4",
         
+        
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

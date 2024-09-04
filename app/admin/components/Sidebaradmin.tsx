@@ -60,7 +60,7 @@ const menu = [
 const Sidebaradmin = () => {
   const pathname = usePathname();
   return (
-    <div className="bg-white w-[300px] h-screen p-4 shrink-0">
+    <div className=" w-[300px] h-screen p-4 shrink-0">
       <div className="flex items-center gap-4">
         <Image
           src="/logo.jpeg"
@@ -71,7 +71,7 @@ const Sidebaradmin = () => {
         ></Image>
         <h2 className="text-2xl font-semibold">OPUS GLOBAL</h2>
       </div>
-      <ul className="mt-6 space-y-4">
+      <ul className="mt-6 bg-blue-200/10 space-y-4">
         {menu.map((item) => (
           <Link
             key={item.title}
