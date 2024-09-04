@@ -79,21 +79,18 @@ function Page() {
               {" "}
               Total Referrals
             </h1>
-            <div className="flex gap-4 flex-col lg:flex-row">
-              {/* COUNT CHART */}
-              <div className="w-full lg:w-2/3 h-[450px]">
+            <div className="flex gap-4 flex-col md:flex-row">
+              <div className="w-full h-[450px]">
                 <CountChart
                   name={"Direct "}
                   reffrals={directReferrals.length}
                 />
-                <div>
-                  <div className="w-full lg:w-2/3 h-[450px]">
-                    <CountChart
-                      name={"Indirect"}
-                      reffrals={indirectReferrals.length}
-                    />
-                  </div>
-                </div>
+              </div>
+              <div className="w-full h-[450px]">
+                <CountChart
+                  name={"Indirect"}
+                  reffrals={indirectReferrals.length}
+                />
               </div>
             </div>
           </div>
