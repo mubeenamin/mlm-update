@@ -10,6 +10,7 @@ import Loader from "./Loader"; // Import the Loader component
 import "react-toastify/dist/ReactToastify.css";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setLoading } from "@/redux/loader/LoadingSlice";
+import { Button } from "@/components/ui/button";
 
 const FormSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -114,13 +115,13 @@ const SignIn = () => {
           {invalidUser && (
             <p className="mt-2 text-sm text-red-500">Wrong email or password</p>
           )}
-          <button
+          <Button
             type="submit"
             className="w-full px-4 py-2 font-medium text-white bg-mlmSky rounded-md hover:bg-mlmSkyLight focus:outline-none focus:ring focus:ring-pink/80"
             disabled={loading}
           >
             Login
-          </button>
+          </Button>
         </form>
       </div>
     </main>

@@ -23,12 +23,12 @@ const menu = [
   { title: "Referral Account", link: "#", icon: <MdManageAccounts /> },
   {
     title: "Update Package",
-    link: "/admin/passwordChange",
+    link: "/user/updatePackage",
     icon: <TbPasswordUser />,
   },
   {
     title: "MESSAGE",
-    link: "/user/UserMessages",
+    link: "/user/messages",
     icon: <TiMessages />,
   },
   {
