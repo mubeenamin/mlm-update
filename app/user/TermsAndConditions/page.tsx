@@ -27,7 +27,7 @@ const initialItemCount = 3;
           </h1>
           <p className="text-lg pb-5">
             Following are the terms and conditions of
-            <span className="text-lamaYellow font-bold"> Opus Global</span>. It’s necessary
+            <span className="text-mlmSky font-bold"> Opus Global</span>. It’s necessary
             to read all of them for clarity.
           </p>
         </div>
@@ -49,7 +49,7 @@ const initialItemCount = 3;
           {/* "See More" button (only visible on mobile) */}
           {!showMore && (
             <button
-              className="text-lamaYellow underline mt-4 md:hidden"
+              className="text-mlmSky underline mt-4 md:hidden"
               onClick={() => setShowMore(true)}
             >
               See More

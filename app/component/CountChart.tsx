@@ -16,19 +16,19 @@ const data = [
   {
     
     count: 53,
-    fill: "#FAE27C",
+    fill: "#7091E6",
   },
   {
     
     count: 53,
-    fill: "#C3EBFA",
+    fill: "#3D52A0",
   },
 ];
  
 
 const CountChart = ({name , reffrals}: {name: string , reffrals: number}) => {
   return (
-    <div className="bg-white rounded-xl w-full h-full p-4">
+    <div className=" rounded-xl w-full h-full p-4">
       {/* TITLE */}
       <div className="flex justify-between items-center">
         <h1 className="text-lg  font-semibold">{name}</h1>
@@ -60,9 +60,9 @@ const CountChart = ({name , reffrals}: {name: string , reffrals: number}) => {
       <div className=" ">
        
         <div className="flex flex-col gap-1">
-          <div className="w-5 h-5 bg-lamaYellow rounded-full" />
+          <div className="w-5 h-5 bg-mlmSky rounded-full" />
           <h1 className="font-bold">{reffrals}</h1>
-          <h2 className="text-xs text-gray-300">Reffrals (45%)</h2>
+          <h2 className="text-xs  ">Reffrals (45%)</h2>
         </div>
       </div>
     </div>

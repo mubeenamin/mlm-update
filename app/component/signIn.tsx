@@ -74,7 +74,7 @@ const SignIn = () => {
     <main>
       {/* <Toast /> */}
       {loading && <Loader />}
-      <div className="w-full max-w-md p-8 space-y-6 bg-white rounded shadow-md">
+      <div className="w-full max-w-md p-8 space-y-6 bg-mlmSkyBg rounded shadow-md">
         <h1 className="text-4xl font-bold text-center">OPUS GLOBAL</h1>
         <h2 className="text-2xl font-medium text-center text-gray-700">
           Login
@@ -117,7 +117,7 @@ const SignIn = () => {
           )}
           <Button
             type="submit"
-            className="w-full px-4 py-2 font-medium "
+            className="w-full px-4 py-2 font-medium text-white bg-mlmSky rounded-md hover:bg-mlmSkyLight focus:outline-none focus:ring focus:ring-pink/80"
             disabled={loading}
           >
             Login

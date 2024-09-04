@@ -75,7 +75,7 @@ function Page() {
           </div>
 
           <div>
-            <h1 className="text-xl font-bold text-center p-4 bg-[#ADBBDA]">
+            <h1 className="text-xl text-mlmSkyBg font-bold text-center p-4 bg-mlmSkyLight">
               {" "}
               Total Referrals
             </h1>
@@ -86,18 +86,19 @@ function Page() {
                   name={"Direct "}
                   reffrals={directReferrals.length}
                 />
-              </div>
-              <div className="w-full lg:w-2/3 h-[450px]">
-                <CountChart
-                  name={"Indirect"}
-                  reffrals={indirectReferrals.length}
-                />
+                <div>
+                  <div className="w-full lg:w-2/3 h-[450px]">
+                    <CountChart
+                      name={"Indirect"}
+                      reffrals={indirectReferrals.length}
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div></div>
     </main>
   );
 }
