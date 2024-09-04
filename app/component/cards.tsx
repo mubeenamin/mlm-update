@@ -30,9 +30,9 @@ function CardsUser({ users }: any) {
       dailyProfitPkg = 4;
     } else if (userPackage === "Gold Plus") {
       dailyProfitPkg = 8;
-    } else if (userPackage === "Daimond") {
+    } else if (userPackage === "Diamond") {
       dailyProfitPkg = 16;
-    } else if (userPackage === "Daimond Plus") {
+    } else if (userPackage === "Diamond Plus") {
       dailyProfitPkg = 32;
     } else if (userPackage === "Platinum") {
       dailyProfitPkg = 64;

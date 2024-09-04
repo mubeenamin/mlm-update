@@ -7,3 +7,21 @@ router = APIRouter(
     prefix="/api/routers/message",
     tags=["Messages"]
 )
+
+@router.post("/send_message")
+def send_message(db: db_dependency, message: Message):
+    db.add(message)
+    db.commit()
+    db.refresh(message)
+    return message
+
+@router.get("/get_messages/{user_id}")
+def get_messages(db: db_dependency, user_id: int):
+    return db.exec(select(Message).where(Message.recipient_id == user_id)).all()
+
+@router.post("/send_message_by_admin")
+def send_message_by_admin(db: db_dependency, message: Message):
+    db.add(message)
+    db.commit()
+    db.refresh(message)
+    return message

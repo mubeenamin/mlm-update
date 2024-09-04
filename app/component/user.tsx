@@ -82,6 +82,7 @@ function User() {
     });
   };
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
+    console.log(data);
     if (data.userPackage === "Bronze") {
       data.initial_balance = 150;
     } else if (data.userPackage === "Silver") {
@@ -124,154 +125,147 @@ function User() {
 
   return (
     <main className="space-y-4">
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="w-max-full gap-8 space-y-10"
-        >
-          <div className="grid md:grid-cols-2 gap-4">
-            <div className="gap-4">
-              <FormField
-                control={form.control}
-                name="nation_id"
-                render={({ field }) => (
-                  <FormItem className="gap-4">
-                    <FormLabel>National ID</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Enter National ID" {...field} />
-                    </FormControl>
-                    <FormMessage className="text-red-500" />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem className="gap-4">
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Enter Email" {...field} />
-                    </FormControl>
-                    <FormMessage className="text-red-500" />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem className="gap-4">
-                    <FormLabel>Password</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Enter Password" {...field} />
-                    </FormControl>
-                    <FormMessage className="text-red-500" />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="country"
-                render={({ field }) => (
-                  <FormItem className="gap-4">
-                    <FormLabel>Country</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Enter Your Country" {...field} />
-                    </FormControl>
-                    <FormMessage className="text-red-500" />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="gap-4">
-              <FormField
-                control={form.control}
-                name="city"
-                render={({ field }) => (
-                  <FormItem className="gap-4">
-                    <FormLabel>City</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Enter Your City" {...field} />
-                    </FormControl>
-                    <FormMessage className="text-red-500" />
-                  </FormItem>
-                )}
-              />
+      <div className="grid justify-center">
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="md:w-96 gap-8 space-y-10"
+          >
+            <FormField
+              control={form.control}
+              name="nation_id"
+              render={({ field }) => (
+                <FormItem className="gap-4">
+                  <FormLabel>National ID</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter National ID" {...field} />
+                  </FormControl>
+                  <FormMessage className="text-red-500" />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem className="gap-4">
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter Email" {...field} />
+                  </FormControl>
+                  <FormMessage className="text-red-500" />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem className="gap-4">
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter Password" {...field} />
+                  </FormControl>
+                  <FormMessage className="text-red-500" />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="country"
+              render={({ field }) => (
+                <FormItem className="gap-4">
+                  <FormLabel>Country</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter Your Country" {...field} />
+                  </FormControl>
+                  <FormMessage className="text-red-500" />
+                </FormItem>
+              )}
+            />
 
-              <FormField
-                control={form.control}
-                name="phone"
-                render={({ field }) => (
-                  <FormItem className="gap-4">
-                    <FormLabel>Phone Number</FormLabel>
+            <FormField
+              control={form.control}
+              name="city"
+              render={({ field }) => (
+                <FormItem className="gap-4">
+                  <FormLabel>City</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter Your City" {...field} />
+                  </FormControl>
+                  <FormMessage className="text-red-500" />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="phone"
+              render={({ field }) => (
+                <FormItem className="gap-4">
+                  <FormLabel>Phone Number</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter Phone number" {...field} />
+                  </FormControl>
+                  <FormMessage className="text-red-500" />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="currency"
+              render={({ field }) => (
+                <FormItem className="gap-4">
+                  <FormLabel>Currency</FormLabel>
+                  <FormControl>
+                    <Input placeholder="" {...field} />
+                  </FormControl>
+                  <FormMessage className="text-red-500" />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="userPackage"
+              render={({ field }) => (
+                <FormItem className="gap-4">
+                  <FormLabel>Package</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
                     <FormControl>
-                      <Input placeholder="Enter Phone number" {...field} />
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a Package" />
+                      </SelectTrigger>
                     </FormControl>
-                    <FormMessage className="text-red-500" />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="currency"
-                render={({ field }) => (
-                  <FormItem className="gap-4">
-                    <FormLabel>Currency</FormLabel>
-                    <FormControl>
-                      <Input placeholder="" {...field} />
-                    </FormControl>
-                    <FormMessage className="text-red-500" />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="userPackage"
-                render={({ field }) => (
-                  <FormItem className="gap-4">
-                    <FormLabel>Package</FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select a Package" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent className="bg-white">
-                        <SelectItem value="Bronze">Bronze $150</SelectItem>
-                        <SelectItem value="Bronze Plus">
-                          Bronze Plus $300
-                        </SelectItem>
-                        <SelectItem value="Gold">Gold $600</SelectItem>
-                        <SelectItem value="Gold Plus">
-                          Gold Plus $1200
-                        </SelectItem>
-                        <SelectItem value="Diamond">Diamond $2400</SelectItem>
-                        <SelectItem value="Diamond Plus">
-                          Diamond Plus $4800
-                        </SelectItem>
-                        <SelectItem value="Platinum">Platinum $9600</SelectItem>
-                        <SelectItem value="Platinum Plus">
-                          Platinum Plus $19200
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <div className="pt-4 md:flex md:justify-end">
-                <Button className="custom-button gap-4" type="submit">
-                  Submit
-                </Button>
-              </div>
-            </div>
-          </div>
-        </form>
-      </Form>
+                    <SelectContent className="bg-white">
+                      <SelectItem value="Bronze">Bronze $150</SelectItem>
+                      <SelectItem value="Bronze Plus">
+                        Bronze Plus $300
+                      </SelectItem>
+                      <SelectItem value="Gold">Gold $600</SelectItem>
+                      <SelectItem value="Gold Plus">Gold Plus $1200</SelectItem>
+                      <SelectItem value="Diamond">Diamond $2400</SelectItem>
+                      <SelectItem value="Diamond Plus">
+                        Diamond Plus $4800
+                      </SelectItem>
+                      <SelectItem value="Platinum">Platinum $9600</SelectItem>
+                      <SelectItem value="Platinum Plus">
+                        Platinum Plus $19200
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button className="custom-button gap-4" type="submit">
+              Submit
+            </Button>
+          </form>
+        </Form>
+      </div>
     </main>
   );
 }
