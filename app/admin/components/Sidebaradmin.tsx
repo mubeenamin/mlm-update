@@ -69,7 +69,7 @@ const Sidebaradmin = () => {
           height={50}
           className="rounded-full"
         ></Image>
-        <h2 className="text-2xl font-semibold">OPUS GLOBAL</h2>
+        <h2 className="text-2xl font-semibold text-[#7091E6]">OPUS GLOBAL</h2>
       </div>
       <ul className="mt-6 bg-blue-200/20 space-y-4">
         {menu.map((item) => (

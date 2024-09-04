@@ -4,6 +4,7 @@ import axios from "axios";
 import React, { useEffect } from "react";
 
 function CardsUser({ users }: any) {
+  console.log(users);
   let userBalance: number;
   let dailyProfitPkg;
   let directReferrals;
@@ -82,11 +83,10 @@ function CardsUser({ users }: any) {
       ) : (
         <div className="space-y-4 bg-white">
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 pb-10 prose-h3:text-xl text-center ">
-          
-            <h3 >
+            <h3>
               Username:<div>{users.nation_id}</div>
             </h3>
-            
+
             <h3>
               Email:<div>{users.email}</div>
             </h3>
@@ -108,7 +108,7 @@ function CardsUser({ users }: any) {
             </div>
           </div>
           <div className="grid grid-cols-1   md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <Card className="p-8 shadow-md grid items-center gap-8 bg-mlmSky rounded-md">
+            <Card className="p-8 shadow-md grid text-white items-center gap-8 bg-mlmSky rounded-md">
               <div className="col-span-2 text-lg">
                 Daily Profit From Package
               </div>
@@ -116,13 +116,13 @@ function CardsUser({ users }: any) {
                 ${dailyProfitPkg}
               </div>
             </Card>
-            <Card className="p-8 shadow-md grid items-center gap-8 bg-mlmSkyLight rounded-md">
+            <Card className="p-8 shadow-md grid  items-center gap-8 bg-mlmSkyLight rounded-md">
               <div className="col-span-2 text-lg">Referral Profit</div>
               <div className="col-span-2  text-4xl text-end">
                 ${totalReferralProfit}
               </div>
             </Card>
-            <Card className="p-8 shadow-md grid  items-center gap-8 bg-mlmSky rounded-md">
+            <Card className="p-8 shadow-md grid  text-white items-center gap-8 bg-mlmSky rounded-md">
               <div className="col-span-2 text-lg">Total Earnings</div>
               <div className="col-span-2  text-4xl text-end">
                 ${totalEarninggs}
@@ -134,7 +134,7 @@ function CardsUser({ users }: any) {
                 {directReferrals.length}
               </div>
             </Card>
-            <Card className="p-8 shadow-md grid  items-center bg-mlmSky text-lg gap-8 rounded-md">
+            <Card className="p-8 shadow-md grid text-white  items-center bg-mlmSky text-lg gap-8 rounded-md">
               <div className="col-span-2 text-lg">Indirect Referral Count</div>
               <div className="col-span-2 text-4xl text-end">
                 {indirectReferrals.length}

@@ -94,6 +94,9 @@ class BalanceUpdate(SQLModel):
 class Balance(balanceBase , table = True):
     id : Optional[int] = Field(default = None , primary_key = True, index=True)
     user : Optional["User"] = Relationship(back_populates = "Balances")
+    
+class TotalBalance(SQLModel):
+    total_balance : Decimal
 
 class WithdrawalBase(SQLModel):
     withdrawal_amount : str
@@ -139,6 +142,11 @@ class Referral(SQLModel, table=True):
     referrer: User = Relationship(back_populates="referrals", sa_relationship_kwargs={"foreign_keys": "[Referral.referrer_user_id]"})
     
 
+class Message(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    sender_id: int = Field(foreign_key="user.id")
+    recipient_id: int = Field(foreign_key="user.id")
+    content: str
 
 
 class Token(SQLModel):
