@@ -71,7 +71,7 @@ const Sidebaradmin = () => {
         ></Image>
         <h2 className="text-2xl font-semibold">OPUS GLOBAL</h2>
       </div>
-      <ul className="mt-6 bg-blue-200/10 space-y-4">
+      <ul className="mt-6 bg-blue-200/20 space-y-4">
         {menu.map((item) => (
           <Link
             key={item.title}
