@@ -1,7 +1,7 @@
 from fastapi import APIRouter, status
 from sqlmodel import select
 from api.models import notification
-from api.dep import db_dependency, user_dependency
+from api.dep import db_dependency
 
 router = APIRouter(
     prefix="/api/routers/notification",
@@ -33,7 +33,7 @@ async def delete_notification_by_id(db: db_dependency,  notification_id: int):
 
 
 @router.put("/update_notification_by_id/{notification_id}", status_code=status.HTTP_204_NO_CONTENT)
-async def update_notification_by_id(db: db_dependency, user: user_dependency, notification_id: int, notification: notification):
+async def update_notification_by_id(db: db_dependency, notification_id: int, notification: notification):
     result = db.exec(select(notification).where(notification.id == notification_id)).first()
     result.message = notification.message
     db.add(result)
