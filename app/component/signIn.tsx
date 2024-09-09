@@ -41,7 +41,7 @@ const SignIn = () => {
 
     try {
       const res = await signIn("credentials", { email, password });
-      console.log(res);
+      // console.log(res);
 
       if (res?.error) {
         setInvalidUser(true);
@@ -74,7 +74,7 @@ const SignIn = () => {
     <main>
       {/* <Toast /> */}
       {loading && <Loader />}
-      <div className="w-full max-w-md p-8 space-y-6 bg-mlmSkyBg rounded shadow-md">
+      <div className="w-full max-w-md p-8 space-y-6  rounded shadow-md">
         <h1 className="text-4xl font-bold text-center">OPUS GLOBAL</h1>
         <h2 className="text-2xl font-medium text-center text-gray-700">
           Login
