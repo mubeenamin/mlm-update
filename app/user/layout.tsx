@@ -4,8 +4,9 @@ import { Inter } from "next/font/google";
 
 import SidebarUser from "./userComponents/SideberUser";
 
-import UserNavbar from "./userComponents/UserNavbar";
+
 import Navbar from "../component/Navbar";
+import Usernavbar from "../component/userNavbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,7 +19,8 @@ export default function UserDashboardLayout({
     <div className="flex ">
       <SidebarUser />
       <div className="w-full h-full">
-        <Navbar name="User Dashboard" />
+     
+        <Usernavbar/>
         <div className=" p-4 ">{children}</div>
       </div>
     </div>

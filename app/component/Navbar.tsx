@@ -3,6 +3,8 @@ import { signOut, useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { IoIosNotifications } from "react-icons/io";
 import Link from "next/link";
+import { Sheet } from "@/components/ui/sheet";
+import { SheetDemo } from "./notificationuser";
 
 const Navbar = ({ name }: { name: string }) => {
   const { data: session } = useSession();
@@ -21,12 +23,8 @@ const Navbar = ({ name }: { name: string }) => {
         </h2>
       </div>
 
-      <div className="flex gap-x-8">
-        <div>
-          <Link href="/user/UserNotification">
-            <IoIosNotifications className="text-2xl mt-2 text-mlmSkyLight" />
-          </Link>
-        </div>
+      
+       
 
         <Button
           className=" bg-mlmSkyLight hover:bg-mlmSky"
@@ -35,7 +33,7 @@ const Navbar = ({ name }: { name: string }) => {
         >
           Sign Out
         </Button>
-      </div>
+     
     </div>
   );
 };
