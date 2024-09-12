@@ -1,9 +1,12 @@
 "use client";
 import { useEffect, useState } from "react";
-import { FaEdit } from "react-icons/fa";
+import { IoMdSend } from "react-icons/io";
 import { MdDeleteSweep } from "react-icons/md";
 import axios from "axios";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
+import { SheetDemo } from "@/app/component/notificationuser";
+import { SendMsg } from "@/app/component/sendmsg";
 
 function Page() {
   const [messages, setMessages] = useState([]);
@@ -83,35 +86,36 @@ function Page() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-300">
-                {messages.map((message : any, index) => (
+                
                   <tr
-                    key={message.id}
+                    
                     className="bg-white transition-all duration-500 hover:bg-gray-50"
                   >
                     <td className="p-5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
-                      {index + 1}
+                      1
                     </td>
                     <td className="p-5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
-                      {message.sender_id}
+                      2
                     </td>
                     <td className="p-5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
-                      {message.recipient_id}
+                      admin
                     </td>
                     <td className="p-5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
-                      {message.content}
+                      mesesage
                     </td>
                     <td className="p-5">
                       <div className="flex items-center gap-1">
-                        <button className="p-2 rounded-full group transition-all duration-500 flex item-center">
-                          <FaEdit size={24} className="text-mlmSky" />
-                        </button>
+                        {/* <Link href={"/admin/messagesend"} className="p-2 rounded-full group transition-all duration-500 flex item-center">
+                          <IoMdSend size={24} className="text-mlmSky" />
+                        </Link> */}
+                        <SendMsg/>
                         <button className="p-2 rounded-full group transition-all duration-500 flex item-center">
                           <MdDeleteSweep size={26} className="text-red-500" />
                         </button>
                       </div>
                     </td>
                   </tr>
-                ))}
+              
               </tbody>
             </table>
           </div>
