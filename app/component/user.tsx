@@ -241,9 +241,7 @@ function User() {
                     </FormControl>
                     <SelectContent className="bg-white">
                       <SelectItem value="Bronze">Bronze $150</SelectItem>
-                      <SelectItem value="Bronze Plus">
-                        Bronze Plus $300
-                      </SelectItem>
+                      <SelectItem value="Silver">Silver $300</SelectItem>
                       <SelectItem value="Gold">Gold $600</SelectItem>
                       <SelectItem value="Gold Plus">Gold Plus $1200</SelectItem>
                       <SelectItem value="Diamond">Diamond $2400</SelectItem>
