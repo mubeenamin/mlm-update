@@ -26,6 +26,7 @@ import moment from "moment";
 import { useRouter } from "next/navigation";
 
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const formSchema = z.object({
   nation_id: z.string().min(2, {
@@ -82,7 +83,6 @@ function User() {
     });
   };
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
-    console.log(data);
     if (data.userPackage === "Bronze") {
       data.initial_balance = 150;
     } else if (data.userPackage === "Silver") {
@@ -111,15 +111,13 @@ function User() {
         if (!res) {
           throw new Error(`HTTP error! status:`);
         } else {
-          console.log(await res.data);
+          handleReset();
+          router.refresh();
+          toast("User created successfully", { type: "success" });
         }
       } catch (error) {
         console.error("An error occurred:", error);
       }
-
-      handleReset();
-
-      router.refresh();
     }
   };
 

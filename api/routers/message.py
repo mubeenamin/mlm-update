@@ -9,14 +9,11 @@ router = APIRouter(
 )
 
 @router.post("/send_message")
-def send_message(db: db_dependency, message: CreateMessage):
-    message_data = message.model_dump()
-    message_data['sender_id'] = db.exec(select(User).where(User.name == message.name)).first().id
-    db_message = Message.model_validate(message_data)
-    db.add(db_message)
+def send_message(db: db_dependency, message: Message):
+    db.add(message)
     db.commit()
-    db.refresh(db_message)
-    return db_message
+    db.refresh(message)
+    return message
 
 @router.get("/get_messages/{user_id}")
 def get_messages(db: db_dependency, user_id: int):

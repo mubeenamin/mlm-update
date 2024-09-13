@@ -6,7 +6,7 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { SheetDemo } from "@/app/component/notificationuser";
-import { SendMsg } from "@/app/component/sendmsg";
+import SendMsg from "@/app/component/sendmsg";
 
 function Page() {
   const [messages, setMessages] = useState([]);
@@ -21,15 +21,18 @@ function Page() {
       if (!userdata) return;
 
       try {
-        const res = await fetch(`/api/routers/message/get_messages/${userdata}`);
+        const res = await fetch(
+          `/api/routers/message/get_messages/${userdata}`
+        );
 
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${res.status}`);
         }
 
         const data = await res.json();
+        console.log(data);
         setMessages(data);
-      } catch (error:any) {
+      } catch (error: any) {
         setError(error.message);
       }
     };
@@ -55,12 +58,6 @@ function Page() {
                 <tr className="bg-gray-50">
                   <th
                     scope="col"
-                    className="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize rounded-t-xl"
-                  >
-                    SR #
-                  </th>
-                  <th
-                    scope="col"
                     className="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
                   >
                     User ID
@@ -69,7 +66,7 @@ function Page() {
                     scope="col"
                     className="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
                   >
-                    USER Email
+                    User Email
                   </th>
                   <th
                     scope="col"
@@ -85,38 +82,35 @@ function Page() {
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-300">
-                
-                  <tr
-                    
-                    className="bg-white transition-all duration-500 hover:bg-gray-50"
-                  >
-                    <td className="p-5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
-                      1
-                    </td>
-                    <td className="p-5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
-                      2
-                    </td>
-                    <td className="p-5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
-                      admin
-                    </td>
-                    <td className="p-5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
-                      mesesage
-                    </td>
-                    <td className="p-5">
-                      <div className="flex items-center gap-1">
-                        {/* <Link href={"/admin/messagesend"} className="p-2 rounded-full group transition-all duration-500 flex item-center">
+              {messages
+                .slice(0)
+                .reverse()
+                .map((message: any) => (
+                  <tbody className="divide-y divide-gray-300" key={message.id}>
+                    <tr className="bg-white transition-all duration-500 hover:bg-gray-50">
+                      <td className="p-5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
+                        {message.sender_id}
+                      </td>
+                      <td className="p-5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
+                        {message.email}
+                      </td>
+                      <td className="p-5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
+                        {message.content}
+                      </td>
+                      <td className="p-5">
+                        <div className="flex items-center gap-1">
+                          {/* <Link href={"/admin/messagesend"} className="p-2 rounded-full group transition-all duration-500 flex item-center">
                           <IoMdSend size={24} className="text-mlmSky" />
                         </Link> */}
-                        <SendMsg/>
-                        <button className="p-2 rounded-full group transition-all duration-500 flex item-center">
-                          <MdDeleteSweep size={26} className="text-red-500" />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-              
-              </tbody>
+                          <SendMsg message_id={message.sender_id} />
+                          <button className="p-2 rounded-full group transition-all duration-500 flex item-center">
+                            <MdDeleteSweep size={26} className="text-red-500" />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                ))}
             </table>
           </div>
         </div>
