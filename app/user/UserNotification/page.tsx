@@ -19,15 +19,15 @@ const Page = () => {
         });
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${res.status}`);
+        } else {
+          const data = await res.json();
+          setUsers(data);
+          setNewNotificationCount(data.length - notificationCount); // Update the new notification count
         }
-        // console.log(res);
-        const data = await res.json();
-        setUsers(data);
-        setNewNotificationCount(data.length - notificationCount); // Update the new notification count
       } catch (error) {
         console.error("An error occurred:", error);
       }
-    }, 5000); // Check for new notifications every 5 seconds
+    }, 60000); // Check for new notifications every 1 minut
 
     return () => clearInterval(interval);
   }, [notificationCount]);

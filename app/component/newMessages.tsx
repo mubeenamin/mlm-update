@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { IoMdSend } from "react-icons/io";
@@ -15,7 +16,7 @@ import {
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import axios from "axios";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 
 const FormSchema = z.object({
   sender_id: z.number(),
@@ -27,13 +28,12 @@ const FormSchema = z.object({
   // name: z.string(),
 });
 
-export default function SendMsg(message_id: any) {
+function NewMessages() {
   const { data: session } = useSession();
   // @ts-ignore
-  const senderId = session?.user?.id;
+  const senderId: number = session?.user?.id;
   // @ts-ignore
   const sender_email: string = session?.user?.email;
-  const recipientId = message_id.message_id;
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -41,16 +41,16 @@ export default function SendMsg(message_id: any) {
       content: "",
       email: sender_email,
       sender_id: senderId,
-      recipient_id: recipientId,
+      recipient_id: 0,
       // name: "string",
     },
   });
 
-  const onSubmit = async (submit_data: z.infer<typeof FormSchema>) => {
+  const onSubmit = async (data: z.infer<typeof FormSchema>) => {
     try {
       const res = await axios.post(
-        "/api/routers/message/send_message",
-        submit_data
+        "/api/routers/message/send_message_by_user",
+        data
       );
       if (!res) {
         throw new Error(`HTTP error! status:`);
@@ -65,9 +65,7 @@ export default function SendMsg(message_id: any) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button>
-          <IoMdSend size={24} className="text-mlmSky" />
-        </Button>
+        <Button className="bg-mlmSkyLight text-white">New Message</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <Form {...form}>
@@ -97,3 +95,5 @@ export default function SendMsg(message_id: any) {
     </Dialog>
   );
 }
+
+export default NewMessages;

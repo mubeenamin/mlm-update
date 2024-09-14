@@ -149,8 +149,7 @@ class Message(SQLModel, table=True):
     recipient_id: int = Field(foreign_key="user.id")
     content: str
 
-class CreateMessage(Message):
-    name: str
+
 
 class Token(SQLModel):
     access_token: str
