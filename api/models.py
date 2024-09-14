@@ -144,9 +144,11 @@ class Referral(SQLModel, table=True):
 
 class Message(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
+    email: str
     sender_id: int = Field(foreign_key="user.id")
     recipient_id: int = Field(foreign_key="user.id")
     content: str
+
 
 
 class Token(SQLModel):

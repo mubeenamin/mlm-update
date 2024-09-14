@@ -1,126 +1,43 @@
 "use client";
 import { useEffect, useState } from "react";
-import { IoMdSend } from "react-icons/io";
-import { MdDeleteSweep } from "react-icons/md";
-import axios from "axios";
 import { useSession } from "next-auth/react";
-import Link from "next/link";
-import { SheetDemo } from "@/app/component/notificationuser";
-import { SendMsg } from "@/app/component/sendmsg";
+import GetMessages from "@/app/component/getMessages";
 
 function Page() {
-  const [messages, setMessages] = useState([]);
-  const [error, setError] = useState(null);
-
   const { data: session, status } = useSession();
   // @ts-ignore
   const userdata = session?.user?.id;
+  const [messages, setMessages] = useState([]);
 
+  let messagesData: any;
   useEffect(() => {
     const fetchData = async () => {
-      if (!userdata) return;
-
       try {
-        const res = await fetch(`/api/routers/message/get_messages/${userdata}`);
+        const res = await fetch(
+          `/api/routers/message/get_messages/${userdata}`
+        );
 
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${res.status}`);
+        } else {
+          const data = await res.json();
+          setMessages(data);
         }
-
-        const data = await res.json();
-        setMessages(data);
-      } catch (error:any) {
-        setError(error.message);
-      }
+      } catch (error) {}
     };
 
     fetchData();
   }, [userdata]);
 
-  if (status === "loading") {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
+  if (messages === null) {
+    return <div>No messages found</div>;
+  } else {
+    messagesData = messages;
   }
 
   return (
-    <div className="flex flex-col">
-      <div className="overflow-x-auto">
-        <div className="min-w-full inline-block align-middle">
-          <div className="overflow-hidden">
-            <table className="min-w-full rounded-xl">
-              <thead>
-                <tr className="bg-gray-50">
-                  <th
-                    scope="col"
-                    className="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize rounded-t-xl"
-                  >
-                    SR #
-                  </th>
-                  <th
-                    scope="col"
-                    className="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
-                  >
-                    User ID
-                  </th>
-                  <th
-                    scope="col"
-                    className="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
-                  >
-                    USER Email
-                  </th>
-                  <th
-                    scope="col"
-                    className="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
-                  >
-                    Message
-                  </th>
-                  <th
-                    scope="col"
-                    className="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize rounded-t-xl"
-                  >
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-300">
-                
-                  <tr
-                    
-                    className="bg-white transition-all duration-500 hover:bg-gray-50"
-                  >
-                    <td className="p-5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
-                      1
-                    </td>
-                    <td className="p-5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
-                      2
-                    </td>
-                    <td className="p-5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
-                      admin
-                    </td>
-                    <td className="p-5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
-                      mesesage
-                    </td>
-                    <td className="p-5">
-                      <div className="flex items-center gap-1">
-                        {/* <Link href={"/admin/messagesend"} className="p-2 rounded-full group transition-all duration-500 flex item-center">
-                          <IoMdSend size={24} className="text-mlmSky" />
-                        </Link> */}
-                        <SendMsg/>
-                        <button className="p-2 rounded-full group transition-all duration-500 flex item-center">
-                          <MdDeleteSweep size={26} className="text-red-500" />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-              
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+    <div>
+      <GetMessages message_data={messagesData} />
     </div>
   );
 }

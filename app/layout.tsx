@@ -1,6 +1,7 @@
+import { ToastContainer } from "./component/toast";
 import App from "./admin/App";
 import SessionWrapper from "./component/sessionWrapper";
-
+import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
 import { Inter } from "next/font/google";
 
@@ -23,6 +24,7 @@ export default function RootLayout({
           <div className="">
             <App>{children}</App>
           </div>
+          <ToastContainer />
         </body>
       </SessionWrapper>
     </html>

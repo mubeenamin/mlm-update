@@ -119,3 +119,9 @@ async def delete_user(db: db_dependency, user_id: int):
     db.delete(result)
     db.commit()
     return result
+
+@router.get("/get_users_by_name/{name}", response_model=List[UserRead])
+async def get_users_by_name(name: str, db: db_dependency):
+    statement  = select(User).where(User.name == name)
+    users = db.exec(statement).all()
+    return users
