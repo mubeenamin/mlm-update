@@ -5,8 +5,12 @@ import { MdDeleteSweep } from "react-icons/md";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { Mail } from "lucide-react";
+import ViewMessage from "./viewMessage";
 
 function GetMessages({ message_data }: any) {
+  if (!message_data) {
+    return <div>No messages found</div>;
+  }
   const deletMsg = async (message_id: any) => {
     try {
       const res = await axios.delete(
@@ -107,6 +111,7 @@ function GetMessages({ message_data }: any) {
                                   className="text-red-500"
                                 />
                               </button>
+                              <ViewMessage message_id={message.id} />
                             </div>
                           </td>
                         </tr>

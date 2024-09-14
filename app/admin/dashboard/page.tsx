@@ -1,6 +1,4 @@
 "use client";
-
-import CardsUser from "@/app/component/cards";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import AdminCard from "@/app/component/admincard";
@@ -29,7 +27,7 @@ function Page() {
         }
         const data = await res.json();
         const data2 = await res2.json();
-        console.log(data2);
+
         setUsers(data);
         setTotalBalance(data2);
       } catch (error) {}

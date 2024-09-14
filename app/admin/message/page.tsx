@@ -8,9 +8,8 @@ function Page() {
   // @ts-ignore
   const userdata = session?.user?.id;
   const [messages, setMessages] = useState([]);
-  const [error, setError] = useState(null);
 
-  console.log(userdata);
+  let messagesData: any;
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -20,28 +19,25 @@ function Page() {
 
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${res.status}`);
+        } else {
+          const data = await res.json();
+          setMessages(data);
         }
-        const data = await res.json();
-        setMessages(data);
-      } catch (error: any) {
-        setError(error.message);
-      }
+      } catch (error) {}
     };
 
     fetchData();
   }, [userdata]);
 
-  if (status === "loading") {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
+  if (messages === null) {
+    return <div>No messages found</div>;
+  } else {
+    messagesData = messages;
   }
 
   return (
     <div>
-      <GetMessages message_data={messages} />;
+      <GetMessages message_data={messagesData} />
     </div>
   );
 }

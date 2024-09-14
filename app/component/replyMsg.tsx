@@ -24,7 +24,6 @@ const FormSchema = z.object({
   content: z.string().min(2, {
     message: "Message must be at least 2 characters.",
   }),
-  // name: z.string(),
 });
 
 export default function ReplyMsg(message_id: any) {
@@ -42,7 +41,6 @@ export default function ReplyMsg(message_id: any) {
       email: sender_email,
       sender_id: senderId,
       recipient_id: recipientId,
-      // name: "string",
     },
   });
 
