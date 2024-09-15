@@ -1,7 +1,6 @@
 "use client";
 import { MdDashboard, MdManageAccounts } from "react-icons/md";
-import { GrTransaction } from "react-icons/gr";
-import { IoAnalytics, IoMedicalSharp, IoSettings } from "react-icons/io5";
+import { IoAnalytics, IoMedicalSharp } from "react-icons/io5";
 import { RiShoppingCartLine } from "react-icons/ri";
 import { TbMapPinCode, TbPasswordUser } from "react-icons/tb";
 import { GrNotification } from "react-icons/gr";
@@ -18,7 +17,11 @@ const menu = [
     icon: <RiShoppingCartLine />,
   },
 
-  { title: "Fund Transfer", link: "/user/fundTransfer", icon: <MdManageAccounts /> },
+  {
+    title: "Fund Transfer",
+    link: "/user/fundTransfer",
+    icon: <MdManageAccounts />,
+  },
   { title: "Account History", link: "#", icon: <IoAnalytics /> },
   { title: "Referral Account", link: "#", icon: <MdManageAccounts /> },
   {
@@ -27,23 +30,23 @@ const menu = [
     icon: <TbPasswordUser />,
   },
   {
-    title: "MESSAGE",
+    title: "Messages",
     link: "/user/messages",
     icon: <TiMessages />,
   },
   {
-    title: "PIN CHANGE",
+    title: "Pin Change",
     link: "/user/changePin",
     icon: <TbMapPinCode />,
   },
   {
-    title: "CASH WITHDRAWAL",
-    link: "/admin/cashWithdrawal",
+    title: "Cash Withdrawal",
+    link: "/user/withdrawal",
     icon: <IoMedicalSharp />,
   },
 
   {
-    title: "NOTIFICATION",
+    title: "Notification",
     link: "/user/UserNotification",
     icon: <GrNotification />,
   },

@@ -5,12 +5,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useState, useEffect } from "react";
 import { redirect } from "next/navigation";
-import Toast from "./toast";
+
 import Loader from "./Loader"; // Import the Loader component
 import "react-toastify/dist/ReactToastify.css";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setLoading } from "@/redux/loader/LoadingSlice";
 import { Button } from "@/components/ui/button";
+import { toast } from "react-toastify";
 
 const FormSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -21,19 +22,16 @@ const FormSchema = z.object({
 
 const SignIn = () => {
   const { data: session, status } = useSession();
-
-  const dispatch = useAppDispatch();
-  const loading = useAppSelector((state) => state.LoadingReducer);
-  const [invalidUser, setInvalidUser] = useState(false);
-
   if (status === "authenticated") {
-    dispatch(setLoading(false));
     if (session?.user?.name === "admin") {
       redirect("/admin/dashboard");
     } else {
       redirect("/user/dashboard");
     }
   }
+  const dispatch = useAppDispatch();
+  const loading = useAppSelector((state) => state.LoadingReducer);
+  const [invalidUser, setInvalidUser] = useState(false);
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
     dispatch(setLoading(true));
@@ -46,6 +44,8 @@ const SignIn = () => {
       if (res?.error) {
         setInvalidUser(true);
         dispatch(setLoading(false));
+      } else {
+        toast("Login successful", { type: "success" });
       }
     } catch (error) {
       setInvalidUser(true);
@@ -72,7 +72,6 @@ const SignIn = () => {
 
   return (
     <main>
-      {/* <Toast /> */}
       {loading && <Loader />}
       <div className="w-full max-w-md p-8 space-y-6  rounded shadow-md">
         <h1 className="text-4xl font-bold text-center">OPUS GLOBAL</h1>

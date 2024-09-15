@@ -98,8 +98,10 @@ class Balance(balanceBase , table = True):
 class TotalBalance(SQLModel):
     total_balance : Decimal
 
-class WithdrawalBase(SQLModel):
-    withdrawal_amount : str
+class WithdrawalBase(SQLModel): 
+    withdrawal_amount : Decimal
+    email : str
+    iban : str
     status : str
     user_id : Optional[int] = Field(default = None , foreign_key = "user.id")
     
