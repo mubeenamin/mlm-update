@@ -34,7 +34,7 @@ function NewWithdrawal() {
   // @ts-ignore
   const senderId: number = session?.user?.id;
   // @ts-ignore
-  const sender_email: string = session?.user?.email;
+  const userBalance = session?.user?.balance;
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -54,19 +54,23 @@ function NewWithdrawal() {
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
     console.log(data);
-    try {
-      const res = await axios.post(
-        "/api/routers/withdrawal/create_withdrawal",
-        data
-      );
-      if (!res) {
-        throw new Error(`HTTP error! status:`);
-      } else {
-        toast("Withdraw request sent successfully", { type: "success" });
-        form.reset();
+    if (userBalance < data.withdrawal_amount) {
+      toast("Insufficient balance", { type: "error" });
+    } else {
+      try {
+        const res = await axios.post(
+          "/api/routers/withdrawal/create_withdrawal",
+          data
+        );
+        if (!res) {
+          throw new Error(`HTTP error! status:`);
+        } else {
+          toast("Withdraw request sent successfully", { type: "success" });
+          form.reset();
+        }
+      } catch (error) {
+        console.error("An error occurred:", error);
       }
-    } catch (error) {
-      console.error("An error occurred:", error);
     }
   };
   return (

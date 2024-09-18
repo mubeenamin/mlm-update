@@ -1,5 +1,6 @@
 import { Mail } from "lucide-react";
 import { MdEdit } from "react-icons/md";
+import UpdateWithdrawal from "./updateWithdrawal";
 
 function GetWithdrawal({ withdraw_data }: any) {
   return (
@@ -84,7 +85,7 @@ function GetWithdrawal({ withdraw_data }: any) {
                     <tr>
                       <td
                         className="p-5 text-center text-xl leading-6 font-medium text-[#9CA3AF]"
-                        colSpan={6}
+                        colSpan={11}
                       >
                         <div className="flex justify-center">
                           <div>
@@ -143,10 +144,7 @@ function GetWithdrawal({ withdraw_data }: any) {
                           </td>
                           <td className="p-2">
                             <div className="flex items-center gap-1">
-                              <button className="p-2 rounded-full group transition-all duration-500 flex item-center">
-                                <MdEdit size={26} className="text-red-500" />
-                              </button>
-                              {/* <ViewMessage message_id={message.id} /> */}
+                              <UpdateWithdrawal withdrawal_id={withdraw.id} />
                             </div>
                           </td>
                         </tr>
