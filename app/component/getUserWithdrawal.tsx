@@ -9,64 +9,64 @@ function GetUserWithdrawal({ withdraw_data }: any) {
             <div className="overflow-hidden">
               <table className="min-w-full rounded-xl">
                 <thead>
-                  <tr className="bg-gray-50">
+                  <tr className="bg-gray-50 text-center">
                     <th
                       scope="col"
-                      className="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
+                      className="p-5  text-sm leading-6 font-semibold text-gray-900 capitalize"
                     >
                       User Id
                     </th>
                     <th
                       scope="col"
-                      className="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
+                      className="p-5  text-sm leading-6 font-semibold text-gray-900 capitalize"
                     >
                       First Name
                     </th>
                     <th
                       scope="col"
-                      className="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
+                      className="p-5  text-sm leading-6 font-semibold text-gray-900 capitalize"
                     >
                       Last Name
                     </th>
                     <th
                       scope="col"
-                      className="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
+                      className="p-5  text-sm leading-6 font-semibold text-gray-900 capitalize"
                     >
                       National Id/ Passport
                     </th>
                     <th
                       scope="col"
-                      className="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
+                      className="p-5  text-sm leading-6 font-semibold text-gray-900 capitalize"
                     >
                       Country
                     </th>
                     <th
                       scope="col"
-                      className="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
+                      className="p-5  text-sm leading-6 font-semibold text-gray-900 capitalize"
                     >
                       Bank Name
                     </th>
                     <th
                       scope="col"
-                      className="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
+                      className="p-5  text-sm leading-6 font-semibold text-gray-900 capitalize"
                     >
                       Contact
                     </th>
                     <th
                       scope="col"
-                      className="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
+                      className="p-5  text-sm leading-6 font-semibold text-gray-900 capitalize"
                     >
                       IBan
                     </th>
                     <th
                       scope="col"
-                      className="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
+                      className="p-5  text-sm leading-6 font-semibold text-gray-900 capitalize"
                     >
                       Amount
                     </th>
                     <th
                       scope="col"
-                      className="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
+                      className="p-5  text-sm leading-6 font-semibold text-gray-900 capitalize"
                     >
                       Status
                     </th>
@@ -103,7 +103,7 @@ function GetUserWithdrawal({ withdraw_data }: any) {
                         className="divide-y divide-gray-300"
                         key={withdraw.id}
                       >
-                        <tr className="bg-white transition-all duration-500 hover:bg-gray-50">
+                        <tr className="bg-white transition-all duration-500 hover:bg-gray-50 text-center border">
                           <td className="p-2 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
                             {withdraw.user_id}
                           </td>
