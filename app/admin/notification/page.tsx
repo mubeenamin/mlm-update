@@ -1,8 +1,6 @@
 "use client";
 
-import NotificationView from "@/app/component/notificationView";
-import ProtectedRoute from "@/app/component/protectedRoute";
-import { Button } from "@/components/ui/button";
+
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -19,7 +17,7 @@ export default  function Notification() {
   const handleReset = () => {
     settitle("");
     setmessage("");
-    setuser_id(1);
+    setuser_id(3);
   };
   const handleSubmit = async (event: any) => {
   event.preventDefault();
@@ -30,7 +28,7 @@ export default  function Notification() {
       user_id: user_id
     });
     
-  //  console.log(response);
+  
   } catch (error) {
     console.error(error);
   }

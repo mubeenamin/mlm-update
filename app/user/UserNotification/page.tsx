@@ -1,36 +1,36 @@
 "use client";
 import React, { useEffect, useState } from "react";
-
 import { useSession } from "next-auth/react";
 
 const Page = () => {
   const [open, setOpen] = useState(false);
   const [users, setUsers] = useState<any>([]);
-  const [loading, setLoading] = useState(true);
   const [notificationCount, setNotificationCount] = useState(0);
   const [newNotificationCount, setNewNotificationCount] = useState(0);
   const { data: session } = useSession();
 
-  useEffect(() => {
-    const interval = setInterval(async () => {
-      try {
-        const res = await fetch("/api/routers/notification/notifications", {
-          mode: "no-cors",
-        });
-        if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`);
-        } else {
-          const data = await res.json();
-          setUsers(data);
-          setNewNotificationCount(data.length - notificationCount); // Update the new notification count
-        }
-      } catch (error) {
-        console.error("An error occurred:", error);
+  const fetchNotifications = async () => {
+    try {
+      const res = await fetch("/api/routers/notification/notifications", {
+        mode: "no-cors",
+      });
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      } else {
+        const data = await res.json();
+        setUsers(data);
+        setNewNotificationCount(data.length - notificationCount); // Update the new notification count
       }
-    }, 60000); // Check for new notifications every 1 minut
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
+  };
 
-    return () => clearInterval(interval);
-  }, [notificationCount]);
+  useEffect(() => {
+    if (open) {
+      fetchNotifications(); // Fetch notifications when opened
+    }
+  }, [open]);
 
   const handleToggle = () => {
     setOpen(!open);
