@@ -24,13 +24,7 @@ class User(userBase , table = True):
     Pin : Optional["Pin"] = Relationship(back_populates="user")
     referrals: List["Referral"] = Relationship(back_populates="referrer",sa_relationship_kwargs={"foreign_keys": "[Referral.referrer_user_id]"})
     notifications: List["notification"] = Relationship(back_populates="user")
- 
-    
-    
 
-   
-    
-    
 class UserRead(userBase):
     Balances : Optional["Balance"]
     Withdrawals: List["Withdrawal"]
@@ -100,8 +94,13 @@ class TotalBalance(SQLModel):
 
 class WithdrawalBase(SQLModel): 
     withdrawal_amount : Decimal
-    email : str
+    firstName : str
+    lastName : str
+    idNumber : str
+    country : str
+    bankName : str
     iban : str
+    contact : str
     status : str
     user_id : Optional[int] = Field(default = None , foreign_key = "user.id")
     

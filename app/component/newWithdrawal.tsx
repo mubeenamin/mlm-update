@@ -1,6 +1,5 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { useSession } from "next-auth/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -19,8 +18,13 @@ import { Input } from "@/components/ui/input";
 
 const FormSchema = z.object({
   withdrawal_amount: z.string(),
-  email: z.string(),
+  firstName: z.string(),
+  lastName: z.string(),
+  idNumber: z.string(),
+  country: z.string(),
+  bankName: z.string(),
   iban: z.string(),
+  contact: z.string(),
   status: z.string(),
   user_id: z.number(),
 });
@@ -36,8 +40,13 @@ function NewWithdrawal() {
     resolver: zodResolver(FormSchema),
     defaultValues: {
       withdrawal_amount: "",
-      email: sender_email,
+      firstName: "",
+      lastName: "",
+      idNumber: "",
+      country: "",
+      bankName: "",
       iban: "",
+      contact: "",
       status: "Pending",
       user_id: senderId,
     },
@@ -61,50 +70,136 @@ function NewWithdrawal() {
     }
   };
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button className="bg-mlmSkyLight text-white">Withdrawal</Button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className=" space-y-6">
-            <FormField
-              control={form.control}
-              name="iban"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Iban Number</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Enter Iban" {...field} />
-                  </FormControl>
+    <div className="grid justify-center">
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="md:w-96 space-y-6"
+        >
+          <FormField
+            control={form.control}
+            name="firstName"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>First Name</FormLabel>
+                <FormControl>
+                  <Input placeholder="First Name" {...field} />
+                </FormControl>
 
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="withdrawal_amount"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Amount</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="number"
-                      placeholder="Enter Amount"
-                      {...field}
-                    />
-                  </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="lastName"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Last Name</FormLabel>
+                <FormControl>
+                  <Input placeholder="Last Name" {...field} />
+                </FormControl>
 
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button type="submit">Submit</Button>
-          </form>
-        </Form>
-      </DialogContent>
-    </Dialog>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="idNumber"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>National Id/Passport Number</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="National Identity/Passport Number"
+                    {...field}
+                  />
+                </FormControl>
+
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="country"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Country</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter Your Country" {...field} />
+                </FormControl>
+
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="bankName"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Bank Name</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter Bank Name" {...field} />
+                </FormControl>
+
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="contact"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Contact</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter Iban" {...field} />
+                </FormControl>
+
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="iban"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Iban Number</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter Iban" {...field} />
+                </FormControl>
+
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="withdrawal_amount"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Amount</FormLabel>
+                <FormControl>
+                  <Input type="number" placeholder="Enter Amount" {...field} />
+                </FormControl>
+
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button
+            type="submit"
+            className="bg-mlmSky hover:bg-mlmSkyLight text-white"
+          >
+            Submit
+          </Button>
+        </form>
+      </Form>
+    </div>
   );
 }
 

@@ -21,7 +21,37 @@ function GetWithdrawal({ withdraw_data }: any) {
                       scope="col"
                       className="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
                     >
-                      User Email
+                      First Name
+                    </th>
+                    <th
+                      scope="col"
+                      className="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
+                    >
+                      Last Name
+                    </th>
+                    <th
+                      scope="col"
+                      className="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
+                    >
+                      National Id/ Passport
+                    </th>
+                    <th
+                      scope="col"
+                      className="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
+                    >
+                      Country
+                    </th>
+                    <th
+                      scope="col"
+                      className="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
+                    >
+                      Bank Name
+                    </th>
+                    <th
+                      scope="col"
+                      className="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
+                    >
+                      Contact
                     </th>
                     <th
                       scope="col"
@@ -77,26 +107,41 @@ function GetWithdrawal({ withdraw_data }: any) {
                     .reverse()
                     .map((withdraw: any) => (
                       <tbody
-                        className="divide-y divide-gray-300"
+                        className="divide-y divide-gray-300 text-center"
                         key={withdraw.id}
                       >
                         <tr className="bg-white transition-all duration-500 hover:bg-gray-50">
-                          <td className="p-5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
-                            {withdraw.sender_id}
+                          <td className="p-2 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
+                            {withdraw.user_id}
                           </td>
-                          <td className="p-5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
-                            {withdraw.email}
+                          <td className="p-2 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
+                            {withdraw.firstName}
                           </td>
-                          <td className="p-5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
+                          <td className="p-2 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
+                            {withdraw.lastName}
+                          </td>
+                          <td className="p-2 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
+                            {withdraw.idNumber}
+                          </td>
+                          <td className="p-2 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
+                            {withdraw.country}
+                          </td>
+                          <td className="p-2 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
+                            {withdraw.bankName}
+                          </td>
+                          <td className="p-2 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
+                            {withdraw.contact}
+                          </td>
+                          <td className="p-2 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
                             {withdraw.iban}
                           </td>
-                          <td className="p-5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
-                            {withdraw.amount}
+                          <td className="p-2 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
+                            {withdraw.withdrawal_amount}
                           </td>
-                          <td className="p-5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
-                            {withdraw.amount}
+                          <td className="p-2 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
+                            {withdraw.status}
                           </td>
-                          <td className="p-5">
+                          <td className="p-2">
                             <div className="flex items-center gap-1">
                               <button className="p-2 rounded-full group transition-all duration-500 flex item-center">
                                 <MdEdit size={26} className="text-red-500" />

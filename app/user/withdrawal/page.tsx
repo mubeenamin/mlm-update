@@ -1,7 +1,8 @@
 "use client";
 import GetUserWithdrawal from "@/app/component/getUserWithdrawal";
-import NewWithdrawal from "@/app/component/newWithdrawal";
+import { Button } from "@/components/ui/button";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 import React from "react";
 
 function Page() {
@@ -25,7 +26,11 @@ function Page() {
   return (
     <div>
       <div className="flex justify-end mb-4">
-        <NewWithdrawal />
+        <Link href="/user/newWithdrawal">
+          <Button className="bg-mlmSky hover:bg-mlmSkyLight text-white">
+            New Withdrawal
+          </Button>
+        </Link>
       </div>
       <GetUserWithdrawal withdraw_data={withdraw_data} />
     </div>

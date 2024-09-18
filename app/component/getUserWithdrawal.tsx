@@ -1,5 +1,4 @@
 import { Mail } from "lucide-react";
-import { MdEdit } from "react-icons/md";
 
 function GetUserWithdrawal({ withdraw_data }: any) {
   return (
@@ -21,7 +20,37 @@ function GetUserWithdrawal({ withdraw_data }: any) {
                       scope="col"
                       className="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
                     >
-                      User Email
+                      First Name
+                    </th>
+                    <th
+                      scope="col"
+                      className="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
+                    >
+                      Last Name
+                    </th>
+                    <th
+                      scope="col"
+                      className="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
+                    >
+                      National Id/ Passport
+                    </th>
+                    <th
+                      scope="col"
+                      className="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
+                    >
+                      Country
+                    </th>
+                    <th
+                      scope="col"
+                      className="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
+                    >
+                      Bank Name
+                    </th>
+                    <th
+                      scope="col"
+                      className="p-5 text-left text-sm leading-6 font-semibold text-gray-900 capitalize"
+                    >
+                      Contact
                     </th>
                     <th
                       scope="col"
@@ -75,19 +104,34 @@ function GetUserWithdrawal({ withdraw_data }: any) {
                         key={withdraw.id}
                       >
                         <tr className="bg-white transition-all duration-500 hover:bg-gray-50">
-                          <td className="p-5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
+                          <td className="p-2 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
                             {withdraw.user_id}
                           </td>
-                          <td className="p-5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
-                            {withdraw.email}
+                          <td className="p-2 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
+                            {withdraw.firstName}
                           </td>
-                          <td className="p-5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
+                          <td className="p-2 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
+                            {withdraw.lastName}
+                          </td>
+                          <td className="p-2 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
+                            {withdraw.idNumber}
+                          </td>
+                          <td className="p-2 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
+                            {withdraw.country}
+                          </td>
+                          <td className="p-2 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
+                            {withdraw.bankName}
+                          </td>
+                          <td className="p-2 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
+                            {withdraw.contact}
+                          </td>
+                          <td className="p-2 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
                             {withdraw.iban}
                           </td>
-                          <td className="p-5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
+                          <td className="p-2 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
                             {withdraw.withdrawal_amount}
                           </td>
-                          <td className="p-5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
+                          <td className="p-2 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
                             {withdraw.status}
                           </td>
                         </tr>
