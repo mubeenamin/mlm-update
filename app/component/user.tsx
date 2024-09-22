@@ -70,18 +70,6 @@ function User() {
       initial_balance: 0,
     },
   });
-  const handleReset = () => {
-    form.reset({
-      nation_id: "",
-      email: "",
-      password: "",
-      city: "",
-      country: "",
-      phone: "",
-      currency: "USD",
-      userPackage: "",
-    });
-  };
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     if (data.userPackage === "Bronze") {
       data.initial_balance = 150;
@@ -111,7 +99,7 @@ function User() {
         if (!res) {
           throw new Error(`HTTP error! status:`);
         } else {
-          handleReset();
+          form.reset();
           router.refresh();
           toast("User created successfully", { type: "success" });
         }
