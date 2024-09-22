@@ -9,6 +9,9 @@ import { TiMessages } from "react-icons/ti";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Sheet } from "@/components/ui/sheet";
+import { ResponsiveNav } from "@/app/component/responsiveNav";
+
 
 const menu = [
   { title: "Dashboard", link: "/admin/dashboard", icon: <MdDashboard /> },
@@ -57,10 +60,13 @@ const menu = [
   },
 ];
 
+
+
 const Sidebaradmin = () => {
   const pathname = usePathname();
   return (
-    <div className=" w-[300px] h-screen p-4 shrink-0">
+    <main>
+    <div className="hidden md:block w-[300px] h-screen p-4 shrink-0">
       <div className="flex items-center gap-4">
         <Image
           src="/logo.jpeg"
@@ -85,6 +91,8 @@ const Sidebaradmin = () => {
         ))}
       </ul>
     </div>
+   
+    </main>
   );
 };
 

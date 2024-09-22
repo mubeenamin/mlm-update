@@ -5,7 +5,7 @@ import UpdateWithdrawal from "./updateWithdrawal";
 function GetWithdrawal({ withdraw_data }: any) {
   return (
     <main>
-      <div className="flex flex-col">
+      <div className="flex flex-col ">
         <div className="overflow-x-auto">
           <div className="min-w-full inline-block align-middle">
             <div className="overflow-hidden">
