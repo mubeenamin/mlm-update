@@ -15,7 +15,7 @@ export default function DashboardLayout({
     <div className="flex">
       <Sidebaradmin />
       <div className="w-full h-full">
-        <Navbar name="Admin Dashboard" />
+        <Navbar />
 
         <div className="p-4 ">{children}</div>
       </div>
