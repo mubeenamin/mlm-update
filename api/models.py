@@ -26,14 +26,14 @@ class User(userBase , table = True):
     Pin : Optional["Pin"] = Relationship(back_populates="user")
     referrals: List["Referral"] = Relationship(back_populates="referrer",sa_relationship_kwargs={"foreign_keys": "[Referral.referrer_user_id]"})
     notifications: List["notification"] = Relationship(back_populates="user")
-
+    fund: List["Fund"] = Relationship(back_populates="user")
 class UserRead(userBase):
     Balances : Optional["Balance"]
     Withdrawals: List["Withdrawal"]
     Pin : Optional["Pin"]
     referrals: List["Referral"]
     notifications: List["notification"]
-    
+    fund: List["Fund"]
     
 class AdminCreate(SQLModel):
 
@@ -157,7 +157,12 @@ class Message(SQLModel, table=True):
     recipient_id: int = Field(foreign_key="user.id")
     content: str
 
-
+class Fund(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    user_id: int = Field(foreign_key="user.id")
+    amount: Decimal
+    email: str
+    user: User = Relationship(back_populates="Funds")
 
 class Token(SQLModel):
     access_token: str
