@@ -7,6 +7,8 @@ from decimal import Decimal
 
 class userBase(SQLModel):
     id: Optional[int] = Field(default = None , primary_key = True, index=True)
+    firstName : str
+    lastName : str
     nation_id : str
     email : str 
     password : str
@@ -34,6 +36,9 @@ class UserRead(userBase):
     
     
 class AdminCreate(SQLModel):
+
+    firstName : str
+    lastName : str
     nation_id : str
     email : str 
     password : str
@@ -48,6 +53,8 @@ class AdminCreate(SQLModel):
     
 
 class UserCreate(SQLModel):
+    firstName : str
+    lastName : str
     nation_id : str
     email : str 
     password : str

@@ -12,61 +12,61 @@ function GetUserWithdrawal({ withdraw_data }: any) {
                   <tr className="bg-gray-50 text-center">
                     <th
                       scope="col"
-                      className="p-5  text-sm leading-6 font-semibold text-gray-900 capitalize"
+                      className="p-2  text-sm leading-6 font-semibold text-gray-900 capitalize"
                     >
                       User Id
                     </th>
                     <th
                       scope="col"
-                      className="p-5  text-sm leading-6 font-semibold text-gray-900 capitalize"
+                      className="p-2  text-sm leading-6 font-semibold text-gray-900 capitalize"
                     >
                       First Name
                     </th>
                     <th
                       scope="col"
-                      className="p-5  text-sm leading-6 font-semibold text-gray-900 capitalize"
+                      className="p-2  text-sm leading-6 font-semibold text-gray-900 capitalize"
                     >
                       Last Name
                     </th>
                     <th
                       scope="col"
-                      className="p-5  text-sm leading-6 font-semibold text-gray-900 capitalize"
+                      className="p-2  text-sm leading-6 font-semibold text-gray-900 capitalize"
                     >
                       National Id/ Passport
                     </th>
                     <th
                       scope="col"
-                      className="p-5  text-sm leading-6 font-semibold text-gray-900 capitalize"
+                      className="p-2  text-sm leading-6 font-semibold text-gray-900 capitalize"
                     >
                       Country
                     </th>
                     <th
                       scope="col"
-                      className="p-5  text-sm leading-6 font-semibold text-gray-900 capitalize"
+                      className="p-2  text-sm leading-6 font-semibold text-gray-900 capitalize"
                     >
                       Bank Name
                     </th>
                     <th
                       scope="col"
-                      className="p-5  text-sm leading-6 font-semibold text-gray-900 capitalize"
+                      className="p-2  text-sm leading-6 font-semibold text-gray-900 capitalize"
                     >
                       Contact
                     </th>
                     <th
                       scope="col"
-                      className="p-5  text-sm leading-6 font-semibold text-gray-900 capitalize"
+                      className="p-2  text-sm leading-6 font-semibold text-gray-900 capitalize"
                     >
                       IBan
                     </th>
                     <th
                       scope="col"
-                      className="p-5  text-sm leading-6 font-semibold text-gray-900 capitalize"
+                      className="p-2  text-sm leading-6 font-semibold text-gray-900 capitalize"
                     >
                       Amount
                     </th>
                     <th
                       scope="col"
-                      className="p-5  text-sm leading-6 font-semibold text-gray-900 capitalize"
+                      className="p-2  text-sm leading-6 font-semibold text-gray-900 capitalize"
                     >
                       Status
                     </th>
@@ -77,7 +77,7 @@ function GetUserWithdrawal({ withdraw_data }: any) {
                     <tr>
                       <td
                         className="p-5 text-center text-xl leading-6 font-medium text-[#9CA3AF]"
-                        colSpan={5}
+                        colSpan={11}
                       >
                         <div className="flex justify-center">
                           <div>

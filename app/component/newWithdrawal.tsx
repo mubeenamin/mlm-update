@@ -51,9 +51,22 @@ function NewWithdrawal() {
       user_id: senderId,
     },
   });
+  const balanceUpdate = async (updatedBalance: number) => {
+    try {
+      const res = await axios.put(
+        `/api/routers/balance/update_balance_by_id/${senderId}`,
+        { balance: updatedBalance }
+      );
+      if (!res) {
+        throw new Error(`HTTP error! status:`);
+      } else {
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
-    console.log(data);
     if (userBalance < data.withdrawal_amount) {
       toast("Insufficient balance", { type: "error" });
     } else {
