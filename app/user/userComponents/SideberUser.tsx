@@ -60,7 +60,7 @@ const menu = [
 const SidebarUser = () => {
   const pathname = usePathname();
   return (
-    <div className="bg-white w-[80px] md:w-[300px] h-screen p-4 shrink-0">
+    <div className="bg-white w-[80px] md:w-[300px] h-screen p-4 shrink-0 hidden md:block">
       <div className="flex items-center gap-4">
         <Image
           src="/logo.jpeg"
@@ -71,7 +71,7 @@ const SidebarUser = () => {
         ></Image>
         <h2 className="text-2xl font-semibold">OPUS GLOBAL</h2>
       </div>
-      <ul className="mt-6 space-y-4 hidden md:block">
+      <ul className="mt-6 space-y-4 ">
         {menu.map((item) => (
           <Link
             key={item.title}
@@ -84,19 +84,7 @@ const SidebarUser = () => {
           </Link>
         ))}
       </ul>
-      <ul className="mt-6 space-y-4 block md:hidden">
-        {menu.map((item) => (
-          <Link
-            key={item.title}
-            href={item.link}
-            className={`flex items-center gap-2 p-4 rounded-lg cursor-pointer hover:odd:bg-mlmSkyLight hover:even:bg-mlmSky hover:text-white
-            ${pathname === item.link ? "bg-mlmSky text-white" : "bg-gary-200"}`}
-          >
-            <div>{item.icon}</div>
-            {/* <div>{item.title}</div> */}
-          </Link>
-        ))}
-      </ul>
+    
     </div>
   );
 };
