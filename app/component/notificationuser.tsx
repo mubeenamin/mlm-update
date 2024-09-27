@@ -40,7 +40,7 @@ export function SheetDemo() {
         // console.log(res);
         // Update the new notification count
       } catch (error) {
-        console.error("An error occurred:", error);
+        // console.error("An error occurred:", error);
       }
     }, 60000); // Check for new notifications every 5 seconds
 

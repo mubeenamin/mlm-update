@@ -21,7 +21,7 @@ const menu = [
     icon: <RiShoppingCartLine />,
   },
   { title: "Daily Created Accounts", link: "#", icon: <GrTransaction /> },
-  { title: "Fund Transfer", link: "#", icon: <MdManageAccounts /> },
+  { title: "Fund Transfer", link: "/admin/fundTransfer", icon: <MdManageAccounts /> },
   { title: "Account History", link: "#", icon: <IoAnalytics /> },
   {
     title: "All ACCOUNTS HISTORY",

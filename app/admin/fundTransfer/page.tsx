@@ -1,9 +1,10 @@
-import FundTransfer from "@/app/component/fundTransfer";
-import React from "react";
+
 
 export default function page() {
   return(
-  <div>
-    <FundTransfer />
-  </div>
+    <main>
+    <div className="flex justify-end mb-4">
+      ljsljslkj
+    </div>
+    </main>
 )}
