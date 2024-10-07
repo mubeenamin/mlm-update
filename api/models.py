@@ -162,7 +162,7 @@ class Fund(SQLModel, table=True):
     user_id: int = Field(foreign_key="user.id")
     amount: Decimal
     email: str
-    user: User = Relationship(back_populates="Funds")
+    user: User = Relationship(back_populates="fund")
 
 class Token(SQLModel):
     access_token: str
