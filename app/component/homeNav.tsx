@@ -10,7 +10,7 @@ const HomeNav = () => {
                     <div className="flex items-center ">
                         <div className="flex items-center justify-between w-full md:w-auto">
                             <Link href="/" className="flex items-center">
-                                <Image src="/logo.jpeg" alt="logo" width={50} height={50} className="rounded-full" />
+                                <Image src="/logos.png" alt="logo" width={80} height={80} className="" />
                             </Link>
                         </div>
                     </div>

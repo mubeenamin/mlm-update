@@ -1,7 +1,10 @@
 import React from 'react'
+import HomeNav from '../component/homeNav'
 
 const About = () => {
   return (
+    <>
+    <HomeNav/>
     <section className="bg-gray-100 md:mt-8">
   <div className=" mx-auto py-16 px-4 sm:px-6 lg:px-8">
     <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-8">
@@ -20,7 +23,7 @@ const About = () => {
       </div>
       <div className="mt-12 md:mt-0">
         <img
-          src="https://images.unsplash.com/photo-1531973576160-7125cd663d86"
+          src="/about.jpg"
           alt="About Us Image"
           className="object-cover rounded-lg shadow-md"
         />
@@ -29,6 +32,8 @@ const About = () => {
   </div>
 </section>
 
+
+    </>
   )
 }
 
