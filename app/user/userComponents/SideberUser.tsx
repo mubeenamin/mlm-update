@@ -69,7 +69,7 @@ const SidebarUser = () => {
           height={50}
           className="rounded-full"
         ></Image>
-        <h2 className="text-2xl font-semibold">OPUS GLOBAL</h2>
+        <h2 className="text-2xl font-semibold">OPUS GLOBALS</h2>
       </div>
       <ul className="mt-6 space-y-4 ">
         {menu.map((item) => (

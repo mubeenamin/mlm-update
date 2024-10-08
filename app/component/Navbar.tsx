@@ -25,7 +25,7 @@ const Navbar = () => {
         <div>
         <h2 className="flex items-center gap-2 text-sm md:text-2xl text-mlmSky font-semibold">
           <Image src="/logo.jpeg" alt="logo" width={32} height={32} className="rounded-full size-32 md:hidden"/>
-         <span className="hidden md:block">OPUS GLOBAL</span>  <span className="text-mlmSkyLight">Admin Dashboard</span>
+         <span className="hidden md:block">OPUS GLOBALS</span>  <span className="text-mlmSkyLight">Admin Dashboard</span>
         </h2>
         </div>
       </div>
