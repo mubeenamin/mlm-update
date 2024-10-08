@@ -79,7 +79,7 @@ export function UserResNav() {
                             height={40}
                             className="rounded-full"
                         ></Image>
-                        <h2 className="text-xl font-semibold text-[#7091E6]">OPUS GLOBAL</h2>
+                        <h2 className="text-xl font-semibold text-[#7091E6]">OPUS GLOBALS</h2>
                     </div>
                     <ul className="mt-4 mb-4 bg-blue-200/20 ">
                         {menu.map((item) => (
