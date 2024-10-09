@@ -4,6 +4,7 @@ import SessionWrapper from "./component/sessionWrapper";
 import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
 import { Inter } from "next/font/google";
+import HomeNav from "./component/homeNav";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,6 +23,7 @@ export default function RootLayout({
       <SessionWrapper>
         <body className={inter.className}>
           <div className="">
+            
             <App>{children}</App>
           </div>
           <ToastContainer />

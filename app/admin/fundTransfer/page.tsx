@@ -1,9 +1,14 @@
-import FundTransfer from "@/app/component/fundTransfer";
-import React from "react";
+import GetFund from "@/app/component/getfund";
+import NewFundtransfer from "@/app/component/newFundtransfer";
+
 
 export default function page() {
   return(
-  <div>
-    <FundTransfer />
-  </div>
+    <main>
+    <div className="flex justify-end mb-4">
+      <NewFundtransfer/>
+    
+    </div>
+    <GetFund />
+    </main>
 )}

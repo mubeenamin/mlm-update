@@ -21,7 +21,7 @@ const menu = [
     icon: <RiShoppingCartLine />,
   },
   { title: "Daily Created Accounts", link: "#", icon: <GrTransaction /> },
-  { title: "Fund Transfer", link: "#", icon: <MdManageAccounts /> },
+  { title: "Fund Transfer", link: "/admin/fundTransfer", icon: <MdManageAccounts /> },
   { title: "Account History", link: "#", icon: <IoAnalytics /> },
   {
     title: "All ACCOUNTS HISTORY",
@@ -75,7 +75,7 @@ const Sidebaradmin = () => {
           height={50}
           className="rounded-full"
         ></Image>
-        <h2 className="text-2xl font-semibold text-[#7091E6]">OPUS GLOBAL</h2>
+        <h2 className="text-2xl font-semibold text-[#7091E6]">OPUS GLOBALS</h2>
       </div>
       <ul className="mt-6 bg-blue-200/20 space-y-4">
         {menu.map((item) => (

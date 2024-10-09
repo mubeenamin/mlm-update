@@ -12,7 +12,7 @@ const menu = [
   { title: "Dashboard", link: "/admin/dashboard" },
   { title: "Create User Account", link: "/admin/createUser" },
   { title: "Daily Created Accounts", link: "#" },
-  { title: "Fund Transfer", link: "#" },
+  { title: "Fund Transfer", link: "/admin/fundTransfer" },
   { title: "Account History", link: "#" },
   { title: "All ACCOUNTS HISTORY", link: "/admin/allAccountHistory" },
   { title: "PASSWORD CHANGE", link: "/admin/passwordChange" },
@@ -48,7 +48,7 @@ export function ResponsiveNav() {
           height={40}
           className="rounded-full"
         ></Image>
-        <h2 className="text-xl font-semibold text-[#7091E6]">OPUS GLOBAL</h2>
+        <h2 className="text-xl font-semibold text-[#7091E6]">OPUS GLOBALS</h2>
       </div>
           <ul className="mt-4 mb-4 bg-blue-200/20 ">
             {menu.map((item) => (
