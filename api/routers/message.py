@@ -7,8 +7,7 @@ router = APIRouter(
     prefix="/api/routers/message",
     tags=["Messages"]
 )
-def get_admin_user(db: db_dependency,):
-    return db.exec(select(User).where(User.name == 'admin')).first()
+
 
 
 @router.post("/send_message")

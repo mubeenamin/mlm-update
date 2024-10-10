@@ -7,6 +7,8 @@ from decimal import Decimal
 
 class userBase(SQLModel):
     id: Optional[int] = Field(default = None , primary_key = True, index=True)
+    firstName : str
+    lastName : str
     nation_id : str
     email : str 
     password : str
@@ -24,16 +26,19 @@ class User(userBase , table = True):
     Pin : Optional["Pin"] = Relationship(back_populates="user")
     referrals: List["Referral"] = Relationship(back_populates="referrer",sa_relationship_kwargs={"foreign_keys": "[Referral.referrer_user_id]"})
     notifications: List["notification"] = Relationship(back_populates="user")
-
+    fund: List["Fund"] = Relationship(back_populates="user")
 class UserRead(userBase):
     Balances : Optional["Balance"]
     Withdrawals: List["Withdrawal"]
     Pin : Optional["Pin"]
     referrals: List["Referral"]
     notifications: List["notification"]
-    
+    fund: List["Fund"]
     
 class AdminCreate(SQLModel):
+
+    firstName : str
+    lastName : str
     nation_id : str
     email : str 
     password : str
@@ -48,6 +53,8 @@ class AdminCreate(SQLModel):
     
 
 class UserCreate(SQLModel):
+    firstName : str
+    lastName : str
     nation_id : str
     email : str 
     password : str
@@ -61,6 +68,12 @@ class UserCreate(SQLModel):
     referral_type_name: str
     initial_balance: Decimal
     userPackage: str
+
+
+class UserPasswordUpdate(SQLModel):
+    
+    password : Optional[str]
+
 
 class notificationBase(SQLModel):
     title : str
@@ -150,7 +163,21 @@ class Message(SQLModel, table=True):
     recipient_id: int = Field(foreign_key="user.id")
     content: str
 
+class Fund(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    user_id: int = Field(foreign_key="user.id")
+    amount: Decimal
+    email: str
+    date: str
+    user: User = Relationship(back_populates="fund")
 
+class FundRead(SQLModel):
+    id: int
+    user_id: int
+    amount: Decimal
+    email: str
+    date: str
+    user: Optional["User"]
 
 class Token(SQLModel):
     access_token: str
