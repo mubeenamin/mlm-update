@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, status
 from sqlmodel import select
-from api.models import Balance, ReferralType, Referral
+from api.models import Balance, ReferralType, Referral, UserPasswordUpdate
 from api.dep import db_dependency, bcrypt_context
 from typing import Annotated, List
 from api.models import User, UserCreate, UserRead, AdminCreate, Referral, ReferralType
@@ -125,3 +125,14 @@ async def get_users_by_name(name: str, db: db_dependency):
     statement  = select(User).where(User.name == name)
     users = db.exec(statement).all()
     return users
+
+
+
+@router.put("/update_user_password_by_id/{user_id}", status_code=status.HTTP_204_NO_CONTENT)
+async def update_user_password_by_id(db: db_dependency, user_id: int, user: UserPasswordUpdate):
+    result = db.exec(select(User).where(User.id == user_id)).first()
+    result.password = user.password
+    db.add(result)
+    db.commit()
+    db.refresh(result)
+    return result

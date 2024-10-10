@@ -69,6 +69,12 @@ class UserCreate(SQLModel):
     initial_balance: Decimal
     userPackage: str
 
+
+class UserPasswordUpdate(SQLModel):
+    
+    password : Optional[str]
+
+
 class notificationBase(SQLModel):
     title : str
     message : str
@@ -162,7 +168,16 @@ class Fund(SQLModel, table=True):
     user_id: int = Field(foreign_key="user.id")
     amount: Decimal
     email: str
+    date: str
     user: User = Relationship(back_populates="fund")
+
+class FundRead(SQLModel):
+    id: int
+    user_id: int
+    amount: Decimal
+    email: str
+    date: str
+    user: Optional["User"]
 
 class Token(SQLModel):
     access_token: str

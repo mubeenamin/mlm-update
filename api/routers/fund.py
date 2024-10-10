@@ -1,6 +1,6 @@
 from fastapi import APIRouter, status
 from sqlmodel import select
-from api.models import Balance, Fund,  User
+from api.models import Balance, Fund,  User, FundRead
 from api.dep import db_dependency
 
 router = APIRouter(
@@ -8,7 +8,7 @@ router = APIRouter(
     tags=["Funds"]
 )
 
-@router.get("/get_funds")
+@router.get("/get_funds", response_model=list[FundRead])
 async def get_funds(db: db_dependency):
     return db.exec(select(Fund)).all()
 

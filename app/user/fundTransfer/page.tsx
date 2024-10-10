@@ -1,16 +1,13 @@
-import GetFund from "@/app/component/getfund";
+import GetUserFund from "@/app/component/getUserFund";
 import NewFundtransfer from "@/app/component/newFundtransfer";
 
-
 export default function page() {
-  return(
+  return (
     <main>
-    <div className="flex justify-end mb-4">
-      <NewFundtransfer/>
-    
-    </div>
-    <GetFund />
+      <div className="flex justify-end mb-4">
+        <NewFundtransfer />
+      </div>
+      <GetUserFund />
     </main>
-)}
-
-
+  );
+}
