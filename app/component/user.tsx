@@ -29,6 +29,8 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const formSchema = z.object({
+  firstName: z.string(),
+  lastName: z.string(),
   nation_id: z.string().min(2, {
     message: "National ID must be at least 2 characters.",
   }),
@@ -51,10 +53,13 @@ function User() {
   const { data: session } = useSession();
   // @ts-ignore
   const referral_id = session?.user?.id;
+  const user_id = referral_id;
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      firstName: "",
+      lastName: "",
       nation_id: "",
       email: "",
       password: "",
@@ -70,6 +75,20 @@ function User() {
       initial_balance: 0,
     },
   });
+  const balanceUpdate = async (updatedBalance: number) => {
+    try {
+      const res = await axios.put(
+        `/api/routers/balance/update_balance_by_id/${user_id}`,
+        { balance: updatedBalance }
+      );
+      if (!res) {
+        throw new Error(`HTTP error! status:`);
+      } else {
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     if (data.userPackage === "Bronze") {
       data.initial_balance = 150;
@@ -88,9 +107,10 @@ function User() {
     } else if (data.userPackage === "Platinum Plus") {
       data.initial_balance = 19200;
     }
-
     // @ts-ignore
-    if (session?.user?.balance < data.initial_balance) {
+    const currentBalance = session?.user?.balance;
+
+    if (currentBalance < data.initial_balance) {
       alert("Insufficient Balance");
     } else {
       try {
@@ -102,6 +122,8 @@ function User() {
           form.reset();
           router.refresh();
           toast("User created successfully", { type: "success" });
+          const newbalance = currentBalance - data.initial_balance;
+          balanceUpdate(newbalance);
         }
       } catch (error) {
         console.error("An error occurred:", error);
@@ -117,6 +139,32 @@ function User() {
             onSubmit={form.handleSubmit(onSubmit)}
             className="md:w-96 gap-8 space-y-10"
           >
+            <FormField
+              control={form.control}
+              name="firstName"
+              render={({ field }) => (
+                <FormItem className="gap-4">
+                  <FormLabel>First Name</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter First Name" {...field} />
+                  </FormControl>
+                  <FormMessage className="text-red-500" />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="lastName"
+              render={({ field }) => (
+                <FormItem className="gap-4">
+                  <FormLabel>Last Name</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter Last Name" {...field} />
+                  </FormControl>
+                  <FormMessage className="text-red-500" />
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name="nation_id"

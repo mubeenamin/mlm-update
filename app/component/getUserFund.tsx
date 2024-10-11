@@ -2,8 +2,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Mail, Receipt } from "lucide-react";
+import { useSession } from "next-auth/react";
 
-function GetFund() {
+function GetUserFund() {
+  const { data: session } = useSession();
+  // @ts-ignore
+  const user_id = session?.user?.id;
   const [funds, setFunds] = useState([]);
   const formattedDateTime = (date: any) => {
     const timestamp = Number(date);
@@ -15,7 +19,9 @@ function GetFund() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get("/api/routers/fund/get_funds");
+        const res = await axios.get(
+          `/api/routers/fund/get_fund_by_user_id/${user_id}`
+        );
         if (!res) {
           throw new Error(`HTTP error! status: ${res}`);
         } else {
@@ -36,12 +42,6 @@ function GetFund() {
               <table className="min-w-full rounded-xl">
                 <thead>
                   <tr className="bg-gray-50 text-center">
-                    <th
-                      scope="col"
-                      className="p-5  text-sm leading-6 font-semibold text-gray-900 capitalize"
-                    >
-                      Transfer By
-                    </th>
                     <th
                       scope="col"
                       className="p-5  text-sm leading-6 font-semibold text-gray-900 capitalize"
@@ -67,7 +67,7 @@ function GetFund() {
                     <tr>
                       <td
                         className="p-5 text-center text-xl leading-6 font-medium text-[#9CA3AF]"
-                        colSpan={11}
+                        colSpan={3}
                       >
                         <div className="flex justify-center">
                           <div>
@@ -95,9 +95,6 @@ function GetFund() {
                       >
                         <tr className="bg-white transition-all duration-500 hover:bg-gray-50">
                           <td className="p-2 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
-                            {fund.user.email}
-                          </td>
-                          <td className="p-2 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
                             {fund.email}
                           </td>
                           <td className="p-2 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
@@ -119,4 +116,4 @@ function GetFund() {
   );
 }
 
-export default GetFund;
+export default GetUserFund;

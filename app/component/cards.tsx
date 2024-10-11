@@ -4,7 +4,6 @@ import axios from "axios";
 import React, { useEffect } from "react";
 
 function CardsUser({ users }: any) {
-  console.log(users);
   let userBalance: number;
   let dailyProfitPkg;
   let directReferrals;
