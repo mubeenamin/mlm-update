@@ -27,7 +27,7 @@ const initialItemCount = 3;
           </h1>
           <p className="text-lg pb-5">
             Following are the terms and conditions of
-            <span className="text-mlmSky font-bold"> Opus Global</span>. It’s necessary
+            <span className="text-mlmSky font-bold"> Opus Globals</span>. It’s necessary
             to read all of them for clarity.
           </p>
         </div>
