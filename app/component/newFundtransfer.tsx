@@ -34,6 +34,9 @@ function NewFundTransfer() {
   const { data: session, status } = useSession();
   // @ts-ignore
   const userId: number = session?.user?.id;
+  // @ts-ignore
+  const userBalance = session?.user?.balance;
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -43,7 +46,20 @@ function NewFundTransfer() {
       user_id: userId,
     },
   });
-
+  const balanceUpdate = async (updatedBalance: number) => {
+    try {
+      const res = await axios.put(
+        `/api/routers/balance/update_balance_by_id/${userId}`,
+        { balance: updatedBalance }
+      );
+      if (!res) {
+        throw new Error(`HTTP error! status:`);
+      } else {
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
     try {
       const res = await axios.post("/api/routers/fund/create_fund", data);

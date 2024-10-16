@@ -67,6 +67,7 @@ function NewWithdrawal() {
   };
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
+    let withdrawalAmount = Number(data.withdrawal_amount);
     if (userBalance < data.withdrawal_amount) {
       toast("Insufficient balance", { type: "error" });
     } else {
@@ -80,6 +81,7 @@ function NewWithdrawal() {
         } else {
           toast("Withdraw request sent successfully", { type: "success" });
           form.reset();
+          balanceUpdate(userBalance - withdrawalAmount);
         }
       } catch (error) {
         console.error("An error occurred:", error);
