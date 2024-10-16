@@ -5,7 +5,7 @@ import Link from "next/link"
 const HomeNav = () => {
     return (
 
-        <main className=" mt-4 mb-4 px-4 mx-auto max-w-7xl sm:px-6">
+        <main className=" mt-4 mb-4 px-2 mx-auto max-w-7xl sm:px-6">
             <nav className=" flex items-center justify-between  justify-center">
                     <div className="flex items-center ">
                         <div className="flex items-center justify-between w-full md:w-auto">
@@ -14,7 +14,7 @@ const HomeNav = () => {
                             </Link>
                         </div>
                     </div>
-                    <div className="flex space-x-2 md:space-x-10 list-none">
+                    <div className="flex space-x-3 md:space-x-10 list-none">
                         <li>
                             <Link
                                 href="/"
@@ -30,13 +30,23 @@ const HomeNav = () => {
                             >
                                 About
                             </Link>
-                        </li> <li>
+                        </li> 
+                        <li>
                             <Link
                                 href="/contact-us"
                                 className="text-base font-normal text-gray-500 list-none hover:text-gray-900"
                                 target=""
                             >
                                 Contact Us
+                            </Link>
+                        </li>
+                        <li>
+                            <Link
+                                href="/Conditions"
+                                className="text-base font-normal text-gray-500 list-none hover:text-gray-900"
+                                target=""
+                            >
+                                Terms and Conditions
                             </Link>
                         </li>
                     </div>

@@ -22,7 +22,7 @@ const menu = [
     link: "/user/fundTransfer",
     icon: <MdManageAccounts />,
   },
-  { title: "Account History", link: "#", icon: <IoAnalytics /> },
+  { title: "Account History", link: "/user/accountHistory", icon: <IoAnalytics /> },
   { title: "Referral Account", link: "#", icon: <MdManageAccounts /> },
   {
     title: "Update Package",

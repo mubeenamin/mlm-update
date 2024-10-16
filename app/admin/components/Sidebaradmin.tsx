@@ -22,7 +22,7 @@ const menu = [
   },
   { title: "Daily Created Accounts", link: "#", icon: <GrTransaction /> },
   { title: "Fund Transfer", link: "/admin/fundTransfer", icon: <MdManageAccounts /> },
-  { title: "Account History", link: "#", icon: <IoAnalytics /> },
+  { title: "Account History", link: "/admin/accountHistory", icon: <IoAnalytics /> },
   {
     title: "All ACCOUNTS HISTORY",
     link: "/admin/allAccountHistory",

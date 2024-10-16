@@ -12,12 +12,13 @@ const About = () => {
         <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
           About Us
         </h2>
-        <p className="mt-4 text-gray-600 text-lg">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis eros
-          at lacus feugiat hendrerit sed ut tortor. Suspendisse et magna quis
-          elit efficitur consequat. Mauris eleifend velit a pretium iaculis.
-          Donec sagittis velit et magna euismod, vel aliquet nulla malesuada.
-          Nunc pharetra massa lectus, a fermentum arcu volutpat vel.
+        <p className="mt-4 prose md:text-xl ">
+        Opus Globals is a media buying agency. Its primary role is to purchase advertising time slots or spaces from various TV channels, negotiating rates and placements. Once they acquire these advertising slots, they sell them to other companies interested in running their media ads. This allows advertisers to reach their target audience through television channels without directly dealing with the complexities of media buying. The agency acts as an intermediary, facilitating the process for both the TV channels and the companies looking to promote their products or services through advertisements.
+Our company allocates 70% of its earned profits to be distributed among its customers, reserving the remaining 30% for internal retention.
+"Our company is positioned among distinguished companies committed to provide daily profits to our clients"
+
+Join over 200+ brands advertising on TV with Opus Globals
+Our clients come from all stages; from TV novices to experienced advertisers, and different industries. No matter the stage or size of budget - our technology and service put your goals first.
         </p>
        
       </div>
