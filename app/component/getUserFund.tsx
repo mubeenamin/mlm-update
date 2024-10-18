@@ -31,7 +31,7 @@ function GetUserFund() {
       } catch (error) {}
     };
     fetchData();
-  }, []);
+  }, [user_id]);
 
   return (
     <main>

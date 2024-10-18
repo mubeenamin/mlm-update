@@ -45,11 +45,11 @@ const menu = [
     icon: <IoMedicalSharp />,
   },
 
-  {
-    title: "Notification",
-    link: "/user/UserNotification",
-    icon: <GrNotification />,
-  },
+  // {
+  //   title: "Notification",
+  //   link: "/user/UserNotification",
+  //   icon: <GrNotification />,
+  // },
   {
     title: "Terms & Conditions",
     link: "/user/TermsAndConditions",
