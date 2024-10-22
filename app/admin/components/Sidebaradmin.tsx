@@ -33,11 +33,7 @@ const menu = [
     link: "/admin/passwordChange",
     icon: <TbPasswordUser />,
   },
-  {
-    title: "PIN CHANGE",
-    link: "/admin/pinChange",
-    icon: <TbMapPinCode />,
-  },
+  
   {
     title: "MESSAGE",
     link: "/admin/message",

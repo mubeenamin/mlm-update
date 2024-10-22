@@ -34,11 +34,7 @@ const menu = [
     link: "/user/messages",
     icon: <TiMessages />,
   },
-  {
-    title: "Pin Change",
-    link: "/user/changePin",
-    icon: <TbMapPinCode />,
-  },
+  
   {
     title: "Cash Withdrawal",
     link: "/user/withdrawal",
