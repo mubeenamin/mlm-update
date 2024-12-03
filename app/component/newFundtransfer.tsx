@@ -68,6 +68,7 @@ function NewFundTransfer() {
       } else {
         form.reset();
         toast("Fund Transfered Successfully", { type: "success" });
+        balanceUpdate(userBalance - Number(data.amount));
       }
     } catch (error) {
       console.error("An error occurred:", error);

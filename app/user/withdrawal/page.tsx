@@ -22,7 +22,7 @@ function Page() {
       setWithdrawData(data);
     };
     fetchData();
-  }, []);
+  }, [user_id]);
   return (
     <div>
       <div className="flex justify-end mb-4">

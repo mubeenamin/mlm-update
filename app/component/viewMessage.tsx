@@ -27,7 +27,7 @@ function ViewMessage({ message_id }: any) {
       } catch (error) {}
     };
     fetchData();
-  }, []);
+  }, [message_id]);
 
   return (
     <Dialog>

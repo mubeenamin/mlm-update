@@ -88,7 +88,7 @@ export default function ReplyMsg(message_id: any) {
                 </FormItem>
               )}
             />
-            <Button type="submit">Submit</Button>
+            <Button type="submit" className="text-white bg-mlmSky hover:bg-mlmSkyLight">Submit</Button>
           </form>
         </Form>
       </DialogContent>

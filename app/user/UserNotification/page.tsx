@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useSession } from "next-auth/react";
 
 const Page = () => {
@@ -7,9 +7,10 @@ const Page = () => {
   const [users, setUsers] = useState<any>([]);
   const [notificationCount, setNotificationCount] = useState(0);
   const [newNotificationCount, setNewNotificationCount] = useState(0);
+  const [notificationsFetched, setNotificationsFetched] = useState(false); // New state to track if notifications have been fetched
   const { data: session } = useSession();
 
-  const fetchNotifications = async () => {
+  const fetchNotifications = useCallback(async () => {
     try {
       const res = await fetch("/api/routers/notification/notifications", {
         mode: "no-cors",
@@ -20,17 +21,18 @@ const Page = () => {
         const data = await res.json();
         setUsers(data);
         setNewNotificationCount(data.length - notificationCount); // Update the new notification count
+        setNotificationsFetched(true); // Set the flag to true after fetching notifications
       }
     } catch (error) {
       console.error("An error occurred:", error);
     }
-  };
+  }, [notificationCount]);
 
   useEffect(() => {
-    if (open) {
-      fetchNotifications(); // Fetch notifications when opened
+    if (open && !notificationsFetched) {
+      fetchNotifications(); // Fetch notifications only if they haven't been fetched yet
     }
-  }, [open]);
+  }, [open, fetchNotifications, notificationsFetched]);
 
   const handleToggle = () => {
     setOpen(!open);

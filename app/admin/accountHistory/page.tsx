@@ -6,8 +6,9 @@ import Link from "next/link";
 function AccountHistory() {
 
   return (
-    <main >
+    <main className="mt-4" >
       <div className="space-y-4 bg-white">
+      <h1 className="text-3xl mt-4 font-bold text-center">Account History</h1>
 
         <div className="grid grid-cols-1   md:grid-cols-2 lg:grid-cols-3 gap-4">
           <Card className="p-8 shadow-md grid text-white items-center gap-8 bg-mlmSky rounded-md hover:bg-mlmSkyLight">

@@ -22,7 +22,7 @@ const menu = [
     link: "/user/fundTransfer",
     icon: <MdManageAccounts />,
   },
-  { title: "Account History", link: "#", icon: <IoAnalytics /> },
+  { title: "Account History", link: "/user/accountHistory", icon: <IoAnalytics /> },
   { title: "Referral Account", link: "#", icon: <MdManageAccounts /> },
   {
     title: "Update Package",
@@ -34,22 +34,18 @@ const menu = [
     link: "/user/messages",
     icon: <TiMessages />,
   },
-  {
-    title: "Pin Change",
-    link: "/user/changePin",
-    icon: <TbMapPinCode />,
-  },
+  
   {
     title: "Cash Withdrawal",
     link: "/user/withdrawal",
     icon: <IoMedicalSharp />,
   },
 
-  {
-    title: "Notification",
-    link: "/user/UserNotification",
-    icon: <GrNotification />,
-  },
+  // {
+  //   title: "Notification",
+  //   link: "/user/UserNotification",
+  //   icon: <GrNotification />,
+  // },
   {
     title: "Terms & Conditions",
     link: "/user/TermsAndConditions",

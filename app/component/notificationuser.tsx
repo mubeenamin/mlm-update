@@ -42,7 +42,7 @@ export function SheetDemo() {
       } catch (error) {
         // console.error("An error occurred:", error);
       }
-    }, 60000); // Check for new notifications every 5 seconds
+    }, 6000); // Check for new notifications every 5 seconds
 
     return () => clearInterval(interval);
   }, [notificationCount]);

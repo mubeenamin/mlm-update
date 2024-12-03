@@ -101,14 +101,14 @@ function GetMessages({ message_data }: any) {
                           </td>
                           <td className="p-5">
                             <div className="flex items-center gap-1">
-                              <ReplyMsg message_id={message.sender_id} />
+                              <ReplyMsg  message_id={message.sender_id} />
                               <button
                                 className="p-2 rounded-full group transition-all duration-500 flex item-center"
                                 onClick={() => deletMsg(message.id)}
                               >
                                 <MdDeleteSweep
                                   size={26}
-                                  className="text-red-500"
+                                  className="text-red-500 "
                                 />
                               </button>
                               <ViewMessage message_id={message.id} />

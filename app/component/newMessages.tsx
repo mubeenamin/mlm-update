@@ -88,7 +88,7 @@ function NewMessages() {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="text-red-500">Submit</Button>
+            <Button type="submit" className="text-white bg-mlmSky hover:bg-mlmSky">Submit</Button>
           </form>
         </Form>
       </DialogContent>
