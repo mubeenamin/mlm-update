@@ -71,7 +71,7 @@ def main(db: Session):
 
 def start_scheduler():
     scheduler = BackgroundScheduler()
-    scheduler.add_job(run_main, 'interval', seconds=86400)
+    scheduler.add_job(run_main, 'interval', seconds=120)
     scheduler.start()
 
 def run_main():
