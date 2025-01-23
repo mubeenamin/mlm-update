@@ -2,19 +2,17 @@
   "version": 2,
   "builds": [
     {
-      "src": "dailyupdate-trigger.js",
-      "use": "@vercel/node"
+      "src": "index.py",
+      "use": "@vercel/python"
     }
   ],
   "routes": [
     {
       "src": "/api/routers/dailyupdate",
-      "dest": "dailyupdate-trigger.js"
+      "dest": "index.py"
     }
   ],
-  "functions": {
-    "dailyupdate-trigger": {
-      "cron": "0 0 0 * * *"
-    }
-  }
+  "cron": [
+    { "schedule": "0 0 * * *", "destination": "/api/routers/dailyupdate" }
+  ]
 }
