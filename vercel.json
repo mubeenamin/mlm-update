@@ -1,7 +1,19 @@
 {
+  "version": 2,
+  "builds": [
+    {
+      "src": "dailyupdate-trigger.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/routers/dailyupdate",
+      "dest": "dailyupdate-trigger.js"
+    }
+  ],
   "functions": {
     "dailyupdate-trigger": {
       "cron": "0 0 0 * * *"
     }
   }
-}
