@@ -1,16 +1,8 @@
 {
-  "version": 2,
-  "builds": [
+  "crons": [
     {
-      "src": "index.py",
-      "use": "@vercel/python"
+      "path": "/api/routers/dailyupdate/calculate_earnings",
+      "schedule": "0 0 * * *"
     }
-  ],
-  "routes": [
-    {
-      "src": "/api/routers/dailyupdate",
-      "dest": "index.py"
-    }
-  ],
-  "cron": "0 0 * * *"
+  ]
 }
