@@ -1,8 +1,7 @@
 {
-  "crons": [
-    {
-      "path": "https://www.opusglobals.com/api/routers/dailyupdate",
-      "schedule": "0 0 * * *"
+  "functions": {
+    "handler": {
+      "cron": "0 0 0 * * *"
     }
-  ]
+  }
 }
