@@ -4,7 +4,7 @@ from api.db import  engine
 from api.models import *
 from fastapi.middleware.cors import CORSMiddleware
 from apscheduler.schedulers.background import BackgroundScheduler
-from api.routers import auth, withdrawal, pin, referral_type, balance, user , notification, message, fund
+from api.routers import auth, dailyupdate, withdrawal, pin, referral_type, balance, user , notification, message, fund
 import math
 
 def calculate_earnings(user):
@@ -71,7 +71,7 @@ def main(db: Session):
 
 def start_scheduler():
     scheduler = BackgroundScheduler()
-    scheduler.add_job(run_main, 'interval', seconds=120)
+    scheduler.add_job(run_main, 'interval', seconds=1200000)
     scheduler.start()
 
 def run_main():
@@ -114,4 +114,4 @@ app.include_router(balance.router)
 app.include_router(notification.router)
 app.include_router(message.router)
 app.include_router(fund.router)
-
+app.include_router(dailyupdate.router)

@@ -2,7 +2,7 @@ from fastapi import APIRouter, status
 from sqlmodel import select
 from sqlalchemy import func
 from api.models import Balance, BalanceUpdate, TotalBalance
-from api.dep import db_dependency, user_dependency
+from api.dep import db_dependency
 
 router = APIRouter(
     prefix="/api/routers/balance",
