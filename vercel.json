@@ -1,7 +1,7 @@
 {
   "crons": [
     {
-      "path": "/api/routers/dailyupdate",
+      "path": "https://www.opusglobals.com/api/routers/dailyupdate",
       "schedule": "0 0 * * *"
     }
   ]
