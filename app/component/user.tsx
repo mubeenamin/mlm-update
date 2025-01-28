@@ -28,33 +28,44 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const formSchema = z.object({
-  firstName: z.string(),
-  lastName: z.string(),
-  nation_id: z.string().min(2, {
-    message: "National ID must be at least 2 characters.",
-  }),
-  email: z.string().email({ message: "Invalid email address" }),
-  password: z.string().min(6, {
-    message: "Password must be at least 6 characters.",
-  }),
-  city: z.string(),
-  country: z.string(),
-  phone: z.string(),
-  currency: z.string(),
-  userPackage: z.string({ required_error: "Please select a package" }),
-  name: z.string(),
-  created_at: z.string(),
-  referrer_user_id: z.number(),
-  referral_type_name: z.string(),
-  initial_balance: z.number(),
-});
+// Define the form schema with additional validation for confirmPassword
+const formSchema = z
+  .object({
+    firstName: z.string().min(1, { message: "First name is required." }),
+    lastName: z.string().min(1, { message: "Last name is required." }),
+    nation_id: z.string().min(2, {
+      message: "National ID must be at least 2 characters.",
+    }),
+    email: z.string().email({ message: "Invalid email address." }),
+    password: z.string().min(6, {
+      message: "Password must be at least 6 characters.",
+    }),
+    confirmPassword: z.string().min(6, {
+      message: "Confirm password must be at least 6 characters.",
+    }),
+    city: z.string().min(1, { message: "City is required." }),
+    country: z.string().min(1, { message: "Country is required." }),
+    phone: z.string().min(1, { message: "Phone number is required." }),
+    currency: z.string().min(1, { message: "Currency is required." }),
+    userPackage: z.string({ required_error: "Please select a package." }),
+    name: z.string(),
+    created_at: z.string(),
+    referrer_user_id: z.number(),
+    referral_type_name: z.string(),
+    initial_balance: z.number(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match.",
+    path: ["confirmPassword"],
+  });
+
 function User() {
   const { data: session } = useSession();
   // @ts-ignore
   const referral_id = session?.user?.id;
   const user_id = referral_id;
   const router = useRouter();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -63,6 +74,7 @@ function User() {
       nation_id: "",
       email: "",
       password: "",
+      confirmPassword: "",
       city: "",
       country: "",
       phone: "",
@@ -75,6 +87,7 @@ function User() {
       initial_balance: 0,
     },
   });
+
   const balanceUpdate = async (updatedBalance: number) => {
     try {
       const res = await axios.put(
@@ -83,12 +96,12 @@ function User() {
       );
       if (!res) {
         throw new Error(`HTTP error! status:`);
-      } else {
       }
     } catch (error) {
       console.log(error);
     }
   };
+
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     if (data.userPackage === "Bronze") {
       data.initial_balance = 150;
@@ -107,6 +120,7 @@ function User() {
     } else if (data.userPackage === "Platinum Plus") {
       data.initial_balance = 19200;
     }
+
     // @ts-ignore
     const currentBalance = session?.user?.balance;
 
@@ -198,7 +212,28 @@ function User() {
                 <FormItem className="gap-4">
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter Password" {...field} />
+                    <Input
+                      type="password"
+                      placeholder="Enter Password"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage className="text-red-500" />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="confirmPassword"
+              render={({ field }) => (
+                <FormItem className="gap-4">
+                  <FormLabel>Confirm Password</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="password"
+                      placeholder="Confirm Password"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage className="text-red-500" />
                 </FormItem>
@@ -217,7 +252,6 @@ function User() {
                 </FormItem>
               )}
             />
-
             <FormField
               control={form.control}
               name="city"
@@ -231,7 +265,6 @@ function User() {
                 </FormItem>
               )}
             />
-
             <FormField
               control={form.control}
               name="phone"
