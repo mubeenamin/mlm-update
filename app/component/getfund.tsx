@@ -6,10 +6,12 @@ import { Mail, Receipt } from "lucide-react";
 function GetFund() {
   const [funds, setFunds] = useState([]);
   const formattedDateTime = (date: any) => {
-    const timestamp = Number(date);
-    const d = new Date(timestamp);
-    const formateDate = d.toLocaleString();
-    return formateDate;
+    // Check if the date is a valid timestamp or ISO string
+    const parsedDate = new Date(date);
+    if (isNaN(parsedDate.getTime())) {
+      return "Invalid Date"; // Handle invalid dates gracefully
+    }
+    return parsedDate.toLocaleString(); // Format the date
   };
 
   useEffect(() => {
