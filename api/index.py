@@ -4,8 +4,8 @@ from api.db import  engine
 from api.models import *
 from fastapi.middleware.cors import CORSMiddleware
 from apscheduler.schedulers.background import BackgroundScheduler
-from api.routers import auth, dailyupdate, withdrawal, pin, referral_type, balance, user , notification, message, fund
-import math
+from api.routers import auth, dailyupdate, otp, withdrawal, pin, referral_type, balance, user , notification, message, fund
+
 
 def calculate_earnings(user):
     if user.Balances is None:
@@ -115,3 +115,4 @@ app.include_router(notification.router)
 app.include_router(message.router)
 app.include_router(fund.router)
 app.include_router(dailyupdate.router)
+app.include_router(otp.router)

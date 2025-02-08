@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, HTTPException, Response, status
 from sqlmodel import select
 from api.models import Balance, ReferralType, Referral, UserPasswordUpdate
 from api.dep import db_dependency, bcrypt_context
@@ -130,9 +130,21 @@ async def get_users_by_name(name: str, db: db_dependency):
 
 @router.put("/update_user_password_by_id/{user_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def update_user_password_by_id(db: db_dependency, user_id: int, user: UserPasswordUpdate):
-    result = db.exec(select(User).where(User.id == user_id)).first()
-    result.password = user.password
-    db.add(result)
-    db.commit()
-    db.refresh(result)
-    return result
+    try:
+        # Get user from database
+        db_user = db.exec(select(User).where(User.id == user_id)).first()
+        if not db_user:
+            raise HTTPException(status_code=404, detail="User not found")
+        
+        # Hash the new password
+        hashed_password = bcrypt_context.hash(user.password)
+        
+        # Update password and save
+        db_user.password = hashed_password
+        db.add(db_user)
+        db.commit()
+        db.refresh(db_user)
+        
+        return Response(status_code=status.HTTP_204_NO_CONTENT)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
