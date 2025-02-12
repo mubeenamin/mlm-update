@@ -1,10 +1,14 @@
-from fastapi import APIRouter, FastAPI, HTTPException, Request, Form
+from fastapi import APIRouter, FastAPI, HTTPException, Request, Form, Response
 from fastapi.responses import JSONResponse
 import smtplib
 from email.mime.text import MIMEText
 import random
 import os
 from dotenv import load_dotenv
+from sqlmodel import select
+from api.dep import bcrypt_context, db_dependency
+
+from api.models import User
 
 # Load environment variables
 load_dotenv()
@@ -67,3 +71,33 @@ async def verify_otp(email: str = Form(...), otp: str = Form(...)):
     else:
         raise HTTPException(status_code=400, detail="Invalid OTP")
 
+# Add to your existing FastAPI code
+# @router.post("/change-password")
+# async def change_password(
+#     email: str = None,
+#     new_password: str = None,
+   
+# ):  
+#             # Validate input
+#     if not email or not new_password:
+#         raise HTTPException(status_code=404, detail="Email and new password are required")
+
+#     # Get user from database
+#     db_user = db.exec(select(User).where(User.email == email)).first()
+#     if not db_user:
+#         raise HTTPException(status_code=404, detail="User not found")
+
+#     # Hash the new password
+#     hashed_password = bcrypt_context.hash(new_password)
+
+#     try:
+#         # Update password and save
+#         db_user.password = hashed_password
+#         db.add(db_user)
+#         db.commit()
+#         db.refresh(db_user)
+#     except Exception as e:
+#         db.rollback()  # Rollback in case of error
+#         raise HTTPException(status_code=404, detail="Failed to update password")
+
+#     return {"message": "Password changed successfully"}

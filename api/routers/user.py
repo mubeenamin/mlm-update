@@ -128,11 +128,11 @@ async def get_users_by_name(name: str, db: db_dependency):
 
 
 
-@router.put("/update_user_password_by_id/{user_id}", status_code=status.HTTP_204_NO_CONTENT)
-async def update_user_password_by_id(db: db_dependency, user_id: int, user: UserPasswordUpdate):
+@router.post("/update_user_password_by_email/{user_email}", status_code=status.HTTP_204_NO_CONTENT)
+async def update_user_password_by_id(db: db_dependency, user_email: str, user: UserPasswordUpdate):
     try:
         # Get user from database
-        db_user = db.exec(select(User).where(User.id == user_id)).first()
+        db_user = db.exec(select(User).where(User.email == user_email)).first()
         if not db_user:
             raise HTTPException(status_code=404, detail="User not found")
         
