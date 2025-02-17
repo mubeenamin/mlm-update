@@ -14,7 +14,8 @@ export default function PasswordChangeWithOTP() {
   const { data: session } = useSession();
   // @ts-ignore
   const userEmail: string = session?.user?.email;
-
+  // @ts-ignore
+  const user_id: number = session?.user?.id;
   const handleSendOTP = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
@@ -77,12 +78,67 @@ export default function PasswordChangeWithOTP() {
     }
   };
 
+  // const handlePasswordChange = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   setIsLoading(true);
+  //   setErrorMessage("");
+  //   setSuccessMessage("");
+
+  //   try {
+  //     // Validate that passwords match
+  //     if (newPassword !== confirmPassword) {
+  //       throw new Error("Passwords do not match");
+  //     }
+
+  //     // Prepare the request payload
+  //     const requestBody = {
+  //       password: newPassword, // Match the `UserPasswordUpdate` model
+  //     };
+
+  //     // Send the request to the backend using Axios
+  //     const response = await axios.put(
+  //       `/api/routers/user/update_user_password_by_email/${encodeURIComponent(userEmail)}`,
+  //       requestBody, // Request body
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json", // Backend expects JSON
+  //         },
+  //       }
+  //     );
+
+  //     // Handle success (204 No Content)
+  //     if (response.status === 204) {
+  //       setSuccessMessage("Password changed successfully!");
+  //       // Reset form fields
+  //       setNewPassword("");
+  //       setConfirmPassword("");
+  //       setEmailSent(false);
+  //     } else {
+  //       throw new Error("Unexpected response from server");
+  //     }
+  //   } catch (error) {
+  //     // Handle errors
+  //     if (axios.isAxiosError(error)) {
+  //       // Axios-specific error handling
+  //       const errorMessage =
+  //         error.response?.data?.detail || "Password change failed";
+  //       setErrorMessage(errorMessage);
+  //     } else {
+  //       // Generic error handling
+  //       setErrorMessage(
+  //         error instanceof Error ? error.message : "Password change failed"
+  //       );
+  //     }
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
+
   const handlePasswordChange = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setErrorMessage("");
     setSuccessMessage("");
-
     try {
       // Validate that passwords match
       if (newPassword !== confirmPassword) {
@@ -95,8 +151,8 @@ export default function PasswordChangeWithOTP() {
       };
 
       // Send the request to the backend using Axios
-      const response = await axios.post(
-        `/api/routers/user/update_user_password_by_email/${encodeURIComponent(userEmail)}`,
+      const response = await axios.put(
+        `/api/routers/user/update_user_password_by_id/${user_id}`, // Updated endpoint with user_id
         requestBody, // Request body
         {
           headers: {
@@ -132,7 +188,6 @@ export default function PasswordChangeWithOTP() {
       setIsLoading(false);
     }
   };
-
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       {/* OTP Verification Modal */}
