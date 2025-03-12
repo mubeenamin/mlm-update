@@ -1,5 +1,7 @@
+"use client";
 import UserView from "@/app/component/userView";
 import axios from "axios";
+import { useEffect, useState } from "react";
 interface User {
   id: number;
   firstName: string;
@@ -13,20 +15,23 @@ interface User {
   city: string;
   referrals: Array<{ referred_user_id: number }>;
 }
-async function getData() {
-  try {
-    const response = await axios.get(
-      `${process.env.ACCESS_LOGIN_URL}/api/routers/user/me`
-    );
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    return [];
-  }
-}
 
-export default async function AllAccountHistory() {
-  const data: User[] = await getData();
+export default function AllAccountHistory() {
+  const [data, setdata] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get("/api/routers/user/me");
+        if (!res) {
+          throw new Error(`HTTP error! status: ${res}`);
+        } else {
+          console.log(res.data);
+          setdata(res.data);
+        }
+      } catch (error) {}
+    };
+    fetchData();
+  }, []);
 
   return (
     <div>
