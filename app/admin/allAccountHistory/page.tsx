@@ -1,10 +1,24 @@
 import UserView from "@/app/component/userView";
-import React from "react";
+import axios from "axios";
 
-export default function AllAccountHistory() {
+async function getData() {
+  try {
+    const response = await axios.get(
+      `${process.env.ACCESS_LOGIN_URL}/api/routers/user/me`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return [];
+  }
+}
+
+export default async function AllAccountHistory() {
+  const data = await getData();
+
   return (
     <div>
-      <UserView />
+      <UserView data={data} />
     </div>
   );
 }
