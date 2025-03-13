@@ -10,7 +10,6 @@ import {
   type SortingState,
 } from "@tanstack/react-table";
 import { useEffect, useMemo, useState } from "react";
-
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
 
@@ -45,21 +44,43 @@ const UserView = () => {
   const [visibleReferrals, setVisibleReferrals] = useState<Set<number>>(
     new Set()
   );
-  const [data, setdata] = useState<User[]>([]);
+  const [data, setData] = useState<User[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
+
   useEffect(() => {
+    let timeoutId: NodeJS.Timeout;
+
     const fetchData = async () => {
       try {
-        const res = await axios.get("/api/routers/user/me");
-        if (!res) {
-          throw new Error(`HTTP error! status: ${res}`);
-        } else {
-          console.log(res.data);
-          setdata(res.data);
-        }
-      } catch (error) {}
+        const [response] = await Promise.all([
+          axios.get<User[]>("/api/routers/user/me"),
+          // Add minimum 1 second delay to prevent flash of loading spinner
+          new Promise((resolve) => (timeoutId = setTimeout(resolve, 1000))),
+        ]);
+
+        setData(response.data);
+        setHasError(false);
+      } catch (error) {
+        console.error("Failed to fetch data:", error);
+        setHasError(true);
+      } finally {
+        setIsLoading(false);
+      }
     };
+
     fetchData();
+
+    return () => {
+      if (timeoutId) clearTimeout(timeoutId);
+    };
   }, []);
+
+  const LoadingSpinner = () => (
+    <div className="flex justify-center items-center h-64">
+      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900"></div>
+    </div>
+  );
   const toggleReferralVisibility = (userId: number) => {
     setVisibleReferrals((prev) => {
       const next = new Set(prev);
@@ -176,49 +197,63 @@ const UserView = () => {
   });
 
   return (
-    <div className="p-6 max-w-7xl mx-auto">
-      <div className="overflow-x-auto shadow-lg rounded-lg">
-        <table className="w-full">
-          <thead className="bg-gray-50">
-            {table.getHeaderGroups().map((headerGroup) => (
-              <tr key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
-                  <th
-                    key={header.id}
-                    className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
-                    onClick={header.column.getToggleSortingHandler()}
-                  >
-                    <div className="flex items-center gap-2">
+    <div className="p-4 max-w-7xl mx-auto">
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : hasError ? (
+        <div className="text-center py-8 text-red-600">
+          Failed to load data. Please try again later.
+        </div>
+      ) : (
+        <div className="overflow-x-auto shadow-lg rounded-lg">
+          <table className="w-full">
+            {/* Keep existing table header code */}
+            <thead className="bg-gray-50">
+              {table.getHeaderGroups().map((headerGroup) => (
+                <tr key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => (
+                    <th
+                      key={header.id}
+                      className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                      onClick={header.column.getToggleSortingHandler()}
+                    >
+                      <div className="flex items-center gap-2">
+                        {flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                        {{
+                          asc: "↑",
+                          desc: "↓",
+                        }[header.column.getIsSorted() as string] ?? null}
+                      </div>
+                    </th>
+                  ))}
+                </tr>
+              ))}
+            </thead>
+
+            {/* Keep existing table body code */}
+            <tbody className="bg-white divide-y divide-gray-200">
+              {table.getRowModel().rows.map((row) => (
+                <tr key={row.id} className="hover:bg-gray-50 transition-colors">
+                  {row.getVisibleCells().map((cell) => (
+                    <td
+                      key={cell.id}
+                      className="px-4 py-3 text-sm text-gray-900 whitespace-normal break-words max-w-[200px]"
+                    >
                       {flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
+                        cell.column.columnDef.cell,
+                        cell.getContext()
                       )}
-                      {{
-                        asc: "↑",
-                        desc: "↓",
-                      }[header.column.getIsSorted() as string] ?? null}
-                    </div>
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {table.getRowModel().rows.map((row) => (
-              <tr key={row.id} className="hover:bg-gray-50 transition-colors">
-                {row.getVisibleCells().map((cell) => (
-                  <td
-                    key={cell.id}
-                    className="px-4 py-3 text-sm text-gray-900 whitespace-normal break-words max-w-[200px]"
-                  >
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 };
