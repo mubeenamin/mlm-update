@@ -9,9 +9,10 @@ import {
   useReactTable,
   type SortingState,
 } from "@tanstack/react-table";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
+import axios from "axios";
 
 interface User {
   id: number;
@@ -39,12 +40,26 @@ interface ProcessedUser {
   referrals: string;
 }
 
-const UserView = ({ data }: { data: User[] }) => {
+const UserView = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [visibleReferrals, setVisibleReferrals] = useState<Set<number>>(
     new Set()
   );
-
+  const [data, setdata] = useState<User[]>([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get("/api/routers/user/me");
+        if (!res) {
+          throw new Error(`HTTP error! status: ${res}`);
+        } else {
+          console.log(res.data);
+          setdata(res.data);
+        }
+      } catch (error) {}
+    };
+    fetchData();
+  }, []);
   const toggleReferralVisibility = (userId: number) => {
     setVisibleReferrals((prev) => {
       const next = new Set(prev);
