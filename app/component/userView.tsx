@@ -54,7 +54,7 @@ const UserView = () => {
     const fetchData = async () => {
       try {
         const [response] = await Promise.all([
-          axios.get<User[]>("/api/routers/user/me"),
+          axios.get<User[]>("/api/routers/user/users"),
           // Add minimum 1 second delay to prevent flash of loading spinner
           new Promise((resolve) => (timeoutId = setTimeout(resolve, 1000))),
         ]);

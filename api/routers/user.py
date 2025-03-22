@@ -4,6 +4,7 @@ from api.models import Balance, ReferralType, Referral, UserPasswordUpdate
 from api.dep import db_dependency, bcrypt_context
 from typing import Annotated, List
 from api.models import User, UserCreate, UserRead, AdminCreate, Referral, ReferralType
+from sqlalchemy.orm import joinedload, selectinload
 
 
 router = APIRouter(
@@ -101,7 +102,27 @@ async def get_users(db: db_dependency):
     users = db.exec(statement).all()
     return users
 
-
+@router.get("/users", response_model=list[UserRead])
+def get_all_users(db: db_dependency):
+    # Create query with eager loading options
+    query = (
+        select(User)
+        .options(
+            # To-one relationships
+            joinedload(User.Balances),
+            joinedload(User.Pin),
+            # To-many relationships
+            selectinload(User.Withdrawals),
+            selectinload(User.referrals),
+            selectinload(User.notifications),
+            selectinload(User.fund)
+        )
+    )
+    
+    # Execute query
+    users = db.exec(query).unique().all()
+    
+    return users
 
 # get single user 
 

@@ -7,17 +7,17 @@ from decimal import Decimal
 
 class userBase(SQLModel):
     id: Optional[int] = Field(default = None , primary_key = True, index=True)
-    firstName : str
-    lastName : str
+    firstName : str 
+    lastName : str  
     nation_id : str
-    email : str 
+    email : str
     password : str
-    phone : str
+    phone : str 
     currency : str
     country : str
     city : str
     name : str
-    created_at: str
+    created_at: str 
     
 class User(userBase , table = True):
     
