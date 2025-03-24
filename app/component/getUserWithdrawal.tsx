@@ -1,6 +1,77 @@
+import {
+  useReactTable,
+  createColumnHelper,
+  flexRender,
+  getCoreRowModel,
+} from "@tanstack/react-table";
 import { Mail } from "lucide-react";
 
-function GetUserWithdrawal({ withdraw_data }: any) {
+interface Withdrawal {
+  id: string;
+  user_id: string;
+  firstName: string;
+  lastName: string;
+  idNumber: string;
+  country: string;
+  bankName: string;
+  contact: string;
+  iban: string;
+  withdrawal_amount: string;
+  status: string;
+}
+
+const columnHelper = createColumnHelper<Withdrawal>();
+
+function GetUserWithdrawal({ withdraw_data }: { withdraw_data: Withdrawal[] }) {
+  const columns = [
+    columnHelper.accessor("user_id", {
+      header: "User Id",
+      cell: (info) => info.getValue(),
+    }),
+    columnHelper.accessor("firstName", {
+      header: "First Name",
+      cell: (info) => info.getValue(),
+    }),
+    columnHelper.accessor("lastName", {
+      header: "Last Name",
+      cell: (info) => info.getValue(),
+    }),
+    columnHelper.accessor("idNumber", {
+      header: "National Id/ Passport",
+      cell: (info) => info.getValue(),
+    }),
+    columnHelper.accessor("country", {
+      header: "Country",
+      cell: (info) => info.getValue(),
+    }),
+    columnHelper.accessor("bankName", {
+      header: "Bank Name",
+      cell: (info) => info.getValue(),
+    }),
+    columnHelper.accessor("contact", {
+      header: "Contact",
+      cell: (info) => info.getValue(),
+    }),
+    columnHelper.accessor("iban", {
+      header: "IBan",
+      cell: (info) => info.getValue(),
+    }),
+    columnHelper.accessor("withdrawal_amount", {
+      header: "Amount",
+      cell: (info) => info.getValue(),
+    }),
+    columnHelper.accessor("status", {
+      header: "Status",
+      cell: (info) => info.getValue(),
+    }),
+  ];
+
+  const table = useReactTable({
+    data: withdraw_data.slice(0).reverse(),
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+  });
+
   return (
     <main>
       <div className="flex flex-col">
@@ -8,76 +79,30 @@ function GetUserWithdrawal({ withdraw_data }: any) {
           <div className="min-w-full inline-block align-middle">
             <div className="overflow-hidden">
               <table className="min-w-full rounded-xl">
-                <thead>
-                  <tr className="bg-gray-50 text-center">
-                    <th
-                      scope="col"
-                      className="p-2  text-sm leading-6 font-semibold text-gray-900 capitalize"
-                    >
-                      User Id
-                    </th>
-                    <th
-                      scope="col"
-                      className="p-2  text-sm leading-6 font-semibold text-gray-900 capitalize"
-                    >
-                      First Name
-                    </th>
-                    <th
-                      scope="col"
-                      className="p-2  text-sm leading-6 font-semibold text-gray-900 capitalize"
-                    >
-                      Last Name
-                    </th>
-                    <th
-                      scope="col"
-                      className="p-2  text-sm leading-6 font-semibold text-gray-900 capitalize"
-                    >
-                      National Id/ Passport
-                    </th>
-                    <th
-                      scope="col"
-                      className="p-2  text-sm leading-6 font-semibold text-gray-900 capitalize"
-                    >
-                      Country
-                    </th>
-                    <th
-                      scope="col"
-                      className="p-2  text-sm leading-6 font-semibold text-gray-900 capitalize"
-                    >
-                      Bank Name
-                    </th>
-                    <th
-                      scope="col"
-                      className="p-2  text-sm leading-6 font-semibold text-gray-900 capitalize"
-                    >
-                      Contact
-                    </th>
-                    <th
-                      scope="col"
-                      className="p-2  text-sm leading-6 font-semibold text-gray-900 capitalize"
-                    >
-                      IBan
-                    </th>
-                    <th
-                      scope="col"
-                      className="p-2  text-sm leading-6 font-semibold text-gray-900 capitalize"
-                    >
-                      Amount
-                    </th>
-                    <th
-                      scope="col"
-                      className="p-2  text-sm leading-6 font-semibold text-gray-900 capitalize"
-                    >
-                      Status
-                    </th>
-                  </tr>
+                <thead className="bg-gray-50">
+                  {table.getHeaderGroups().map((headerGroup) => (
+                    <tr key={headerGroup.id}>
+                      {headerGroup.headers.map((header) => (
+                        <th
+                          key={header.id}
+                          className="p-2 text-sm leading-6 font-semibold text-gray-900 capitalize text-center"
+                        >
+                          {flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                        </th>
+                      ))}
+                    </tr>
+                  ))}
                 </thead>
-                {withdraw_data.length === 0 ? (
+
+                {table.getRowModel().rows.length === 0 ? (
                   <tbody>
                     <tr>
                       <td
                         className="p-5 text-center text-xl leading-6 font-medium text-[#9CA3AF]"
-                        colSpan={11}
+                        colSpan={columns.length}
                       >
                         <div className="flex justify-center">
                           <div>
@@ -95,48 +120,26 @@ function GetUserWithdrawal({ withdraw_data }: any) {
                     </tr>
                   </tbody>
                 ) : (
-                  withdraw_data
-                    .slice(0)
-                    .reverse()
-                    .map((withdraw: any) => (
-                      <tbody
-                        className="divide-y divide-gray-300"
-                        key={withdraw.id}
+                  <tbody className="divide-y divide-gray-300">
+                    {table.getRowModel().rows.map((row) => (
+                      <tr
+                        key={row.id}
+                        className="bg-white transition-all duration-500 hover:bg-gray-50 text-center border"
                       >
-                        <tr className="bg-white transition-all duration-500 hover:bg-gray-50 text-center border">
-                          <td className="p-2 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
-                            {withdraw.user_id}
+                        {row.getVisibleCells().map((cell) => (
+                          <td
+                            key={cell.id}
+                            className="p-2 whitespace-nowrap text-sm leading-6 font-medium text-gray-900"
+                          >
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext()
+                            )}
                           </td>
-                          <td className="p-2 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
-                            {withdraw.firstName}
-                          </td>
-                          <td className="p-2 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
-                            {withdraw.lastName}
-                          </td>
-                          <td className="p-2 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
-                            {withdraw.idNumber}
-                          </td>
-                          <td className="p-2 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
-                            {withdraw.country}
-                          </td>
-                          <td className="p-2 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
-                            {withdraw.bankName}
-                          </td>
-                          <td className="p-2 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
-                            {withdraw.contact}
-                          </td>
-                          <td className="p-2 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
-                            {withdraw.iban}
-                          </td>
-                          <td className="p-2 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
-                            {withdraw.withdrawal_amount}
-                          </td>
-                          <td className="p-2 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
-                            {withdraw.status}
-                          </td>
-                        </tr>
-                      </tbody>
-                    ))
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
                 )}
               </table>
             </div>

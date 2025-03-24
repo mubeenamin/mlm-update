@@ -2,74 +2,92 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Mail, Receipt } from "lucide-react";
+import {
+  createColumnHelper,
+  flexRender,
+  getCoreRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
 
 function GetFund() {
-  const [funds, setFunds] = useState([]);
+  const [funds, setFunds] = useState<any[]>([]);
+  const columnHelper = createColumnHelper<any>();
+
   const formattedDateTime = (date: any) => {
-    // Check if the date is a valid timestamp or ISO string
     const parsedDate = new Date(date);
     if (isNaN(parsedDate.getTime())) {
-      return "Invalid Date"; // Handle invalid dates gracefully
+      return "Invalid Date";
     }
-    return parsedDate.toLocaleString(); // Format the date
+    return parsedDate.toLocaleString();
   };
+
+  const columns = [
+    columnHelper.accessor("user.email", {
+      header: "Transfer By",
+      cell: (info) => info.getValue(),
+    }),
+    columnHelper.accessor("email", {
+      header: "Transfer to",
+      cell: (info) => info.getValue(),
+    }),
+    columnHelper.accessor("amount", {
+      header: "Amount Transferred",
+      cell: (info) => info.getValue(),
+    }),
+    columnHelper.accessor("date", {
+      header: "Date",
+      cell: (info) => formattedDateTime(info.getValue()),
+    }),
+  ];
+
+  const table = useReactTable({
+    data: funds,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+  });
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await axios.get("/api/routers/fund/get_funds");
-        if (!res) {
-          throw new Error(`HTTP error! status: ${res}`);
-        } else {
-          console.log(res.data);
-          setFunds(res.data);
-        }
-      } catch (error) {}
+        setFunds(res.data.slice().reverse());
+      } catch (error) {
+        console.error("Error fetching funds:", error);
+      }
     };
     fetchData();
   }, []);
 
   return (
     <main>
-      <div className="flex flex-col ">
+      <div className="flex flex-col">
         <div className="overflow-x-auto">
           <div className="min-w-full inline-block align-middle">
             <div className="overflow-hidden">
               <table className="min-w-full rounded-xl">
-                <thead>
-                  <tr className="bg-gray-50 text-center">
-                    <th
-                      scope="col"
-                      className="p-5  text-sm leading-6 font-semibold text-gray-900 capitalize"
-                    >
-                      Transfer By
-                    </th>
-                    <th
-                      scope="col"
-                      className="p-5  text-sm leading-6 font-semibold text-gray-900 capitalize"
-                    >
-                      Transfer to
-                    </th>
-                    <th
-                      scope="col"
-                      className="p-5  text-sm leading-6 font-semibold text-gray-900 capitalize"
-                    >
-                      Amount Transferred
-                    </th>
-                    <th
-                      scope="col"
-                      className="p-5  text-sm leading-6 font-semibold text-gray-900 capitalize"
-                    >
-                      Date
-                    </th>
-                  </tr>
+                <thead className="bg-gray-50">
+                  {table.getHeaderGroups().map((headerGroup) => (
+                    <tr key={headerGroup.id}>
+                      {headerGroup.headers.map((header) => (
+                        <th
+                          key={header.id}
+                          className="p-5 text-sm leading-6 font-semibold text-gray-900 text-center"
+                        >
+                          {flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                        </th>
+                      ))}
+                    </tr>
+                  ))}
                 </thead>
-                {funds.length === 0 ? (
-                  <tbody>
+                <tbody>
+                  {table.getRowModel().rows.length === 0 ? (
                     <tr>
                       <td
                         className="p-5 text-center text-xl leading-6 font-medium text-[#9CA3AF]"
-                        colSpan={11}
+                        colSpan={columns.length}
                       >
                         <div className="flex justify-center">
                           <div>
@@ -85,33 +103,27 @@ function GetFund() {
                         </div>
                       </td>
                     </tr>
-                  </tbody>
-                ) : (
-                  funds
-                    .slice(0)
-                    .reverse()
-                    .map((fund: any) => (
-                      <tbody
-                        className="divide-y divide-gray-300 text-center"
-                        key={fund.id}
+                  ) : (
+                    table.getRowModel().rows.map((row) => (
+                      <tr
+                        key={row.id}
+                        className="bg-white transition-all duration-500 hover:bg-gray-50 divide-y divide-gray-300"
                       >
-                        <tr className="bg-white transition-all duration-500 hover:bg-gray-50">
-                          <td className="p-2 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
-                            {fund.user.email}
+                        {row.getVisibleCells().map((cell) => (
+                          <td
+                            key={cell.id}
+                            className="p-2 whitespace-nowrap text-sm leading-6 font-medium text-gray-900 text-center"
+                          >
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext()
+                            )}
                           </td>
-                          <td className="p-2 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
-                            {fund.email}
-                          </td>
-                          <td className="p-2 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
-                            {fund.amount}
-                          </td>
-                          <td className="p-2 whitespace-nowrap text-sm leading-6 font-medium text-gray-900">
-                            {formattedDateTime(fund.date)}
-                          </td>
-                        </tr>
-                      </tbody>
+                        ))}
+                      </tr>
                     ))
-                )}
+                  )}
+                </tbody>
               </table>
             </div>
           </div>
