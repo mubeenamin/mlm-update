@@ -28,7 +28,6 @@ function GetUserFund() {
         if (!res) {
           throw new Error(`HTTP error! status: ${res}`);
         } else {
-          console.log(res.data);
           setFunds(res.data);
         }
       } catch (error) {

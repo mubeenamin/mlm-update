@@ -1,12 +1,11 @@
 "use client";
+import AccountHistoryAdmin from "@/app/component/accountHistoryAdmin";
 import UserView from "@/app/component/userView";
-import axios from "axios";
-import { useEffect, useState } from "react";
 
 export default function AllAccountHistory() {
   return (
     <div>
-      <UserView />
+      <AccountHistoryAdmin />
     </div>
   );
 }

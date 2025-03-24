@@ -173,3 +173,28 @@ async def update_user_password_by_id(
         return Response(status_code=status.HTTP_204_NO_CONTENT)
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
+    
+
+@router.get("/users/{user_id}", response_model=UserRead)
+def get_user_by_id(user_id: int, db: db_dependency):
+    # Create query with eager loading and filtering
+    query = (
+        select(User)
+        .where(User.id == user_id)
+        .options(
+            joinedload(User.Balances),
+            joinedload(User.Pin),
+            selectinload(User.Withdrawals),
+            selectinload(User.referrals),
+            selectinload(User.notifications),
+            selectinload(User.fund)
+        )
+    )
+    
+    # Execute query
+    user = db.exec(query).first()
+    
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    return user
