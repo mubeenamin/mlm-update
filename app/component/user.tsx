@@ -53,6 +53,7 @@ const formSchema = z
     referrer_user_id: z.number(),
     referral_type_name: z.string(),
     initial_balance: z.number(),
+    status: z.string(), // Add default value for status
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match.",
@@ -85,6 +86,7 @@ function User() {
       referrer_user_id: referral_id,
       referral_type_name: "direct",
       initial_balance: 0,
+      status: "activate", // Add default value for status
     },
   });
 
@@ -286,6 +288,24 @@ function User() {
                   <FormLabel>Currency</FormLabel>
                   <FormControl>
                     <Input placeholder="" {...field} />
+                  </FormControl>
+                  <FormMessage className="text-red-500" />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="status"
+              render={({ field }) => (
+                <FormItem className="gap-4">
+                  <FormLabel>Status</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Status"
+                      {...field}
+                      value="activate"
+                      disabled
+                    />
                   </FormControl>
                   <FormMessage className="text-red-500" />
                 </FormItem>

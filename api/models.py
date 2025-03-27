@@ -17,7 +17,8 @@ class userBase(SQLModel):
     country : str
     city : str
     name : str
-    created_at: str 
+    created_at: str
+    status: str 
     
 class User(userBase , table = True):
     
@@ -50,6 +51,7 @@ class AdminCreate(SQLModel):
     created_at: str
     initial_balance: Decimal
     userPackage: str
+    status: str
     
 
 class UserCreate(SQLModel):
@@ -68,7 +70,7 @@ class UserCreate(SQLModel):
     referral_type_name: str
     initial_balance: Decimal
     userPackage: str
-
+    status: str
 
 class UserPasswordUpdate(SQLModel):
     
