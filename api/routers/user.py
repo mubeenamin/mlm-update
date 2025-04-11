@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, Response, status
 from sqlmodel import select
-from api.models import Balance, ReferralType, Referral, UserPasswordUpdate
+from api.models import Balance, ReferralType, Referral, UserPasswordUpdate, UserUpdate
 from api.dep import db_dependency, bcrypt_context
 from typing import Annotated, List
 from api.models import User, UserCreate, UserRead, AdminCreate, Referral, ReferralType
@@ -198,3 +198,11 @@ def get_user_by_id(user_id: int, db: db_dependency):
         raise HTTPException(status_code=404, detail="User not found")
     
     return user
+
+@router.put("/update_user_by_id/{user_id}")
+async def update_withdrawal_by_id(db: db_dependency,  user_id: int, user: UserUpdate):
+    result = db.exec(select(User).where(User.id == user_id)).first()
+    result.status = user.status
+    db.add(result)
+    db.commit()
+    return {"message": "User updated successfully."} 

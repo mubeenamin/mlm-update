@@ -29,7 +29,7 @@ const FormSchema = z.object({
   status: z.string(),
 });
 
-function UpdateWithdrawal({ withdrawal_id }: any) {
+function UpdateUserStatus({ user_id }: any) {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -40,7 +40,7 @@ function UpdateWithdrawal({ withdrawal_id }: any) {
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
     try {
       const res = await axios.put(
-        `/api/routers/withdrawal/update_withdrawal_by_id/${withdrawal_id}`,
+        `/api/routers/user/update_user_by_id/${user_id}`,
         data
       );
       if (!res) {
@@ -79,12 +79,9 @@ function UpdateWithdrawal({ withdrawal_id }: any) {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent className="bg-white">
-                      <SelectItem value="Pending">Pending</SelectItem>
-                      <SelectItem value="Completed" className="text-green-600">
-                        Completed
-                      </SelectItem>
-                      <SelectItem value="Rejected" className="text-red-600">
-                        Rejected
+                      <SelectItem value="Active">Active</SelectItem>
+                      <SelectItem value="Deactive" className="text-green-600">
+                        Deactive
                       </SelectItem>
                     </SelectContent>
                   </Select>
@@ -100,4 +97,4 @@ function UpdateWithdrawal({ withdrawal_id }: any) {
   );
 }
 
-export default UpdateWithdrawal;
+export default UpdateUserStatus;

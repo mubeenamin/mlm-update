@@ -86,7 +86,7 @@ function User() {
       referrer_user_id: referral_id,
       referral_type_name: "direct",
       initial_balance: 0,
-      status: "activate", // Add default value for status
+      status: "Active", // Add default value for status
     },
   });
 

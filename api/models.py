@@ -35,7 +35,9 @@ class UserRead(userBase):
     referrals: List["Referral"]
     notifications: List["notification"]
     fund: List["Fund"]
-    
+
+class UserUpdate(SQLModel):
+    status : Optional[str]
 class AdminCreate(SQLModel):
 
     firstName : str
