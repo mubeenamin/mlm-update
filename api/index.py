@@ -4,7 +4,7 @@ from api.db import  engine
 from api.models import *
 from fastapi.middleware.cors import CORSMiddleware
 from apscheduler.schedulers.background import BackgroundScheduler
-from api.routers import auth, dailyupdate, otp, withdrawal, pin, referral_type, balance, user , notification, message, fund
+from api.routers import  dailyupdate, otp, withdrawal, pin, referral_type, balance, user , notification, message, fund, audit_Log
 
 
 def calculate_earnings(user):
@@ -106,7 +106,6 @@ def hello_world():
     return {"message": "Hello World"}
 
 app.include_router(user.router)
-app.include_router(auth.router)
 app.include_router(withdrawal.router)
 app.include_router(pin.router)
 app.include_router(referral_type.router)
@@ -116,3 +115,4 @@ app.include_router(message.router)
 app.include_router(fund.router)
 app.include_router(dailyupdate.router)
 app.include_router(otp.router)
+app.include_router(audit_Log.router)

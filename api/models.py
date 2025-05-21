@@ -28,6 +28,7 @@ class User(userBase , table = True):
     referrals: List["Referral"] = Relationship(back_populates="referrer",sa_relationship_kwargs={"foreign_keys": "[Referral.referrer_user_id]"})
     notifications: List["notification"] = Relationship(back_populates="user")
     fund: List["Fund"] = Relationship(back_populates="user")
+    audit_logs: List["AuditLog"] = Relationship(back_populates="user")
 class UserRead(userBase):
     Balances : Optional["Balance"]
     Withdrawals: List["Withdrawal"]
@@ -51,7 +52,7 @@ class AdminCreate(SQLModel):
     city : str
     name : str
     created_at: str
-    initial_balance: Decimal
+    initial_balance: float
     userPackage: str
     status: str
     
@@ -70,7 +71,7 @@ class UserCreate(SQLModel):
     created_at: str
     referrer_user_id: int
     referral_type_name: str
-    initial_balance: Decimal
+    initial_balance: float
     userPackage: str
     status: str
 
@@ -93,24 +94,24 @@ class notification(notificationBase , table = True):
 
 
 class balanceBase(SQLModel):
-    balance : Decimal
+    balance : float
     package: str
     user_id : Optional[int] = Field(default = None , foreign_key = "user.id")
     
 class BalanceCreate(balanceBase):
     pass
 class BalanceUpdate(SQLModel):
-    balance : Optional[Decimal]
+    balance : Optional[float]
     
 class Balance(balanceBase , table = True):
     id : Optional[int] = Field(default = None , primary_key = True, index=True)
     user : Optional["User"] = Relationship(back_populates = "Balances")
     
 class TotalBalance(SQLModel):
-    total_balance : Decimal
+    total_balance : float
 
 class WithdrawalBase(SQLModel): 
-    withdrawal_amount : Decimal
+    withdrawal_amount : float
     firstName : str
     lastName : str
     idNumber : str
@@ -170,7 +171,7 @@ class Message(SQLModel, table=True):
 class Fund(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     user_id: int = Field(foreign_key="user.id")
-    amount: Decimal
+    amount: float
     email: str
     date: str
     user: User = Relationship(back_populates="fund")
@@ -178,11 +179,23 @@ class Fund(SQLModel, table=True):
 class FundRead(SQLModel):
     id: int
     user_id: int
-    amount: Decimal
+    amount: float
     email: str
     date: str
     user: Optional["User"]
+    
+    
+class AuditLogBase(SQLModel):
+    user_id: Optional[int] = Field(foreign_key="user.id")
+    user_name: str
+    date: str  # For simplicity, storing the date as a string (could be `datetime.date` if preferred)
+    amount: float
+    status: str
+    action_description: str  # Maps to "Action"
 
-class Token(SQLModel):
-    access_token: str
-    token_type: str
+class AuditLog(AuditLogBase, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    user: Optional["User"] = Relationship(back_populates="audit_logs")
+
+class AuditLogRead(AuditLogBase):
+    id: int

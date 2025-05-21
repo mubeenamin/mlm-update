@@ -1,4 +1,4 @@
-import UserView from "@/app/component/userView";
+import UserView from "@/app/component/allAccountHistory";
 
 function Page() {
   return <UserView />;

@@ -47,7 +47,19 @@ const formSchema = z
     country: z.string().min(1, { message: "Country is required." }),
     phone: z.string().min(1, { message: "Phone number is required." }),
     currency: z.string().min(1, { message: "Currency is required." }),
-    userPackage: z.string({ required_error: "Please select a package." }),
+    userPackage: z.enum(
+      [
+        "Bronze",
+        "Silver",
+        "Gold",
+        "Gold Plus",
+        "Diamond",
+        "Diamond Plus",
+        "Platinum",
+        "Platinum Plus",
+      ],
+      { required_error: "Please select a package." }
+    ),
     name: z.string(),
     created_at: z.string(),
     referrer_user_id: z.number(),
@@ -79,7 +91,7 @@ function User() {
       city: "",
       country: "",
       phone: "",
-      userPackage: "",
+      userPackage: undefined,
       currency: "USD",
       name: "user",
       created_at: moment().format("YYYY-MM-DD"),
@@ -124,7 +136,9 @@ function User() {
     }
 
     // @ts-ignore
-    const currentBalance = session?.user?.balance;
+    const currentBalance = Number(session?.user?.balance);
+
+    console.log("Current balance:", currentBalance);
 
     if (currentBalance < data.initial_balance) {
       alert("Insufficient Balance");
@@ -139,6 +153,7 @@ function User() {
           router.refresh();
           toast("User created successfully", { type: "success" });
           const newbalance = currentBalance - data.initial_balance;
+          console.log("New balance:", newbalance);
           balanceUpdate(newbalance);
         }
       } catch (error) {
@@ -303,7 +318,7 @@ function User() {
                     <Input
                       placeholder="Status"
                       {...field}
-                      value="activate"
+                      value="Active"
                       disabled
                     />
                   </FormControl>

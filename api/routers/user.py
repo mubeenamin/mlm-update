@@ -5,6 +5,7 @@ from api.dep import db_dependency, bcrypt_context
 from typing import Annotated, List
 from api.models import User, UserCreate, UserRead, AdminCreate, Referral, ReferralType
 from sqlalchemy.orm import joinedload, selectinload
+from api.routers.audit_Log import log_action
 
 
 router = APIRouter(
@@ -13,7 +14,7 @@ router = APIRouter(
 )
 
 @router.post("/create_admin", status_code=status.HTTP_201_CREATED)
-async def create_admin(db: db_dependency , user: AdminCreate):
+async def create_admin(db: db_dependency , user: AdminCreate, ):
     # Hash the password
     hashed_password = bcrypt_context.hash(user.password)
     
@@ -134,7 +135,7 @@ async def get_user(user_id: int, db: db_dependency):
 # delete user
 
 
-@router.delete("/delete_user/{user_id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.delete("/delete_user/{user_id}", status_code=status.HTTP_200_OK)
 async def delete_user(db: db_dependency, user_id: int):
     result = db.exec(select(User).where(User.id == user_id)).first()
     db.delete(result)
@@ -149,7 +150,7 @@ async def get_users_by_name(name: str, db: db_dependency):
 
 
 
-@router.put("/update_user_password_by_id/{user_id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.put("/update_user_password_by_id/{user_id}", status_code=status.HTTP_200_OK)
 async def update_user_password_by_id(
     db: db_dependency,
     user_id: int,
@@ -205,4 +206,4 @@ async def update_withdrawal_by_id(db: db_dependency,  user_id: int, user: UserUp
     result.status = user.status
     db.add(result)
     db.commit()
-    return {"message": "User updated successfully."} 
+    return {"message": "User updated successfully."}
